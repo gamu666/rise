@@ -28,3 +28,34 @@ dialog{background:var(--task-head);color:var(--ink);border:1px solid var(--line)
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
 body{display:flow-root}
 @media(min-width:901px) and (max-height:650px){.detail-head .status-tag{display:inline-flex;margin:0 0 0 5px;font-size:8px;padding:4px 5px}.student-detail{padding:10px}.detail-head h3{font-size:14px}.detail-label{font-size:9px;margin-bottom:5px}.detail-person small{font-size:8px}.detail-person strong{font-size:9px}.detail-grid{margin:7px 0}.detail-grid article{padding:7px}.detail-grid span{margin-top:5px;font-size:8px}.detail-grid strong{font-size:10px}.detail-bottom small{font-size:8px;margin-bottom:3px}.detail-bottom{padding:7px;gap:5px}.detail-button{padding:8px;font-size:8px}.student-heading{margin:0}.student-section{gap:6px}}
+/* Exact reference colors: ice canvas, charcoal panels, lime accents; no gradients. */
+:root{--ink:#151719;--muted:#78818a;--line:#ffffff80;--surface:#edf3f9;--card:#dfe7ec;--field:#ffffff75;--task-head:#eef0f2;--accent:#b5fa00;background:#c3c5bf}
+:root[data-theme=dark]{--ink:#f5f6f8;--muted:#a0a6b0;--line:#ffffff0c;--surface:#1c2430;--card:#252a34;--field:#ffffff08;--task-head:#1c2430;--accent:#aaff00;background:#080b0e}
+:root[data-theme=night]{--ink:#f5f6f8;--muted:#a0a6b0;--line:#ffffff0c;--surface:#18212d;--card:#222731;--field:#ffffff08;--task-head:#18212d;--accent:#aaff00;background:#080b0e}
+body,[data-theme=dark] body,[data-theme=night] body{background:#c3c5bf}
+[data-theme=dark] body,[data-theme=night] body{background:#080b0e}
+.os-shell{background:#edf3f9;backdrop-filter:none;box-shadow:none;border-color:#d9e0e7}
+[data-theme=dark] .os-shell,[data-theme=night] .os-shell{background:#1c2430;border-color:#313842}
+.workspace{background:transparent}.brand{background:#20252b;box-shadow:none}.brand img{width:120px}.profile-avatar{background:#383298}.wave{background:none;color:var(--ink)}
+.top-nav a.active{background:#303030;color:#fff;border-color:transparent}.theme-switch button[aria-pressed=true]{background:#c7ff00;color:#151719;box-shadow:none}
+.summary-row article{background:#dfe7ec;border-color:transparent;box-shadow:none}.summary-icon{color:#20252b;background:#d1dce6;box-shadow:none}.summary-icon.mint{background:#baff00}.summary-icon.yellow{background:#d1dce6}.summary-icon.lilac{background:#d1dce6}
+[data-theme=dark] .summary-row article,[data-theme=night] .summary-row article{background:#252a34}.goal-card,.monthly{background:#dfe7ec;border-color:transparent;box-shadow:none}
+[data-theme=dark] .goal-card,[data-theme=dark] .monthly,[data-theme=night] .goal-card,[data-theme=night] .monthly{background:#252a34}
+.progress-track{background:#cfd8df}.progress-track>div,.monthly .progress-track>div,.mini-dot,.monthly .mini-dot{background:#b5fa00}
+[data-theme=dark] .progress-track,[data-theme=night] .progress-track{background:#343a43}
+.student-panel{background:#303030;border-color:transparent}.student-tabs{background:var(--surface);border-radius:0 0 22px 22px;padding:0 9px 8px;top:0}.student-tabs button{background:#f4f6f8;color:#30353a;border-color:#dce1e5}.student-tabs button[aria-selected=true]{background:#c7ff00;color:#101600;border-color:transparent}.student-tabs button[aria-selected=true]>span{background:#fff;color:#111}
+.student-item{color:#f4f5f6}.student-info small{color:#a4abb0}.student-item[aria-pressed=true]{background:#444444;box-shadow:none}.student-item[aria-pressed=true] small{color:#c0c5cb}
+.student-avatar,.student-item:nth-child(n) .student-avatar{background:#b3c4cf;color:#1d2530}.student-item[aria-pressed=true] .student-avatar{background:#b3c4cf;color:#1d2530}
+.student-detail{background:#849faf;color:#fff;border-color:transparent;box-shadow:none}.detail-label,.detail-person small,.detail-grid span,.detail-bottom small{color:#e0e8ed}.detail-grid article{background:#92acbb;border-color:transparent}.detail-bottom{background:#91a8b6;border-color:transparent}.detail-button,.detail-button:hover{background:#c7ff00;color:#172000;box-shadow:none}.status-tag{background:#ffffff10;border-color:#ffffff20}
+[data-theme=dark] .student-panel,[data-theme=night] .student-panel{background:#fff}.student-item[aria-pressed=true]{border:1px solid #ffffff08}
+[data-theme=dark] .student-item,[data-theme=night] .student-item{color:#252a30}
+[data-theme=dark] .student-item[aria-pressed=true],[data-theme=night] .student-item[aria-pressed=true]{background:#252a30;color:#fff}
+[data-theme=dark] .student-detail,[data-theme=night] .student-detail{background:#22262e}
+[data-theme=dark] .detail-grid article,[data-theme=night] .detail-grid article{background:#2c3039}
+[data-theme=dark] .detail-bottom,[data-theme=night] .detail-bottom{background:#363b43}
+[data-theme=dark] .detail-label,[data-theme=dark] .detail-person small,[data-theme=dark] .detail-grid span,[data-theme=dark] .detail-bottom small,[data-theme=night] .detail-label,[data-theme=night] .detail-person small,[data-theme=night] .detail-grid span,[data-theme=night] .detail-bottom small{color:#a0a6b0}
+[data-theme=dark] .student-tabs button,[data-theme=night] .student-tabs button{background:#282d35;color:#e4e7ed;border-color:transparent}
+[data-theme=dark] .student-tabs button[aria-selected=true],[data-theme=night] .student-tabs button[aria-selected=true]{background:#aaff00;color:#102000}
+.tasks-column{background:#eee;border-color:#ddd}.tasks-column>h2{color:#080808;background:#eeeeeee8}.tasks-column>h2:after{background:linear-gradient(to bottom,#eeeeeee8,transparent)}
+.task-card{color:#090909;border:0;box-shadow:0 3px 3px #0003;background:#dff8fd}.task-card:hover{box-shadow:0 3px 3px #0003}.task-cyan{background:#dff8fd}.task-pink{background:#f5cfff}.task-yellow{background:#fbe9af}.task-green{background:#c8facb}.task-head small{color:#424447}.task-head time{color:#25272b;background:#b5f1fb}.task-pink time{background:#ecaff9}.task-yellow time{background:#f9dc79}.task-green time{background:#9ef1a5}.task-card>p{background:#ffffffaa;color:#080808;border:0}.task-head .black-avatar{background:#ffdb00}.task-head .teacher-avatar{background:#a4ecb2}.check-symbol{color:#050505}.task-actions .more{background:#050505}.task-actions .cancel{background:#ff101e}.task-actions .done{background:#09e500}.task-actions button{border:1px solid #fff;box-shadow:none}.task-actions button:hover{box-shadow:none;filter:brightness(1.03)}.task-state{color:#34343c}
+.save-button{background:#c7ff00;color:#111}.goal-edit{background:var(--field)}

@@ -16,3 +16,6 @@ Desktop 1440×900-д төлбөрийн мөр эхний дэлгэцэд ха�
 Light, Dark, Night горим header-д сонгогдоно; сонголт `rise-theme` local storage-д хадгалагдана. Slate/ice суурь ба #337fb6 → #6354ed → #9c32e9 → #bf42bc THE RISE gradient ашигласан. Coolors-ийн palette/gradient хэрэгслүүдийг reference болгон үзсэн; task-ийн ice blue, orchid, sand, periwinkle өнгийг энэ сууринд тохируулсан.
 
 901px-ээс өргөн дэлгэцэд page scroll байхгүй, main хэсэг нэг дэлгэцэд багтана. Task болон student жагсаалт тусдаа гүйлгэнэ. My Tasks sticky гарчиг нь 20px backdrop blur, доод fade давхаргатай. 900px-ээс нарийн дэлгэцэд page scroll нээгдэнэ. 1366×768, 1024×600 болон 390×844-д browser-оор шалгасан; compact дэлгэцэд төлбөрийн мөр clipping-гүй. SVG task үйлдэл, theme сонголт reload-ийн дараа хадгалагдахыг шалгасан.
+
+
+Reference color correction: removed decorative brand gradients. Ice #edf3f9, cool gray #dfe7ec, charcoal #303030, blue-gray #849faf, dark #1c2430, lime #c7ff00. Task cards retain original pastel cyan/pink/yellow/mint and black/red/green SVG action buttons. Sticky title blur remains as requested.

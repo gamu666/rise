@@ -76,3 +76,5 @@ body,[data-theme=dark] body,[data-theme=night] body{background:#c3c5bf}
 @media(max-width:900px){.student-panel{grid-template-rows:auto}}
 .student-tabs:before{box-shadow:0 -12px 0 0 var(--surface)}.student-tabs:after{box-shadow:0 -12px 0 0 var(--surface)}
 @media(min-width:901px) and (max-height:650px){.main-column{gap:7px}.goal-card{padding:8px 15px}.goal-heading{margin-top:0}.goal-value{margin-top:3px}.goal-value strong{font-size:27px}.progress-track{margin-top:6px}.student-panel{padding-top:48px}.student-tabs button{padding:7px 11px}.student-detail{padding:8px 10px}.detail-grid{margin:5px 0}.detail-grid article{padding:6px}.detail-bottom{padding:6px 8px}.detail-button{padding:7px 8px}.detail-label{margin-bottom:3px}.student-search{padding:6px 10px}}
+/* Clean tab cutout: no side attachments or seam lines. */
+.student-tabs:before,.student-tabs:after{content:none!important;display:none!important}.student-tabs{border:0;box-shadow:none;outline:0;border-radius:0 0 24px 24px;padding:0 12px 12px;top:-1px}.student-panel{border:0}

@@ -219,3 +219,9 @@ body,[data-theme=dark] body,[data-theme=night] body{background:var(--canvas);bac
 @media(min-width:901px) and (max-width:1100px){.filter-trigger{padding-left:6px;padding-right:30px}.filter-icon{width:24px;height:24px;top:8px;bottom:auto;right:3px}.filter-icon svg{width:15px;height:15px}}
 @media(min-width:901px){.student-panel{grid-template-columns:minmax(0,min(34%,calc(var(--toolbar-left-space,240px) + 10px))) minmax(0,1fr)}.student-roster .student-search{left:var(--roster-search-left,8px);width:var(--roster-search-width,240px);min-width:0;max-width:none}}
 @media(max-width:900px){.student-roster .student-search{width:var(--roster-search-width,100%);max-width:100%}}
+/* Filter geometry is shared by both themes and fills the measured toolbar lane. */
+@media(min-width:901px){.student-filters{width:var(--toolbar-right-space,220px);min-width:0;max-width:none;right:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;align-items:center}}
+.filter-trigger,[data-theme=dark] .filter-trigger,[data-theme=light] .filter-trigger{height:42px;min-height:42px;width:100%;min-width:0;box-sizing:border-box;padding:0 45px 0 12px;border-width:1px;border-radius:24px;font-family:inherit;font-size:12px;font-weight:400;line-height:1.2;display:flex;align-items:center;justify-content:center}
+.filter-label{display:block;flex:1;text-align:center}.filter-icon{width:34px;height:34px;top:3px;right:3px;bottom:auto}.filter-icon svg{width:18px;height:18px}
+@media(min-width:901px) and (max-width:1100px){.filter-trigger,[data-theme=dark] .filter-trigger,[data-theme=light] .filter-trigger{padding:0 30px 0 6px;font-size:10px}.filter-icon{width:24px;height:24px;top:8px;right:3px}.filter-icon svg{width:15px;height:15px}}
+@media(max-width:900px){.student-filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}}

@@ -90,3 +90,4 @@ body,[data-theme=dark] body,[data-theme=night] body{background:#c3c5bf}
 /* Round the inset itself; never append shapes to its edges. */
 .student-tabs:before,.student-tabs:after{content:none!important;display:none!important;mask-image:none!important;-webkit-mask-image:none!important;background:none!important;width:0!important;height:0!important}
 .student-tabs{border-radius:0 0 34px 34px;border:0;box-shadow:none;outline:0;padding:0 14px 14px;top:-1px}
+.student-panel,[data-theme=dark] .student-panel,[data-theme=night] .student-panel{background:transparent!important;isolation:isolate;border-radius:30px}.student-panel:before{content:'';position:absolute;inset:0;background-image:var(--inset-shape);background-repeat:no-repeat;background-size:100% 100%;z-index:-1;pointer-events:none}.student-tabs{background:transparent!important;top:0;overflow:visible}.student-tabs:before,.student-tabs:after{display:none!important;content:none!important}

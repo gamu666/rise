@@ -225,3 +225,10 @@ body,[data-theme=dark] body,[data-theme=night] body{background:var(--canvas);bac
 .filter-label{display:block;flex:1;text-align:center}.filter-icon{width:34px;height:34px;top:3px;right:3px;bottom:auto}.filter-icon svg{width:18px;height:18px}
 @media(min-width:901px) and (max-width:1100px){.filter-trigger,[data-theme=dark] .filter-trigger,[data-theme=light] .filter-trigger{padding:0 30px 0 6px;font-size:10px}.filter-icon{width:24px;height:24px;top:8px;right:3px}.filter-icon svg{width:15px;height:15px}}
 @media(max-width:900px){.student-filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}}
+/* Theme-independent segment geometry: themes only supply paint. */
+.student-tabs button,:root[data-theme=dark] .student-tabs button,:root[data-theme=light] .student-tabs button{height:46px;min-height:46px;padding:0 20px;font-size:14px;font-weight:500;line-height:20px;border-width:1px}
+@media(min-width:901px) and (max-height:800px){.student-tabs button,:root[data-theme=dark] .student-tabs button,:root[data-theme=light] .student-tabs button{height:42px;min-height:42px;padding:0 17px;font-size:13px}}
+@media(min-width:901px) and (max-height:650px){.student-tabs button,:root[data-theme=dark] .student-tabs button,:root[data-theme=light] .student-tabs button{height:36px;min-height:36px;padding:0 12px;font-size:12px}}
+@media(min-width:901px) and (max-width:1250px){.student-tabs button,:root[data-theme=dark] .student-tabs button,:root[data-theme=light] .student-tabs button{padding-left:12px;padding-right:12px}}
+@media(max-width:900px){.student-tabs button,:root[data-theme=dark] .student-tabs button,:root[data-theme=light] .student-tabs button{height:40px;min-height:40px;padding:0 10px;font-size:12px}}
+@media(max-width:900px){.os-shell,:root[data-theme=dark] .os-shell,:root[data-theme=light] .os-shell{height:auto;min-height:100svh;margin:0;border-radius:0;border-width:0}}

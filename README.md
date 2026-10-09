@@ -6,8 +6,8 @@ Open `index.html` directly for the public website. For the complete demo staff s
 
 - Public homepage, responsive course showcases, search, course-detail dialogs, FAQ, desktop hover navigation, mobile menu, scroll scaling, reduced-motion support.
 - Staff entry → local demo login → Manager dashboard. The display name persists within the browser tab session; manager goals, task states and notes persist in local browser storage. Student search and tabs filter six sample records. Logout clears the demo navigation session. Direct dashboard visits without a demo session return to staff entry.
-- Independent HTML/CSS/JavaScript and three original AI-generated illustrative photographs. No Toki source code, fonts or production assets were copied. The THE RISE wordmark is a provisional text treatment.
-- Research screenshots and the overlay/side-by-side viewer in `qa/compare.html`.
+- Independent HTML/CSS/JavaScript and three original AI-generated illustrative photographs. No Toki source code, fonts or production assets were copied. The manager dashboard uses the supplied THE RISE logo.
+- Dashboard details and demo limitations in `MANAGER-DASHBOARD.md`.
 
 ## Connect the real THE RISE OS
 
@@ -23,5 +23,5 @@ The generated scenes depict fictional illustrative trainees and environments, no
 
 ## Reference and visual limits
 
-Live reference https://www.toki.mn/ observed 2026-10-09. Desktop research used 1440 × 900; mobile used 390 × 844. Matched the viewport-led section rhythm, 1200px desktop frame, hero glass panel, 80/60/64px title hierarchy, dark showcases, pale editorial section, rounded cards and scroll-driven scaling. System fonts replace Toki’s proprietary font. Content lengths, artwork and THE RISE colors intentionally differ; this is not a claim of pixel identity. The QA screenshots are included only as visual-study evidence and are not referenced by the public website.
+Live reference https://www.toki.mn/ observed 2026-10-09. Desktop research used 1440 × 900; mobile used 390 × 844. Matched the viewport-led section rhythm, 1200px desktop frame, hero glass panel, 80/60/64px title hierarchy, dark showcases, pale editorial section, rounded cards and scroll-driven scaling. System fonts replace Toki’s proprietary font. Content lengths, artwork and THE RISE colors intentionally differ; this is not a claim of pixel identity. Local visual-study screenshots are excluded from GitHub.
 

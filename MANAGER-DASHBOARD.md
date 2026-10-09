@@ -19,3 +19,5 @@ Light, Dark, Night горим header-д сонгогдоно; сонголт `ri
 
 
 Reference color correction: removed decorative brand gradients. Ice #edf3f9, cool gray #dfe7ec, charcoal #303030, blue-gray #849faf, dark #1c2430, lime #c7ff00. Task cards retain original pastel cyan/pink/yellow/mint and black/red/green SVG action buttons. Sticky title blur remains as requested.
+
+Typography/assets refinement: supplied cat artwork replaces profile and task emoji avatars, supplied monocle image replaces My Tasks emoji. Logo is 82px wide, unboxed. Theme selector exposes light/dark only. The sample name Энхжин is removed. Student tabs use 13–14px type, reference-style inset header and larger count pills; task copy uses 14px type. Laptop 1366×768 verified with payment row fully inside student panel.

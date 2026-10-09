@@ -265,3 +265,5 @@ body,[data-theme=dark] body,[data-theme=night] body{background:var(--canvas);bac
 
 .hub-unread{position:absolute;right:1px;top:1px;margin:0;pointer-events:none}
 .ranking-row{padding-top:4px;padding-bottom:4px;row-gap:3px}.rank-medal,.rank-medal svg{width:24px;height:28px}
+
+:root .ranking-row .rank-medal[data-place="1"]{color:#e8b638!important}:root .ranking-row .rank-medal[data-place="2"]{color:#b6c5d5!important}:root .ranking-row .rank-medal[data-place="3"]{color:#c88758!important}

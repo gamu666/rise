@@ -131,3 +131,6 @@ body,[data-theme=dark] body,[data-theme=night] body{background:var(--canvas);bac
 .task-viewport .tasks-column>h2{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;isolation:isolate}
 .task-viewport .tasks-column>h2:before{content:'';position:absolute;inset:0 0 -16px;z-index:-1;pointer-events:none;background:linear-gradient(to bottom,#eeeeee 0%,#eeeeeeed 22%,#eeeeee99 62%,#eeeeee00 100%);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);mask-image:linear-gradient(to bottom,#000 0%,#000 30%,#0009 72%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 30%,#0009 72%,transparent 100%)}
 .task-viewport .tasks-column>h2:after{bottom:-34px;height:42px;background:linear-gradient(to bottom,#eeeeee55,transparent);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);mask-image:linear-gradient(#0008,transparent);-webkit-mask-image:linear-gradient(#0008,transparent);z-index:-2}
+/* Stronger frost beneath the task heading. */
+.task-viewport .tasks-column>h2:before{backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px)}
+.task-viewport .tasks-column>h2:after{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}

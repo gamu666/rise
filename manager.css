@@ -394,3 +394,6 @@ body,.work-hub,.task-viewport,.tasks-column,.student-panel,.student-detail,.stud
 :root .task-stack .task-card{transition:scale .25s cubic-bezier(.2,.7,.3,1),box-shadow .25s ease!important;transform-origin:center;scale:1}
 @media(hover:hover) and (pointer:fine){:root .task-stack .task-card:hover{scale:1.018;z-index:5;box-shadow:0 4px 18px #26064930!important}}
 @media(prefers-reduced-motion:reduce){:root .task-stack .task-card{transition:none!important}:root .task-stack .task-card:hover{scale:1}}
+
+:root .task-card .task-expand{background:transparent!important;color:#fff!important;border:0!important;box-shadow:none!important;border-radius:0!important}
+:root .task-stack .task-card,:root .task-stack .task-card:hover{z-index:calc(var(--task-order,0) + 1)!important}

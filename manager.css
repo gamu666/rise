@@ -403,3 +403,11 @@ body,.work-hub,.task-viewport,.tasks-column,.student-panel,.student-detail,.stud
 :root[data-theme=light] body{background:radial-gradient(ellipse at 90% 90%,#d3b8f1 0%,transparent 60%),linear-gradient(180deg,#f0eaf9,#e2d3f0 100%)!important;background-attachment:fixed}
 :root .task-viewport,:root[data-theme=light] .task-viewport,:root[data-theme=dark] .task-viewport{background:transparent!important}
 :root .tasks-column>h2{background:linear-gradient(180deg,#090311,#140824)!important}
+
+/* Compact task controls, theme switch, and task heading. */
+:root .task-card .task-actions button{zoom:.75}
+:root .scenic-switch{zoom:.75}
+:root .tasks-column>h2{font-size:23.04px!important;padding:19.2px 16px!important}
+:root .tasks-column>h2 .task-monocle{width:28.16px!important;height:25.6px!important}
+@media(min-width:901px){:root .task-viewport{margin-top:8px!important}}
+@media(max-width:900px){:root .task-viewport{position:relative;top:-8px;margin-bottom:-8px}}

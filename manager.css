@@ -411,3 +411,11 @@ body,.work-hub,.task-viewport,.tasks-column,.student-panel,.student-detail,.stud
 :root .tasks-column>h2 .task-monocle{width:28.16px!important;height:25.6px!important}
 @media(min-width:901px){:root .task-viewport{margin-top:8px!important}}
 @media(max-width:900px){:root .task-viewport{position:relative;top:-8px;margin-bottom:-8px}}
+
+/* Ollo-inspired black/violet backdrop with barely perceptible ambient drift. */
+:root[data-theme=dark] body{background:#03070a!important}
+body:before{content:'';position:fixed;inset:-3%;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 0% 77%,#6534fa 0%,#5625eecc 17%,#39149b66 35%,transparent 57%),radial-gradient(ellipse at 64% 106%,#6534f6 0%,#5529d5b3 22%,#25105355 43%,transparent 65%),linear-gradient(135deg,#010607,#03080b);animation:ambient-violet-wave 32s ease-in-out infinite alternate;will-change:transform;transform-origin:50% 70%}
+.os-shell{position:relative;z-index:1}
+:root[data-theme=light] body:before{background:radial-gradient(ellipse at 0% 77%,#ab88ef88 0%,transparent 57%),radial-gradient(ellipse at 64% 106%,#b79bec99 0%,transparent 65%),linear-gradient(135deg,#f4effb,#e7dcf5)}
+@keyframes ambient-violet-wave{0%{transform:translate3d(-.35%,.2%,0) scale(1.01)}50%{transform:translate3d(.25%,-.35%,0) scale(1.018)}100%{transform:translate3d(.45%,.25%,0) scale(1.008)}}
+@media(prefers-reduced-motion:reduce){body:before{animation:none;will-change:auto}}

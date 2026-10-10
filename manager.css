@@ -383,3 +383,14 @@ body,.work-hub,.task-viewport,.tasks-column,.student-panel,.student-detail,.stud
 @media(prefers-reduced-motion:reduce){.task-stack .task-card,.task-card .task-actions{animation:none!important}.task-expand svg{transition:none}}
 
 :root .task-card .task-head time{top:auto!important;left:auto!important;right:0!important;bottom:-18px!important;transform:none!important}:root .task-card>p{font-weight:400!important}:root .task-card .task-head h3{font-weight:500!important}
+
+/* Match the reference phone's violet surfaces and understated white controls. */
+:root .task-viewport,:root[data-theme=light] .task-viewport,:root[data-theme=dark] .task-viewport{background:linear-gradient(180deg,#090311 0%,#1c053b 20%,#5612c7 55%,#ae80ec 100%)!important}
+:root .tasks-column,:root[data-theme=light] .tasks-column,:root[data-theme=dark] .tasks-column{background:transparent!important}
+:root .tasks-column>h2{background:linear-gradient(180deg,#090311,#1a0633)!important;color:#fff!important;box-shadow:0 7px 12px -5px #0009!important}
+:root .task-card .task-head{padding-right:65px!important}:root .task-card .task-head h3{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}:root .task-card .task-head time{top:23px!important;bottom:auto!important;font-size:9px!important;line-height:18px!important}
+:root .task-card>p{margin-top:15px!important}.task-expand svg circle{fill:currentColor;stroke:none}:root .task-expand[aria-expanded=true] svg{transform:none}
+:root .task-card .task-actions button,:root .task-card .task-actions button:hover,:root .task-card .task-actions button[aria-pressed=true]{background:#fff!important;color:#29163d!important;box-shadow:0 0 10px #ffffff50,0 2px 5px #36105620!important;border:1px solid #ffffffb3!important}
+:root .task-stack .task-card{transition:scale .25s cubic-bezier(.2,.7,.3,1),box-shadow .25s ease!important;transform-origin:center;scale:1}
+@media(hover:hover) and (pointer:fine){:root .task-stack .task-card:hover{scale:1.018;z-index:5;box-shadow:0 4px 18px #26064930!important}}
+@media(prefers-reduced-motion:reduce){:root .task-stack .task-card{transition:none!important}:root .task-stack .task-card:hover{scale:1}}

@@ -362,3 +362,7 @@ body,.work-hub,.task-viewport,.tasks-column,.student-panel,.student-detail,.stud
 @media(prefers-reduced-motion:reduce){.theme-knob,.theme-sun,.theme-moon,.theme-stars,.theme-mountain,.scenic-toggle,body,.work-hub,.task-viewport,.tasks-column,.student-panel,.student-detail,.student-item,.filter-trigger,.hub-nav button,.hub-view article,.detail-grid article,.detail-bottom{transition:none!important}}
 
 .scenic-switch{view-transition-name:theme-control}::view-transition-group(root){animation-duration:.65s}::view-transition-old(root){animation:theme-fade-out .65s ease both}::view-transition-new(root){animation:theme-fade-in .65s ease both}::view-transition-group(theme-control){animation-duration:.65s}::view-transition-old(theme-control){display:none}::view-transition-new(theme-control){animation:none}@keyframes theme-fade-out{to{opacity:0}}@keyframes theme-fade-in{from{opacity:0}}
+
+/* Reduce requested identity elements by exactly one fifth in every theme. */
+.os-header .profile{zoom:.8}.task-head h3,.task-head .avatar,.task-head .check-symbol{zoom:.8}
+:root .tasks-column>h2{font-size:28.8px!important}.tasks-column>h2 .task-monocle{width:35.2px!important;height:32px!important}

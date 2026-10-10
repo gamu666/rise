@@ -366,3 +366,20 @@ body,.work-hub,.task-viewport,.tasks-column,.student-panel,.student-detail,.stud
 /* Reduce requested identity elements by exactly one fifth in every theme. */
 .os-header .profile{zoom:.8}.task-head h3,.task-head .avatar,.task-head .check-symbol{zoom:.8}
 :root .tasks-column>h2{font-size:28.8px!important}.tasks-column>h2 .task-monocle{width:35.2px!important;height:32px!important}
+
+/* Purple layered task cards with a staggered entrance and tucked-away actions. */
+:root .task-stack{gap:0!important;padding-top:14px!important;padding-bottom:18px!important}
+:root .task-stack .task-card{position:relative;background:var(--task-purple,#8747e6)!important;color:#fff!important;border:1px solid #ffffff18!important;border-radius:24px!important;padding:20px 20px 30px!important;box-shadow:0 -2px 8px #35105c12!important;margin-top:-12px;animation:task-arrive .85s cubic-bezier(.2,.75,.25,1) both;animation-delay:calc(.15s + var(--task-order,0)*.13s);isolation:isolate}
+:root .task-stack .task-card:first-child{margin-top:0}:root .task-stack .task-card:last-child{padding-bottom:20px!important}
+:root .task-card .task-head{position:relative;display:flex!important;align-items:center;gap:10px!important;padding-right:35px;margin:0!important;flex-wrap:nowrap!important}
+:root .task-card .task-head>div{min-width:0;flex:1}:root .task-card .task-head h3{color:#fff!important}:root .task-card .task-head small{color:#ffffffe0!important}:root .task-card .task-head time{position:absolute;right:0;bottom:-20px;background:none!important;color:#ffffffc7!important;font-size:9px!important;padding:0!important}
+:root .task-card>p{color:#fff!important;background:none!important;border-radius:0!important;padding:0!important;margin:22px 0 0!important;font-size:12px!important;line-height:1.55!important;min-height:0!important}
+:root .task-card .task-expand{position:absolute;right:0;top:0;width:27px;height:27px;border:0;border-radius:50%;display:grid;place-items:center;padding:0;background:#fff;color:#24103c;box-shadow:0 2px 5px #35105c14;cursor:pointer}
+.task-expand svg{width:17px;height:17px;stroke-width:2;transition:transform .25s ease}.task-expand[aria-expanded=true] svg{transform:rotate(180deg)}
+:root .task-card .task-actions{margin-top:16px!important;gap:12px!important;animation:task-actions-arrive .25s ease both}:root .task-card .task-actions[hidden]{display:none!important}
+:root .task-card.finished,:root .task-card.cancelled{opacity:1!important;filter:none!important}.task-card .task-state{color:#fff!important}
+@keyframes task-arrive{from{opacity:0;transform:translateY(85px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes task-actions-arrive{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.task-stack .task-card,.task-card .task-actions{animation:none!important}.task-expand svg{transition:none}}
+
+:root .task-card .task-head time{top:auto!important;left:auto!important;right:0!important;bottom:-18px!important;transform:none!important}:root .task-card>p{font-weight:400!important}:root .task-card .task-head h3{font-weight:500!important}

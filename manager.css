@@ -435,3 +435,21 @@ body:before{content:'';position:fixed;inset:-3%;pointer-events:none;z-index:0;ba
 :root .tasks-column>h2{background:linear-gradient(180deg,#020608,#03070e)!important}
 :root[data-theme=light] .task-viewport{background:linear-gradient(145deg,#eef4ff9e,#c5d1e5a6 58%,#d9d4ef90)!important;border-color:#ffffff80;box-shadow:inset 0 1px 0 #ffffff90,0 12px 32px #2a174512!important}
 :root[data-theme=light] .tasks-column>h2{background:linear-gradient(180deg,#e9eef8,#d9e0ef)!important;color:var(--ink)!important}
+
+/* Centered rail, unboxed mark, and a slimmer luminous glass roster. */
+:root .main-column>.hub-nav{align-items:center!important}
+:root .main-column>.hub-nav button{display:grid!important;place-items:center!important;padding:0!important}
+:root .main-column>.hub-nav button[aria-selected=true],:root[data-theme=light] .main-column>.hub-nav button[aria-selected=true],:root[data-theme=dark] .main-column>.hub-nav button[aria-selected=true]{background:linear-gradient(145deg,#e6efff30,#b6c9ef12)!important;border:1px solid #e4edff4d!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:inset 0 1px 0 #ffffff30,0 3px 10px #00000020!important;color:#fff!important}
+:root[data-theme=light] .main-column>.hub-nav button[aria-selected=true]{color:#243047!important}
+:root .os-header>.brand,:root[data-theme=dark] .os-header>.brand{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;width:48px;height:44px;position:absolute;left:20px}
+:root .brand-symbol{width:24px;height:26px;mask-size:auto 26px;-webkit-mask-size:auto 26px}
+:root .student-panel,:root[data-theme=dark] .student-panel,:root[data-theme=light] .student-panel{background:linear-gradient(145deg,#eef4ff70,#cfdef548 55%,#e9e4ff55)!important;border:1px solid #f3f7ff66;backdrop-filter:blur(22px) saturate(120%);-webkit-backdrop-filter:blur(22px) saturate(120%);box-shadow:inset 0 1px 0 #ffffff66,0 12px 32px #00000020}
+:root .student-panel:before{display:none!important}
+:root .student-item{background:linear-gradient(120deg,#18212e99,#090e18b3)!important;color:#f4f6fa!important;border:1px solid #ffffff13;margin-bottom:5px}
+:root .student-item[aria-pressed=true]{background:linear-gradient(120deg,#18212e,#070b12)!important;border-color:#ffffff30}
+:root .student-info small{color:#b4c1d3!important}
+:root .student-search{background:linear-gradient(120deg,#ffffff30,#ffffff16)!important;border:1px solid #ffffff4d!important;color:#f4f6fa!important;box-shadow:inset 0 1px 0 #ffffff18}
+:root .student-search input{color:inherit!important}:root .student-search input::placeholder{color:#d1dbea!important}
+:root[data-theme=light] .student-search{color:#263245!important}:root[data-theme=light] .student-search input::placeholder{color:#66768e!important}
+@media(min-width:1201px){.main-column{grid-template-columns:48px minmax(220px,.85fr) minmax(360px,1.05fr)!important}.student-detail{height:296px!important;min-height:296px!important}.student-panel{padding:8px!important;gap:6px!important}}
+@media(max-width:900px){:root .os-header>.brand{left:10px;width:42px}}

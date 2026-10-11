@@ -50,4 +50,12 @@ const originalRegistrationSubmit=document.querySelector('#registration-form');or
 window.addEventListener('rise-data-change',e=>{if(workspaceSection==='ranking'&&e.detail.key!=='rise-hub-unread')queueMicrotask(workspaceRankingDetails)});
 workspaceSelect('students');
 
-nav.addEventListener('keydown',e=>{if(!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;const buttons=[...nav.querySelectorAll('button')].filter(b=>!b.hidden),at=buttons.indexOf(e.target.closest('button'));if(at<0)return;e.preventDefault();e.stopImmediatePropagation();const next=e.key==='Home'?0:e.key==='End'?buttons.length-1:(at+(['ArrowDown','ArrowRight'].includes(e.key)?1:-1)+buttons.length)%buttons.length;buttons[next].focus();buttons[next].click()},true);
+nav.addEventListener('keydown',e=>{if(!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;const buttons=[...nav.querySelectorAll('button[data-hub]')].filter(b=>!b.hidden),at=buttons.indexOf(e.target.closest('button'));if(at<0)return;e.preventDefault();e.stopImmediatePropagation();const next=e.key==='Home'?0:e.key==='End'?buttons.length-1:(at+(['ArrowDown','ArrowRight'].includes(e.key)?1:-1)+buttons.length)%buttons.length;buttons[next].focus();buttons[next].click()},true);
+
+// Reference-style black rail and list share one rounded frame.
+workspaceHub.prepend(nav);nav.classList.add('framed-rail');
+const railBrand=document.querySelector('.brand');nav.prepend(railBrand);
+const railBottom=document.createElement('div');railBottom.className='rail-bottom';railBottom.append(nav.querySelector('[data-hub=notif]'),document.querySelector('.profile-wrap'));nav.append(railBottom);
+const railStats=document.createElement('div');railStats.className='rail-stat-grid';
+[['Сурагчид','26'],['Төлбөр бүрэн','18'],['Үлдэгдэлтэй','8'],['Төгсөх','6']].forEach(([label,value])=>{const tile=document.createElement('div');const name=document.createElement('span'),number=document.createElement('strong');name.textContent=label;number.textContent=value;tile.append(name,number);railStats.append(tile)});workspaceSidebar.prepend(railStats);
+const filterToggle=document.createElement('button');filterToggle.className='rail-filter-toggle';filterToggle.type='button';filterToggle.textContent='Шүүлтүүр';filterToggle.setAttribute('aria-expanded','false');filterToggle.onclick=()=>{const open=filterToggle.getAttribute('aria-expanded')!=='true';filterToggle.setAttribute('aria-expanded',String(open));rosterTools.classList.toggle('filters-open',open)};rosterTools.prepend(filterToggle);

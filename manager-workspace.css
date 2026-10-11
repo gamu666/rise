@@ -64,3 +64,5 @@
 :root .work-hub>.framed-rail{gap:7px!important;padding-bottom:78px!important}.rail-bottom{bottom:22px;gap:0}
 :root .os-header .profile-wrap{margin-left:0;align-self:center}:root .os-header>.scenic-switch{margin-left:auto!important}
 @media(pointer:coarse){:root .framed-rail>button:before,:root .framed-rail .rail-bottom>button:before{content:'';position:absolute;inset:-3px;border-radius:50%}}
+
+@media(min-width:901px){:root .main-column{padding-right:40px!important}}

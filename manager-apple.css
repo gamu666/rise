@@ -78,3 +78,36 @@
 :root .work-hub .student-detail select option{background:#24242a;color:#f5f5f7}
 :root[data-theme=light] :is(#goal-dialog,#graduation-dialog,#certificate-dialog,#certificate-payment-dialog) p{color:#65656e!important}
 @media(pointer:coarse){:root .work-hub .filter-trigger{height:44px!important}:root .work-hub .browser-add{width:44px;height:44px}:root .work-hub .browser-stage :is(.save-button,.registration-submit,.revenue-filters button){min-height:44px}.ios-filter-menu button{min-height:44px!important}}
+/* Mac split-view proportions: navigation / records / detail. */
+@media(min-width:901px){
+ :root .main-column>.work-hub{grid-template-columns:168px clamp(200px,22vw,260px) minmax(0,1fr)!important}
+ :root .work-hub>.framed-rail{width:168px!important;align-items:stretch!important;justify-content:flex-start!important;padding:88px 8px 72px!important;gap:4px!important}
+ :root .framed-rail>button,:root .framed-rail .rail-bottom>button{width:100%!important;height:38px!important;min-height:38px!important;display:flex!important;justify-content:flex-start!important;align-items:center!important;gap:10px!important;padding:0 12px!important;border-radius:10px!important}
+ :root .framed-rail button>svg{width:19px!important;height:19px!important;flex:none!important}
+ .apple-nav-label{font-size:12px;font-weight:500;letter-spacing:-.015em;white-space:nowrap}
+ .apple-nav-lens{left:8px;width:calc(100% - 16px);height:38px;border-radius:10px}
+ :root .framed-rail .brand{left:18px!important;width:32px!important;top:24px!important}
+ .rail-bottom{width:calc(100% - 16px)!important;left:8px!important;bottom:18px}
+ .browser-sidebar{padding:22px 12px 12px}.browser-list-head{height:38px;margin:0 0 14px}.browser-list-head h2{font-size:19px}
+ .rail-stat-grid{display:none!important}
+ :root .work-hub .browser-roster .student-item{min-height:76px!important;padding:11px 10px!important;gap:6px 9px!important;grid-template-columns:32px minmax(0,1fr)}
+ .browser-roster .student-avatar{width:32px;height:32px}.browser-roster .student-balance{padding-top:4px;font-size:11px!important}
+ .browser-stage{padding:24px!important}.student-hero h1{font-size:25px}.student-hero-avatar{width:52px;height:52px;font-size:22px}
+ :root .work-hub .student-hero{margin-bottom:20px!important;padding:0!important;gap:14px}
+ .browser-options{gap:4px}.browser-option{min-height:68px;padding:12px 9px}.browser-option strong{font-size:13px}.browser-option small{font-size:11px}
+ :root .work-hub .student-detail{padding:16px!important}
+}
+@media(min-width:901px) and (max-width:1150px){
+ :root .main-column>.work-hub{grid-template-columns:132px 174px minmax(0,1fr)!important}
+ :root .work-hub>.framed-rail{width:132px!important}
+ :root .framed-rail>button,:root .framed-rail .rail-bottom>button{padding:0 8px!important;gap:7px!important}.apple-nav-label{font-size:11px}
+ .browser-sidebar{padding:22px 8px 10px}.browser-list-head h2{font-size:17px}.browser-stage{padding:20px 14px!important}
+ .student-hero h1{font-size:22px}.student-hero-avatar{width:42px;height:42px;font-size:18px}
+ :root .work-hub .student-detail .detail-grid{grid-template-columns:1fr!important}
+ :root .work-hub .student-detail .detail-bottom{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ :root .work-hub .student-detail .detail-bottom strong{font-size:13px!important}
+ .browser-stage .rank-columns,.browser-stage .ranking-row{grid-template-columns:22px minmax(0,1fr) 37px 35px 63px!important;font-size:9px!important}.browser-stage .ranking-row strong{font-size:10px!important}
+}
+@media(max-width:900px){.apple-nav-label{display:none!important}.rail-stat-grid{display:none!important}}
+@media(min-width:1151px){:root .main-column>.work-hub{grid-template-columns:156px clamp(200px,16vw,240px) minmax(0,1fr)!important}:root .work-hub>.framed-rail{width:156px!important}}
+@media(min-width:901px){:root .work-hub .browser-roster .student-item{height:80px!important;min-height:80px!important;grid-template-rows:auto auto!important;align-content:center!important;gap:3px 9px!important}.browser-roster .student-avatar{grid-row:1/3;align-self:center}.browser-roster .student-info{grid-column:2;grid-row:1}.browser-roster .student-balance{grid-column:2!important;grid-row:2;border:0!important;padding:0!important;font-size:11px!important}.browser-roster .student-info strong{font-size:13px!important;line-height:1.3}.browser-roster .student-info small{margin-top:3px!important;line-height:1.3}}

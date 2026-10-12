@@ -1,6 +1,8 @@
 // Motion is confined to the workspace; My Tasks is intentionally untouched.
 (()=>{
  const root=document.querySelector('.work-hub'),rail=root.querySelector('.framed-rail');
+ const labels={profile:'Миний орон зай',students:'Сурагчид',goal:'Зорилго',revenue:'Орлого',ranking:'Багийн амжилт',chat:'Chat',notif:'Мэдэгдэл'};
+ rail.querySelectorAll('button[data-hub]').forEach(b=>{if(!labels[b.dataset.hub])return;const label=document.createElement('span');label.className='apple-nav-label';label.textContent=labels[b.dataset.hub];b.append(label)});
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  const lens=document.createElement('span');lens.className='apple-nav-lens';lens.setAttribute('aria-hidden','true');rail.append(lens);
  function positionLens(){const b=rail.querySelector('[data-hub][aria-selected=true]');if(!b)return;const r=b.getBoundingClientRect(),parent=rail.getBoundingClientRect();lens.style.transform=`translateY(${r.top-parent.top}px)`}

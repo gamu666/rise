@@ -1,0 +1,125 @@
+{
+  "source": "5220f347f6cdda5d361fc7d69782dabb.jpg",
+  "width": 1081,
+  "height": 709,
+  "aspect_ratio": 1.524682651622003,
+  "dpi_metadata": [
+    72,
+    72
+  ],
+  "original_screen_resolution": null,
+  "original_font_family": null,
+  "original_css_font_sizes": null,
+  "method": "Bounding box of pixels with all RGB channels below 110, inside named region. JPEG threshold measurements, not source vector geometry.",
+  "glyphs": {
+    "heading_home": {
+      "x": 276,
+      "y": 35,
+      "width": 56,
+      "height": 15
+    },
+    "heading_activity": {
+      "x": 276,
+      "y": 112,
+      "width": 80,
+      "height": 15
+    },
+    "heading_people": {
+      "x": 275,
+      "y": 361,
+      "width": 103,
+      "height": 12
+    },
+    "heading_courses": {
+      "x": 276,
+      "y": 520,
+      "width": 119,
+      "height": 15
+    },
+    "nav_home_text": {
+      "x": 71,
+      "y": 114,
+      "width": 31,
+      "height": 8
+    },
+    "nav_home_icon": {
+      "x": 52,
+      "y": 113,
+      "width": 10,
+      "height": 11
+    }
+  },
+  "dividers": {
+    "left_x": 224,
+    "right_x": 785,
+    "method": "Maximum median local column luminance deficit over y=70..679, relative to x±3."
+  },
+  "colors": {
+    "background_upper_left": {
+      "sample_center": [
+        180,
+        75
+      ],
+      "median_5x5": "#CAE1F3"
+    },
+    "background_center": {
+      "sample_center": [
+        530,
+        350
+      ],
+      "median_5x5": "#DAE6F6"
+    },
+    "background_bottom_right": {
+      "sample_center": [
+        1015,
+        680
+      ],
+      "median_5x5": "#F2ECFA"
+    },
+    "selected_navigation": {
+      "sample_center": [
+        180,
+        118
+      ],
+      "median_5x5": "#F4F9FC"
+    },
+    "white_bar": {
+      "sample_center": [
+        345,
+        260
+      ],
+      "median_5x5": "#ECF0FB"
+    },
+    "violet_bar": {
+      "sample_center": [
+        425,
+        200
+      ],
+      "median_5x5": "#5A60FF"
+    },
+    "heading_core_ink": {
+      "region": [
+        276,
+        35,
+        332,
+        50
+      ],
+      "mask": "all RGB channels <80",
+      "median": "#000B1B"
+    },
+    "blue_card": {
+      "sample_center": [
+        930,
+        125
+      ],
+      "median_5x5": "#3761F1"
+    },
+    "white_card": {
+      "sample_center": [
+        920,
+        230
+      ],
+      "median_5x5": "#F7F8FD"
+    }
+  }
+}

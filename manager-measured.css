@@ -25,3 +25,10 @@ dialog{max-width:420px;width:90vw;max-height:85vh;overflow:auto;background:var(-
 .student-item{display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:7px;row-gap:3px}.student-avatar{grid-row:1/3}.student-info strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.student-balance{grid-column:2;margin-left:0;font-size:9px;color:var(--muted)}
 .detail-grid article:not(.student-courses){display:flex;align-items:center;justify-content:space-between;gap:12px}.detail-grid article.student-courses>strong{display:none}
 .brand-symbol{mask:none;-webkit-mask:none;background:none;width:20px;height:23px}.brand-symbol svg{width:20px;height:23px;stroke:none;fill:currentColor}
+
+/* Navigation icons: one 24px grid and consistent optical stroke. */
+.framed-rail{padding-left:8px;padding-right:8px;gap:0}
+.framed-rail>button,.rail-bottom>button{width:208px;height:56px;min-height:56px;padding:16px 20px;gap:16px;border-radius:12px}
+.framed-rail button>svg{width:24px;height:24px;stroke-width:1.5;flex:0 0 24px;display:block}
+.framed-rail .nav-label{font-size:14px;line-height:20px;font-weight:500}
+.framed-rail [data-hub] .hub-badge{position:absolute;right:7px;top:5px}

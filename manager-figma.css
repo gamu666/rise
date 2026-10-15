@@ -1,0 +1,56 @@
+/* Source: Figma 58:585 (1433 × 950); fluid center, fixed source sidebar/task sizes. */
+body{background:#f5f5f5;color:#242220;font-family:ReferenceInter,Arial,sans-serif}
+.os-shell{position:relative;left:auto;top:auto;transform:none;width:100%;height:100dvh;border-radius:0;background:#f5f5f5;box-shadow:none}
+.os-shell:before{content:'';position:absolute;inset:0;background:url('assets/figma/home-bg.png') center/117.79% 100% no-repeat;opacity:.31;pointer-events:none}
+.workspace{position:relative;width:100%;height:100%;grid-template-columns:266px minmax(0,1fr) 384px}
+.main-column,.work-hub{height:100%;min-height:0}
+.framed-rail{height:100%;padding:0;border:0}
+.framed-rail:after{content:'';position:absolute;right:0;top:68px;bottom:42px;width:1px;background:#24222030}
+.framed-rail .brand{left:69px;top:92px;width:113px;height:37px}
+.framed-rail .brand img{width:113px;height:37px;object-fit:contain}
+.figma-menu{position:absolute;left:24px;top:213px;width:208px;display:flex;flex-direction:column}
+.figma-menu button{position:relative;display:flex;align-items:center;width:208px;height:56px;flex:none;padding:16px 20px;gap:16px;border-radius:12px;color:#2422208f;text-align:left}
+.figma-menu button>svg{width:24px;height:24px;flex:0 0 24px;stroke-width:1.5}
+.figma-menu button[aria-selected=true]{color:#242220;background:radial-gradient(ellipse,#cc8b8b22,transparent),#2422200a;box-shadow:inset 0 0 0 .5px #f5efeb29}
+.figma-menu button:hover{background:#ffffff65}
+.figma-menu .nav-label{font-size:14px;font-weight:500;line-height:20px;white-space:nowrap}
+.workspace-account{left:24px;right:23px;bottom:29px;gap:12px;padding:19px 13px 16px;border-radius:24px;border:.5px solid white;background:#d2d2d273;box-shadow:0 30px 37px #00000012}
+.profile-avatar{width:48px;height:48px}.profile strong{font-size:14px;line-height:20px}.profile small{font-size:9px;line-height:22px}.reference-logout{align-self:center;border:0;border-radius:23px;background:white;width:128px;height:46px;padding:0;text-align:center;box-shadow:0 3px 4px #001e4666;font-size:11px}
+.brand-overview,.reference-utility,.reference-right-summary{display:none!important}
+.work-hub[data-section=profile]>.browser-stage{padding:0;height:100%;overflow:hidden}
+#hub-profile{height:100%;position:relative}
+.ai-home{height:100%;position:relative}
+.ai-welcome{position:absolute;top:38.947%;width:100%;text-align:center;padding:0 12px}
+.ai-welcome h1{font-size:40px;line-height:40px;font-weight:500;letter-spacing:0}
+.ai-welcome p{font-size:20px;line-height:40px;color:#979797;font-weight:500}
+.ai-composer{position:absolute;bottom:73px;left:50%;transform:translateX(-50%);width:min(546px,calc(100% - 64px));min-height:42px;display:flex;align-items:center;border:1px solid #fff;background:#ffffff55;box-shadow:0 4px 20px #24222008;border-radius:22px;padding:4px 8px 4px 18px;gap:10px}
+.ai-composer textarea{flex:1;border:0;background:none;resize:none;padding:5px 0;font-size:13px;line-height:22px;max-height:120px}
+.ai-composer button{display:grid;place-items:center;border-radius:50%;width:30px;height:30px;background:#242220;color:white;flex:none}.ai-composer svg{width:20px;height:20px}
+.ai-status{position:absolute;bottom:30px;left:32px;right:32px;font-size:12px;text-align:center;color:#707070}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.file-home{padding:48px}
+.task-viewport{height:100%;position:relative;padding:21px 24px 28px 26px;border:0;overflow:hidden}
+.task-viewport:before{content:'';position:absolute;left:0;top:68px;bottom:42px;width:1px;background:#24222030}
+.tasks-column{position:relative;inset:auto;height:100%;width:100%;padding:0 21px;background:#ffffffa6;border-radius:30px;display:flex;flex-direction:column;overflow:hidden}
+.tasks-column h2{position:static;display:flex;align-items:center;gap:8px;padding:24px 8px 0;font-size:20px;line-height:28px;min-height:56px;flex:none;font-weight:600;background:none;box-shadow:none}
+.tasks-column h2 img{width:36px;height:32px;object-fit:contain}
+#add-self-task{position:static;width:100%;height:45px;min-height:45px;margin:23px 0 24px;border-radius:50px;background:#000;color:white;font-size:16px;font-weight:400;box-shadow:inset 0 0 14.9px #ffffff9c}
+.task-stack{position:relative;inset:auto;height:auto;flex:1;overflow-y:auto;padding:0 0 16px;display:flex;flex-direction:column;gap:29px;mask:none;scrollbar-width:thin}
+.task-card{position:relative;flex:none;min-height:162px;border:0!important;border-radius:20px!important;padding:11px!important;margin:0!important;background-image:var(--task-image)!important;background-size:145% auto!important;background-position:50% 52%!important;background-color:#111!important;box-shadow:none!important;overflow:hidden;color:#fff!important;transform:none!important}
+.task-head{display:flex;align-items:center;gap:10px;position:relative;padding:0 0 9px!important;min-height:47px}
+.task-head .avatar,.task-head .check-symbol{width:38px;height:38px;flex:0 0 38px;border-radius:50%;overflow:hidden;background:#ffffffc0;color:#242220}
+.task-head h3{font-size:14px;line-height:20px;font-weight:500;color:white}.task-head small{font-size:10px;line-height:16px;color:#ffffffc9}
+.task-head time{font-size:9px;color:#ffffffb0;margin-left:auto;align-self:flex-start;max-width:50px}
+.task-expand{position:static!important;width:24px!important;height:24px!important;flex:none;color:white!important;background:none!important}.task-expand svg{width:20px;height:20px;fill:currentColor;stroke:none}
+.task-card>p{display:block!important;-webkit-line-clamp:unset!important;white-space:normal!important;height:auto!important;min-height:94px;margin:0!important;padding:10px 16px!important;font-size:13px!important;line-height:20px!important;background:#ffffffbd!important;border-radius:16px!important;color:#242220!important;overflow:visible!important}
+.task-actions{position:static!important;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding-top:12px!important;width:100%;margin:0!important;transform:none!important;background:none!important}
+.task-actions .task-reply{flex:0 0 100%;width:100%;resize:vertical;background:#ffffffeb;border:1px solid white;color:#242220;font-size:13px;min-height:60px}
+.task-actions button{width:28px!important;height:28px!important;min-width:28px!important;border-radius:50%!important;background:white!important;color:#242220!important;box-shadow:0 0 10px #ffffff80!important;display:grid;place-items:center}.task-actions svg{width:15px;height:15px}.task-state{color:white}
+@media(max-height:780px){.figma-menu{top:150px}.figma-menu button{height:46px;padding-block:11px}.framed-rail .brand{top:54px}.workspace-account{bottom:20px}.workspace-appearance{display:none}}
+@media(max-width:1100px){.workspace{grid-template-columns:232px minmax(0,1fr) 320px}.figma-menu{left:12px}.task-viewport{padding:20px 16px}.tasks-column{padding-inline:14px}.ai-welcome h1{font-size:28px;line-height:36px}.ai-welcome p{font-size:15px;line-height:24px}.ai-composer{width:calc(100% - 32px)}.workspace-account{left:12px;right:12px}}
+@media(max-width:760px){html,body{overflow:auto}.os-shell{height:auto;min-height:100dvh}.workspace{grid-template-columns:72px minmax(0,1fr);height:auto}.framed-rail{grid-row:1/3;min-height:100dvh}.framed-rail .brand{left:10px;top:24px;width:52px}.framed-rail .brand img{width:52px;height:auto}.figma-menu{left:8px;top:100px;width:56px}.figma-menu button{width:56px;padding:16px}.figma-menu .nav-label,.workspace-account{display:none}.main-column{height:65dvh}.task-viewport{grid-column:2;height:600px}.ai-welcome h1{font-size:24px}.ai-welcome p{font-size:14px}.ai-composer{bottom:42px}.ai-status{bottom:5px;font-size:10px}}
+
+.tasks-column h2 .task-monocle{display:block!important;width:36px!important;height:32px!important}
+.task-stack{scrollbar-width:none}.task-stack::-webkit-scrollbar{display:none}
+.task-head>div{flex:1;min-width:0}.task-head h3{white-space:normal!important}.task-head time{position:static!important;order:4;font-size:9px!important;margin-left:0;width:44px;flex:none}.task-expand{margin-left:0!important;order:3}
+.figma-menu .hub-badge{position:absolute;right:10px;top:18px;background:#242220;color:white;min-width:18px;height:18px;font-size:11px}
+
+.task-card:nth-child(5n + 3) .task-head h3,.task-card:nth-child(5n + 3) .task-head small,.task-card:nth-child(5n + 3) .task-head time,.task-card:nth-child(5n + 3) .task-expand{color:#321132!important}

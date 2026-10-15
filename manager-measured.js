@@ -5,8 +5,8 @@
  const shell=document.querySelector('.os-shell');
  function fitCanvas(){const scale=Math.min(innerWidth/1081,innerHeight/709);shell.style.setProperty('--canvas-scale',scale);shell.dataset.scale=scale.toFixed(6)}
  addEventListener('resize',fitCanvas);fitCanvas();
- const labels={profile:'Нүүр',students:'Суралцагчид',goal:'Зорилго',revenue:'Орлого',ranking:'Багийн амжилт',chat:'Чат',notif:'Мэдэгдэл'};
- document.querySelectorAll('.framed-rail [data-hub]').forEach(b=>{if(!labels[b.dataset.hub])return;const label=document.createElement('span');label.className='nav-label';label.textContent=labels[b.dataset.hub];b.append(label)});
+ const labels={profile:'Нүүр',students:'Суралцагчид',goal:'Зорилго',revenue:'Орлого',ranking:'Багийн амжилт',chat:'Зурвас',notif:'Мэдэгдэл'};
+ document.querySelectorAll('.framed-rail [data-hub]').forEach(b=>{if(!labels[b.dataset.hub])return;const label=document.createElement('span');label.className='nav-label';label.textContent=labels[b.dataset.hub];b.setAttribute("aria-label",labels[b.dataset.hub]);b.append(label)});
  // A true three-region application shell: navigation / workspace / tasks.
  const rail=document.querySelector('.framed-rail');
  document.querySelector('.workspace').prepend(rail);

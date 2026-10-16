@@ -26,6 +26,7 @@
 .students-query input::placeholder{color:#9e9e9e}
 .students-toolbar select{padding:0 7px;font:300 10px/22px FigmaInter,sans-serif;color:#656464;cursor:pointer}
 .students-clear{font:500 9px/15px FigmaInter,sans-serif;color:#656464;display:flex;gap:3px;align-items:center;justify-content:center}
+.students-toolbar{grid-template-columns:minmax(150px,234px) repeat(3,minmax(85px,1fr)) 93px}
 .students-add{width:24px;height:24px;border-radius:50%;background:#fff;font-size:18px;color:#348dff;box-shadow:0 1px 4px #0001}
 .students-roster{height:449px;overflow:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:97px;align-content:start;gap:11px;padding:7px 17px 18px;margin:0 -17px;background:linear-gradient(121.480916deg,#ffffff0d 2.8286%,#00000009 52.251%,#9191910d 92.182%);border-radius:5px;scrollbar-width:thin;scrollbar-color:#a5c7e3 transparent}
 .students-card{position:relative;width:100%;height:97px;min-width:0;border-radius:10px;background:#fff;border:1px solid transparent;text-align:left;display:grid;grid-template-columns:40px minmax(0,1fr);grid-template-rows:40px 15px;column-gap:9px;row-gap:13px;padding:13px 12px 10px;transition:transform 180ms ease,box-shadow 180ms ease,border-color 180ms ease;cursor:pointer}
@@ -78,3 +79,13 @@
 #hub-students.student-workspace{min-height:100%}
 .students-profile .sample-photo{overflow:hidden;background:#e0e5eb}
 .students-profile .sample-photo img{position:absolute;max-width:none;width:403.922%;height:201.961%;left:-151.961%;top:-21.569%}
+.rise-notch:not(:hover):not(:focus-visible){width:358.5px;height:45px}
+.rise-notch:not(:hover):not(:focus-visible) .ai-face{scale:.75;transform-origin:top left;left:17.25px;top:3.75px}
+.rise-notch:not(:hover):not(:focus-visible) .notch-summary{left:83.25px;top:9px;right:13.5px;font-size:10.5px;line-height:30px}
+.ai-face{transition:transform 420ms,scale 420ms,left 420ms,top 420ms}
+.notch-summary{transition:left 420ms,top 420ms,font-size 420ms,line-height 420ms}
+#students-record-dialog{margin:auto;width:min(640px,calc(100vw - 32px));max-height:85dvh;overflow:auto;padding:28px;border:1px solid #ffffffbd;border-radius:23px;background:#fafafa;color:#242220;box-shadow:0 20px 70px #0004}
+#students-record-dialog::backdrop{background:#0e101b66;backdrop-filter:blur(10px)}
+#students-record-dialog .dialog-close{position:absolute;right:12px;top:12px;width:26px;height:26px;border-radius:50%;background:#e5e5ea;color:#242220;font-size:20px}
+#students-record-dialog #student-detail{padding-top:14px}
+.goal-demo:empty,.hub-demo:empty,.chat-demo:empty,.revenue-note:empty,.ref-chart-note:empty{display:none}

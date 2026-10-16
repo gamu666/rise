@@ -1,0 +1,11 @@
+/* The 1433 × 950 design is the maximum desktop density, not a minimum canvas. */
+@media(min-width:761px){
+ .os-shell{zoom:var(--dashboard-scale,1);inset:auto;left:0;top:0;width:calc(100vw / var(--dashboard-scale,1));height:var(--dashboard-height,100dvh);max-width:none;min-height:0}
+ dialog{zoom:var(--dashboard-scale,1)}
+ .students-roster{height:clamp(205px,calc(var(--dashboard-height,100dvh) - 501px),449px)}
+ .workspace{min-width:0}
+ .main-column,.browser-stage,.tasks-column{min-width:0;min-height:0}
+ .work-hub[data-section=goal]>.browser-stage{height:100%;overflow-y:auto;overflow-x:hidden}
+ .students-roster{grid-template-columns:repeat(auto-fill,minmax(min(220px,100%),1fr))}
+ .students-panels{grid-template-columns:minmax(0,295px) minmax(0,220px);justify-content:space-between;column-gap:25px}
+}

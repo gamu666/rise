@@ -26,19 +26,18 @@
  function render(){
  const nums=values(),max=Math.max(...nums,1),suffix=metric==='revenue'?'₮':metric==='tasks'?'ажил':'сурагч';
  const cardDates=['10.16.2026','10.12–10.16.2026','10.01–10.31.2026'];
- view.innerHTML='<div class="goal-periods" role="group" aria-label="Зорилгын хугацаа">'+Object.keys(labels).map((p,i)=>'<button data-period="'+p+'" aria-pressed="'+(p===period)+'"><span class="goal-ring" style="--progress:'+([78,98,50][i])+'%;--ring:'+(['#00ff6a','#2f00ff','#00ff6a'][i])+'"><b>'+[78,98,50][i]+'%</b></span><span><strong>'+labels[p]+'</strong><small>'+cardDates[i]+'</small></span></button>').join('')+'</div><div class="goal-connector '+period+'"></div><div class="goal-chart-panel"><div class="goal-chart"></div><div class="goal-metrics" role="group" aria-label="Зорилгын үзүүлэлт">'+Object.keys(metrics).map(m=>'<button data-metric="'+m+'" aria-pressed="'+(m===metric)+'">'+metrics[m]+'</button>').join('')+'</div></div><div class="goal-details"><header><h2></h2><button class="goal-all">'+(all?'Сонгосон хэсэг':'Бүгдийг харах')+'</button></header><div class="goal-records"></div><p class="goal-demo">Загварын жишээ өгөгдөл · бодит тайлан холбогдоогүй</p></div>';
+ view.innerHTML='<div class="goal-periods" role="group" aria-label="Зорилгын хугацаа">'+Object.keys(labels).map((p,i)=>'<button data-period="'+p+'" aria-pressed="'+(p===period)+'"><span class="goal-ring" style="--progress:'+([78,98,50][i])+'%;--ring:'+(['#00ff6a','#2f00ff','#00ff6a'][i])+'"><b>'+[78,98,50][i]+'%</b></span><span><strong>'+labels[p]+'</strong><small>'+cardDates[i]+'</small></span></button>').join('')+'</div><div class="goal-connector '+period+'"></div><div class="goal-chart-panel"><div class="goal-chart"></div><div class="goal-metrics" role="group" aria-label="Зорилгын үзүүлэлт">'+Object.keys(metrics).map(m=>'<button data-metric="'+m+'" aria-pressed="'+(m===metric)+'">'+metrics[m]+'</button>').join('')+'</div></div><div class="goal-details"><header><h2></h2><button class="goal-all">'+(all?'Сонгосон хэсэг':'Бүгдийг харах')+'</button></header><div class="goal-records"></div><p class="goal-demo"></p></div>';
  const chart=view.querySelector('.goal-chart');
  const periodCards=[...view.querySelectorAll('[data-period]')];
  periodCards.forEach((card,i)=>{const ring=card.querySelector('.goal-ring');ring.style.removeProperty('--progress');ring.style.removeProperty('--ring');const base=new Image();base.src='assets/figma/goal-ring-base.svg';base.alt='';base.className='goal-ring-base';const arc=new Image();arc.src='assets/figma/goal-ring-'+['today','week','month'][i]+'.svg';arc.alt='';arc.className='goal-ring-arc';ring.prepend(base,arc)});
  const surface=document.createElementNS('http://www.w3.org/2000/svg','svg');surface.classList.add('goal-surface');surface.setAttribute('aria-hidden','true');surface.innerHTML='<path/>';view.prepend(surface);
  requestAnimationFrame(paintGoalSurface);
- if(period==='month'||period==='week'){
- const points=nums.map((n,i)=>[25+i*308/(nums.length-1),215-n/max*190]);
- const pointNames=nums.map((_,i)=>period==='month'?(i+1)+'-р 7 хоног':names[i]);
- chart.innerHTML='<svg viewBox="0 0 370 240" preserveAspectRatio="none" role="img" aria-label="'+(period==='month'?'Сарын үзүүлэлт долоо хоногоор':'7 хоногийн үзүүлэлт өдрөөр')+'"><path d="M20 5V220H365" fill="none" stroke="#bbb"/><polyline points="'+points.map(p=>p.join(',')).join(' ')+'" fill="none" stroke="#2f00ff" stroke-width="3" stroke-linejoin="round"/></svg><div class="goal-line-points">'+points.map((p,i)=>'<button data-point="'+i+'" style="left:'+(p[0]/370*100)+'%;top:'+(p[1]/240*100)+'%" aria-label="'+pointNames[i]+': '+nums[i]+' '+suffix+'" aria-pressed="'+(i===chosen)+'"></button>').join('')+'</div><div class="goal-line-labels">'+nums.map((_,i)=>'<span style="left:'+(points[i][0]/370*100)+'%" aria-current="'+(i===chosen)+'">'+pointNames[i]+'</span>').join('')+'</div>';
- }else if(period==='today'){
+ if(period==='today'){
  chart.innerHTML='<div class="goal-today"><small>ӨНӨӨДРИЙН ГҮЙЦЭТГЭЛ</small><strong>'+nums[0].toLocaleString()+' '+suffix+'</strong><div><span style="width:78%"></span></div><p>Зорилгын биелэлт 78%</p></div>';
- }else chart.innerHTML='<div class="goal-axis">'+[max,max*2/3,max/3,0].map(n=>'<span>'+(metric==='revenue'?(n===0?'0':n>=1e6?(n/1e6).toFixed(1)+'m':Math.round(n/1000)+'k'):Math.round(n))+'</span>').join('')+'</div><div class="goal-bars">'+nums.map((n,i)=>'<button data-point="'+i+'" aria-pressed="'+(chosen===i)+'" aria-label="'+names[i]+': '+n+' '+suffix+'"><span style="height:'+Math.max(23,n/max*216)+'px"></span><small>'+['Да','Мя','Лха','Пү','Ба','Бя','Ня'][i]+'</small></button>').join('')+'</div>';
+ }else{
+ const pointNames=nums.map((_,i)=>period==='month'?(i+1)+'-р 7 хоног':['Да','Мя','Лха','Пү','Ба','Бя','Ня'][i]);
+ chart.innerHTML='<div class="goal-axis">'+[max,max*2/3,max/3,0].map(n=>'<span>'+(metric==='revenue'?(n===0?'0':n>=1e6?(n/1e6).toFixed(1)+'m':Math.round(n/1000)+'k'):Math.round(n))+'</span>').join('')+'</div><div class="goal-bars" aria-label="'+(period==='month'?'Сарын үзүүлэлт долоо хоногоор':'7 хоногийн үзүүлэлт өдрөөр')+'">'+nums.map((n,i)=>'<button data-point="'+i+'" data-empty="'+(n===0)+'" aria-pressed="'+(chosen===i)+'" aria-label="'+pointNames[i]+': '+n+' '+suffix+'"><span style="height:'+Math.max(23,n/max*216)+'px"></span><small>'+pointNames[i]+'</small></button>').join('')+'</div>';
+ }
  view.querySelectorAll('[data-period]').forEach(b=>b.onclick=()=>{period=b.dataset.period;chosen=period==='week'?1:0;all=false;render()});
  view.querySelectorAll('[data-metric]').forEach(b=>b.onclick=()=>{metric=b.dataset.metric;render()});
  view.querySelectorAll('[data-point]').forEach(b=>b.onclick=()=>{chosen=Number(b.dataset.point);all=false;render()});
@@ -61,13 +60,14 @@
  function paintGoalSurface(){
   if(view.hidden)return;const active=view.querySelector('.goal-periods [aria-pressed=true]'),panel=view.querySelector('.goal-chart-panel'),svg=view.querySelector('.goal-surface');if(!active||!panel||!svg)return;
   // offset geometry excludes hover transforms; one path owns the complete white surface.
-  const vr=view.getBoundingClientRect(),pr=panel.getBoundingClientRect(),ar=active.getBoundingClientRect();
-  const l=pr.left-vr.left,r=pr.right-vr.left,y=pr.top-vr.top,b=pr.bottom-vr.top,t=ar.left-vr.left,tr=ar.right-vr.left,ty=ar.top-vr.top,rad=17;
+  const local=e=>{let x=0,y=0;for(let n=e;n&&n!==view;n=n.offsetParent){x+=n.offsetLeft;y+=n.offsetTop}return {x,y,w:e.offsetWidth,h:e.offsetHeight}};
+  const pr=local(panel),ar=local(active);
+  const l=pr.x,r=pr.x+pr.w,y=pr.y,b=pr.y+pr.h,t=ar.x,tr=ar.x+ar.w,ty=ar.y,rad=17;
   let d='M'+(t+rad)+' '+ty+' H'+(tr-rad)+' Q'+tr+' '+ty+' '+tr+' '+(ty+rad);
   d+=tr>=r-1?' V'+(b-rad)+' Q'+r+' '+b+' '+(r-rad)+' '+b:' V'+(y-rad)+' Q'+tr+' '+y+' '+(tr+rad)+' '+y+' H'+(r-rad)+' Q'+r+' '+y+' '+r+' '+(y+rad)+' V'+(b-rad)+' Q'+r+' '+b+' '+(r-rad)+' '+b;
   d+=' H'+(l+rad)+' Q'+l+' '+b+' '+l+' '+(b-rad);
   d+=t<=l+1?' V'+(ty+rad)+' Q'+l+' '+ty+' '+(l+rad)+' '+ty:' V'+(y+rad)+' Q'+l+' '+y+' '+(l+rad)+' '+y+' H'+(t-rad)+' Q'+t+' '+y+' '+t+' '+(y-rad)+' V'+(ty+rad)+' Q'+t+' '+ty+' '+(t+rad)+' '+ty;
-  svg.setAttribute('viewBox','0 0 '+vr.width+' '+view.scrollHeight);svg.style.height=view.scrollHeight+'px';svg.querySelector('path').setAttribute('d',d+' Z');
+  svg.setAttribute('viewBox','0 0 '+view.clientWidth+' '+view.scrollHeight);svg.style.height=view.scrollHeight+'px';svg.querySelector('path').setAttribute('d',d+' Z');
  }
  new ResizeObserver(paintGoalSurface).observe(view);
  // Source uses three solid status dots, each 13px inside a 17px outline.

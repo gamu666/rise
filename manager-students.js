@@ -19,7 +19,7 @@
  const oldRender=renderStudents;
  function matched(){const q=query.value.trim().toLocaleLowerCase('mn');return students.filter(s=>(s.name+' '+s.phone+' '+s.rd).toLocaleLowerCase('mn').includes(q)&&(!courseFilter.value||studentEnrollments(s).some(e=>e.course===courseFilter.value))&&(!monthFilter.value||s.ends.startsWith(monthFilter.value))&&(filter!=='unpaid'||s.paid<s.total)&&(filter!=='paid'||s.paid>=s.total)&&(filter!=='graduating'||s.ends.startsWith('2026.10')))}
  function name(s){const parts=s.name.trim().split(/\s+/);return esc(parts.slice(0,-1).join(' '))+' <strong>'+esc(parts.at(-1))+'</strong>'}
- function avatar(s,large=false){return '<span class="students-avatar '+(large?'large':'')+'" aria-hidden="true">'+esc(s.initial||s.name[0])+'</span>'}
+ function avatar(s,large=false){const sample=large&&s.id==='TR-26104';return '<span class="students-avatar '+(large?'large':'')+(sample?' sample-photo':'')+'" aria-hidden="true">'+(sample?'<img src="assets/figma/students/c8c70.png" alt="">':esc(s.initial||s.name[0]))+'</span>'}
  function progress(s){return s.total>0?Math.floor(Math.max(0,Math.min(1,s.paid/s.total))*100):100}
  function paint(){
   const records=matched();if(!records.some(s=>s.id===selected))selected=records[0]?.id;
@@ -33,7 +33,7 @@
   if(!records.length){roster.innerHTML='<p class="students-empty">Тохирох сурагч олдсонгүй.<br>Хайлт эсвэл шүүлтүүрээ өөрчлөөрэй.</p>';profile.hidden=summary.hidden=details.hidden=true;return}
   profile.hidden=summary.hidden=details.hidden=false;
   const s=students.find(s=>s.id===selected),entries=studentEnrollments(s),entry=entries.find(e=>e.course===selectedCourses[s.id])||entries[0];
-  profile.innerHTML='<div class="students-cover" aria-hidden="true"><img src="assets/figma/students/975ce.png" alt=""></div>'+avatar(s,true)+'<h1>'+name(s)+'</h1><div class="students-contact"><span>+976</span> <strong>'+esc(s.phone)+'</strong></div><div class="students-profile-footer"><span>'+esc(s.id)+'</span><span>'+esc(entry.course)+'</span></div>';
+  profile.innerHTML=avatar(s,true)+'<h1>'+name(s)+'</h1><div class="students-contact"><span>+976</span> <strong>'+esc(s.phone)+'</strong></div><div class="students-profile-footer"><span>'+esc(s.id)+'</span><span>'+esc(entry.course)+'</span></div>';
   summary.innerHTML='<header><h2>Төлбөрийн мэдээлэл</h2><span class="students-percent">'+progress(s)+'%</span></header><div class="students-progress" aria-hidden="true"><span style="width:'+progress(s)+'%"></span></div><dl><div><dt>Нийт төлбөр</dt><dd>'+money(s.total)+'</dd></div><div><dt>Төлсөн</dt><dd>'+money(s.paid)+'</dd></div><div><dt>Үлдэгдэл</dt><dd>'+money(Math.max(0,s.total-s.paid))+'</dd></div></dl><p class="students-paid-state">'+(s.paid>=s.total?'✓ Төлбөр бүрэн төлөгдсөн':'Төлбөрийн үлдэгдэлтэй')+'</p><button type="button" class="students-open-details">Дэлгэрэнгүй харах →</button>';
   summary.querySelector('button').onclick=()=>{details.open=true;details.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth',block:'nearest'})};
  }

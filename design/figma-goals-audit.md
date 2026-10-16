@@ -45,3 +45,11 @@ Per explicit user correction, removed AI mouth markup and all mouth style rules.
 Yellow action is shown only for built-in personal tasks call/post and self-created records without a sender; director/teacher/incoming assignments expose red/green only. Yellow opens a dedicated edit/postpone form for title, body and due date; preserves state and inline note. Saves personal task records and task-state overrides, applies persisted edits on reload, and displays the updated due date. Incoming clones have inherited personal due labels removed. All dots scale1.3, lift1px and brighten with an outline/shadow on hover/focus; reduced-motion removes transform animation.
 
 Validation: isolated localhost origin created an owned task, edited title/body, postponed2026-10-20 to2026-10-24, saved and reloaded; all fields and due label persisted. Main127.0.0.1 user task data was not modified. Yellow absence verified for poster/test/incoming-director-post; presence for call/post. Hover transform measured1.299/brightness1.139 during transition. Built-in personal task editor opens with correct existing text. No browser errors.
+
+## Centered contents and task composer
+
+Goal card ring+label groups now center as a unit horizontally and vertically with centered label/date text. Browser measured center error below.01px at1920×1080 and1433×950. Smaller viewport rules retain compact centered column layouts.
+
+Removed the white ellipsis SVG from all task expand buttons, including newly appended cards. The expand control is visually hidden but keyboard accessible, with a card focus outline. Clicking task body still opens its actions; keyboard Enter verified. Browser confirms zero task-expand SVGs.
+
+New-task and personal-task edit dialogs now match My Tasks: outer#161617, fields#2C2C2E, white text, rounded fields, softly lit black primary button. Backdrop rgba(6,7,12,.58) with14px blur. Updated new-task labels to Шинэ ажил үүсгэх / Ажлын тайлбар / Ажил үүсгэх. Verified dialog appearance, backdrop/field computed styles, open/close and no browser errors. Task creation/submission data handlers remain unchanged.

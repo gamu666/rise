@@ -105,3 +105,19 @@ input:not([type=checkbox]):not([type=radio]),textarea{cursor:text}
 #own-task-editor form{display:grid;gap:14px}#own-task-editor h2{padding-right:20px}#own-task-editor input,#own-task-editor textarea{width:100%;font-size:13px}#own-task-editor .save-button{justify-self:end}
 @media(max-width:760px){.goal-periods>button{height:100px}}
 @media(prefers-reduced-motion:reduce){.task-actions button[data-figma-dot]{transition:none!important}.task-actions button[data-figma-dot]:is(:hover,:focus-visible){transform:none}}
+
+.goal-periods>button{justify-content:center;align-items:center;text-align:center;padding:12px;gap:10px}
+.goal-periods>button>span:last-child{flex:0 1 auto;min-width:0;text-align:center}
+.task-expand,.task-card:hover .task-expand,.task-expand:focus-visible{width:1px!important;height:1px!important;padding:0!important;opacity:0!important;clip-path:inset(50%);overflow:hidden}
+.task-card:has(.task-expand:focus-visible){outline:2px solid #ffffffb3;outline-offset:2px}
+#new-task-dialog,#own-task-editor{width:min(420px,calc(100vw - 32px));max-height:85dvh;padding:28px;border-radius:24px;background:#161617;color:#fff;border:.5px solid #ffffff26;box-shadow:0 24px 64px #0008;font-family:FigmaInter,Arial,sans-serif;color-scheme:dark}
+#new-task-dialog::backdrop,#own-task-editor::backdrop{background:rgba(6,7,12,.58);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+#new-task-dialog h2,#own-task-editor h2{font-size:20px;line-height:28px;font-weight:600;padding-right:24px;margin-bottom:22px}
+#new-task-dialog form,#own-task-editor form{display:grid;gap:16px}
+#new-task-dialog label,#own-task-editor label{color:#c7c7cc;font-size:11px;line-height:17px;gap:7px}
+#new-task-dialog input,#new-task-dialog textarea,#own-task-editor input,#own-task-editor textarea{width:100%;border:1px solid #ffffff18;border-radius:15px;background:#2c2c2e;color:#fff;padding:11px 14px;font-size:13px;line-height:20px}
+#new-task-dialog textarea,#own-task-editor textarea{min-height:116px;resize:vertical}
+#new-task-dialog :is(input,textarea):focus-visible,#own-task-editor :is(input,textarea):focus-visible{outline:1px solid #ffffff8c;outline-offset:2px}
+#new-task-dialog .save-button,#own-task-editor .save-button{justify-self:stretch;margin-top:4px;padding:12px;border-radius:50px;background:#000;color:white;box-shadow:inset 0 0 14.9px #ffffff70;font-size:14px;line-height:21px}
+#new-task-dialog .dialog-close,#own-task-editor .dialog-close{right:14px;top:14px;width:28px;height:28px;border-radius:50%;background:#2c2c2e;color:#fff;font-size:20px}
+@media(max-width:760px){.goal-periods>button{padding:6px;gap:4px}.goal-periods strong{font-size:8px;line-height:14px}.goal-periods small{font-size:6px;line-height:12px}}

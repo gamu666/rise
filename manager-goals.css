@@ -28,3 +28,32 @@
 @media(max-width:1200px){.goal-periods{width:90%;margin-left:5%;gap:12px}.goal-periods>button{width:30%;padding:10px;gap:5px}.goal-periods strong{font-size:10px}.goal-periods small{font-size:8px}.goal-ring{width:38px;height:38px}.goal-ring b{width:28px;height:28px}.goal-chart-panel{margin-left:5%;width:90%;padding:24px 16px;gap:12px}.goal-connector{width:27%;left:5%}.goal-connector.week{left:36.5%}.goal-connector.month{left:68%}.goal-details h2{font-size:17px}.goal-table-row{font-size:10px}.goal-bars{gap:6px}.goal-metrics{width:100px}.goal-metrics button,.goal-metrics button[aria-pressed=true]{max-width:100%}}
 @media(max-width:760px){.main-column{height:900px}.goal-periods>button{flex-direction:column;justify-content:center;height:100px}.goal-periods{height:100px}.goal-chart-panel{height:330px;flex-direction:column;padding:20px}.goal-chart{width:100%;min-height:230px}.goal-metrics{flex-direction:row;width:100%;gap:8px}.goal-details{overflow-x:auto}.goal-details h2{font-size:14px}.goal-table-head,.goal-table-row{min-width:500px}.notch-summary{font-size:11px;left:91px}.rise-notch{max-width:95%}}
 @media(prefers-reduced-motion:reduce){.rise-notch,.ai-face,.ai-face i,.notch-details,.goal-bars button>span{animation:none;transition:none!important}}
+
+/* Corrections from source layer audit, 2026-10-16. Content hugs its text. */
+.task-card[data-task]{min-height:0!important;background:#161617!important;box-shadow:0 8px 24px -4px rgba(0,0,0,.6)!important}
+.task-card[data-task]>p{min-height:0;height:auto!important;padding:10px 16px!important;background:#2c2c2e!important}
+.task-head time{color:rgba(142,142,147,.6)!important;font-weight:700!important}
+.task-head>.check-symbol{background:#fff!important}.task-head>.check-symbol img{object-fit:contain}
+.task-actions .task-reply{font-weight:300;border-color:#ffffff80;background:linear-gradient(#323233,#323233) padding-box,linear-gradient(108deg,#fff,#2e2e2f) border-box;border:.3px solid transparent}
+.task-actions button[data-figma-dot]{position:relative;padding:0!important;background:transparent!important;box-shadow:none!important;border:0!important}
+.task-actions .task-dot-ring{position:absolute;left:0;top:0;width:17px;height:17px;max-width:none;pointer-events:none}
+.task-actions .task-dot-fill{position:absolute;left:2px;top:2px;width:13px;height:13px;max-width:none;pointer-events:none}
+.task-actions button[data-figma-dot]:focus-visible{outline:1px solid white;outline-offset:3px}
+.goal-periods>button[aria-pressed=true]{border-bottom-left-radius:0;border-bottom-right-radius:0}
+.goal-connector,.goal-connector.week,.goal-connector.month{top:189px;height:52px;border-radius:0;pointer-events:none}
+.goal-ring{background:none;overflow:visible}.goal-ring:after{display:none}
+.goal-ring img{position:absolute;display:block;max-width:none;pointer-events:none}
+.goal-ring-base{left:0;top:0}.goal-ring-arc{left:0;top:.5703px}
+.goal-periods>button:nth-child(3) .goal-ring-arc{left:25.5px}
+.goal-ring b{font-size:9px;font-weight:500;color:#2c2c2e}
+.goal-bars button[aria-pressed=true] small{font-size:10px;font-weight:700;color:#353535;transform:scale(1.08);transform-origin:center}
+.goal-bars button[aria-pressed=true]>span{background:#2f00ff}
+.goal-line-labels span{font-weight:500}.goal-line-labels span[aria-current=true]{font-weight:700;color:#353535;font-size:10px}
+.rise-notch{overflow:visible}.rise-notch:before,.rise-notch:after{content:'';position:absolute;top:0;width:16px;height:15px;pointer-events:none}
+.rise-notch:before{left:-16px;background:radial-gradient(ellipse 16px 15px at 0 100%,transparent 99%,#161617 100%)}
+.rise-notch:after{right:-16px;background:radial-gradient(ellipse 16px 15px at 100% 100%,transparent 99%,#161617 100%)}
+.notch-details{pointer-events:none}.ai-alert{position:absolute;left:2px;top:-6px;width:6px;height:15px;border-radius:7px;background:#ff0004;border:1px solid #161617;box-sizing:border-box}
+.ai-alert:after{content:'';position:absolute;left:-1px;top:14px;width:6px;height:6px;border-radius:50%;background:#ff0004;border:1px solid #161617;box-sizing:border-box}
+@media(max-width:1200px){.goal-ring{scale:none;width:38px;height:38px}.goal-ring img{transform:scale(.7451);transform-origin:top left}.goal-ring-arc{top:.425px}.goal-periods>button:nth-child(3) .goal-ring-arc{left:19px}.goal-ring b{width:38px;height:38px;font-size:7px}.goal-periods>button:nth-child(2){left:35%}.goal-periods>button:nth-child(3){left:70%}}
+@media(max-width:760px){.goal-connector,.goal-connector.week,.goal-connector.month{top:201px;height:52px}}
+@media(min-width:761px){html{overflow:clip}body{height:100dvh;overflow:clip}.os-shell{position:fixed;inset:0}}

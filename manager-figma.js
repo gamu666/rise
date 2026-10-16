@@ -59,7 +59,7 @@
   card.style.setProperty('--task-image','url("assets/figma/task-'+backgrounds[index%backgrounds.length]+'.jpg")');
   card.dataset.tone=backgrounds[index%backgrounds.length];
   if(decorated.has(card))return;decorated.add(card);
-  const actions=card.querySelector('.task-actions');const field=card.querySelector('.task-reply')||document.createElement('textarea');field.className='task-reply';field.rows=2;field.placeholder='Тэмдэглэл бичих…';field.setAttribute('aria-label','Ажлын тэмдэглэл');field.value=taskData[card.dataset.task]?.note||'';actions.prepend(field);
+  const actions=card.querySelector('.task-actions');const field=card.querySelector('.task-reply')||document.createElement('textarea');field.className='task-reply';field.rows=1;field.placeholder='Тайлбар бичих...';field.setAttribute('aria-label','Ажлын тэмдэглэл');field.value=taskData[card.dataset.task]?.note||'';actions.prepend(field);
   card.addEventListener('click',e=>{if(e.target.closest('button,textarea,input,a'))return;card.querySelector('.task-expand').click()});
   actions.addEventListener('click',e=>{if(!e.target.closest('[data-action]'))return;const id=card.dataset.task;taskData[id]={...taskData[id],note:field.value};saveLocal('rise-manager-task-states',taskData)},true);
  });updateTimes();}

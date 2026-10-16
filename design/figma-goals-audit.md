@@ -15,3 +15,13 @@ Motion reference: supplied Coucou MP4. Inspected 50 one-second frames across ful
 Goals is a visual/interaction preview using explicitly labeled October 2026 fixtures. Chart and detail totals derive from the same fixture dates. It is not a connected financial reporting service. AI backend is not connected; Home preserves its existing explicit status message. Shared live demo task DOM and note/state handlers remain intact across navigation.
 
 Validation: JS syntax; 1433 × 950 browser inspection (actual viewport rounded to 1434 by host), cards measured 172 × 88, chart 614.49 × 298, expanded task 292 × 208. Today/week/month, three metrics, chart point detail changes, hover height 154 and detail opacity 1, AI click Home/focus, open task preserved and single expanded task verified. No browser errors observed.
+
+## Follow-up corrections
+
+User requested content-hugging task text instead of source's fixed 94px example height. Removed card/text minimum heights; two-line text now measures 56px including 10px vertical padding. Card and body remain #161617 / #2C2C2E with source shadow unchanged.
+
+Task times 55:497 / 78:108 use #8E8E93 at 60% opacity, Inter Bold 10px. Source actions 78:111–113 are solid #FF0000, #FFC300, #00FF2F 13px circles, with 17px outer outlines (#626262, .5px). Downloaded original SVGs, ordered cancel/details/done. My Task avatar backplates are white as explicitly requested.
+
+Ring overlays retain exported asset bounds: month arc is 25.5 × 49.8594, offset x25.5/y.5703 within the 51px ring. Full-size centering was incorrect. Today/week arcs retain 50.9777/51.0001 × 50.4297/50.4298 root dimensions and top .5703 offset. Base ring is 51 × 51. No asset paths edited.
+
+Selected period card is joined continuously to its panel by a matching-width connector; selected card bottom corners are square inside the combined silhouette. Connector follows selected element bounds on resize. Notch restores 16 × 15 inverse top corners from source's assembled shape; the app shell anchors to the desktop viewport to avoid clipping from preserved document scroll. Selected daily label uses #353535, weight700 and slight enlargement per user request; other labels use source weight500 / #7E7E7E.

@@ -1,0 +1,70 @@
+/* Figma 94:351. Source widths: sidebar 266, center 783, tasks 384. */
+:root{--student-blue:#348dff;--student-blue-gradient:linear-gradient(110deg,#2910e9,#3979ff 55%,#81dbff)}
+.os-shell{background:#fafafa!important;isolation:isolate}
+.os-shell:before{inset:0!important;background:none!important;opacity:1!important;overflow:hidden}
+.os-shell>.students-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.students-bg img{position:absolute;max-width:none;pointer-events:none}
+.students-bg img:first-child{width:141.22%;height:89.75%;left:-20.61%;top:56.92%}
+.students-bg img:nth-child(2){width:120.58%;height:65.26%;left:-10.33%;top:70.32%}
+.students-bg:after{content:'';position:absolute;inset:0;background:#ffffff7d}
+.tasks-column{background:linear-gradient(199.457681deg,rgba(229,229,234,.3) 3.3319%,rgba(91,91,91,.3) 59.686%,rgba(255,255,255,0) 114.19%);border:0;box-shadow:inset 0 0 0 .5px #ffffff70}
+.work-hub[data-section=students]>.browser-sidebar{display:none!important}
+.work-hub[data-section=students]{grid-template-columns:minmax(0,1fr)!important;gap:0!important}
+.work-hub[data-section=students]>.browser-stage{grid-column:1/-1;min-width:0;width:100%}
+.work-hub[data-section=students]>.browser-stage{padding:0!important;overflow:auto;scrollbar-width:none}
+.work-hub[data-section=students]>.browser-stage::-webkit-scrollbar{display:none}
+#hub-students.student-workspace{padding:100px 31px 28px 28px;min-height:950px;width:100%!important;max-width:none;color:#161617}
+.students-toolbar{display:grid;grid-template-columns:minmax(150px,234fr) minmax(85px,121fr) minmax(82px,103fr) minmax(91px,110fr) 93px 24px;gap:8px;align-items:center;height:31px;margin-bottom:15px}
+.students-toolbar :is(select,.students-query){height:31px;min-width:0;border-radius:10px;border:.4px solid #acacac36;background:#ffffff75;box-shadow:inset 0 2px 11.2px -1px #0084ff52}
+.students-query{display:flex;align-items:center;gap:9px;padding:0 9px}
+.students-query svg{width:18px;height:18px;stroke:#242220;stroke-width:1.4;fill:none;flex:none}
+.students-query input{width:100%;min-width:0;border:0;padding:0;outline:0;background:none;font:300 10px/22px FigmaInter,sans-serif;color:#242220;letter-spacing:-.408px}
+.students-query input::placeholder{color:#9e9e9e}
+.students-toolbar select{padding:0 7px;font:300 10px/22px FigmaInter,sans-serif;color:#656464;cursor:pointer}
+.students-clear{font:500 9px/15px FigmaInter,sans-serif;color:#656464;display:flex;gap:3px;align-items:center;justify-content:center}
+.students-add{width:24px;height:24px;border-radius:50%;background:#fff;font-size:18px;color:#348dff;box-shadow:0 1px 4px #0001}
+.students-roster{height:449px;overflow:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:97px;align-content:start;gap:11px;padding:7px 17px 18px;margin:0 -17px;background:linear-gradient(121.480916deg,#ffffff0d 2.8286%,#00000009 52.251%,#9191910d 92.182%);border-radius:5px;scrollbar-width:thin;scrollbar-color:#a5c7e3 transparent}
+.students-card{position:relative;width:100%;height:97px;min-width:0;border-radius:10px;background:#fff;border:1px solid transparent;text-align:left;display:grid;grid-template-columns:40px minmax(0,1fr);grid-template-rows:40px 15px;column-gap:9px;row-gap:13px;padding:13px 12px 10px;transition:transform 180ms ease,box-shadow 180ms ease,border-color 180ms ease;cursor:pointer}
+.students-card:is(:hover,:focus-visible){transform:translateY(-2px);box-shadow:0 5px 14px #2865a71c;outline:none;border-color:#77b7ff70;z-index:1}
+.students-card[aria-pressed=true]{border-color:#348dff70;box-shadow:0 0 0 1px #348dff13}
+.students-avatar{width:40px;height:40px;display:grid;place-items:center;flex:none;background:#d9d9d9;border-radius:50%;font:400 15px/1 FigmaInter,sans-serif;color:#757575}
+.students-card-info{display:block;min-width:0;padding-top:0}
+.students-card-name{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:400 10px/20px FigmaInter,sans-serif;color:#000}
+.students-card-name strong{font-weight:700}
+.students-progress{display:block;width:100%;height:7px;background:#d9d9d97a;border-radius:3px;overflow:hidden}
+.students-progress>span{display:block;height:100%;border-radius:3px;background:var(--student-blue-gradient);transition:width 220ms ease}
+.students-tags{grid-column:1/-1;display:flex;gap:6px;align-items:center;overflow:hidden;min-width:0}
+.students-tags>span{white-space:nowrap;border:.3px solid #d9d9d9;border-radius:8.5px;font:400 8px/14px FigmaInter,sans-serif;padding:0 5px;color:#7c7c7c;box-shadow:0 1px 3px #0002}
+.students-meta{border-bottom:.5px solid #909090;margin:12px 4px 23px;height:0;position:relative;color:#8a8a8a;font-size:8px;text-align:right;line-height:14px;padding:0}
+.students-meta::first-line{background:#fafafacc}
+.students-panels{display:grid;grid-template-columns:minmax(0,479fr) minmax(0,220fr);gap:25px}
+.students-profile,.students-payment{height:292px;min-width:0;border-radius:23px;background:white;box-shadow:0 0 5.1px #0000001a;position:relative}
+.students-profile{padding:30px 33px 20px}
+.students-cover{height:111px;border-radius:23px;overflow:hidden;position:relative;container-type:inline-size}
+/* Original mask crop: 659 × 824 image, rotated 180°, mask at 89,462. */
+.students-cover img{position:absolute;width:159.564%;max-width:none;height:auto;left:-21.55%;top:-111.864cqw;transform:rotate(180deg)}
+.students-profile .large{position:absolute;left:51px;top:102px;width:83px;height:83px;border:5px solid white;font-size:26px;color:#fff;background:var(--student-blue-gradient);box-shadow:0 0 5px #0002}
+.students-profile h1{margin:24px 0 0 111px;height:30px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:400 19px/20px FigmaInter,sans-serif;color:#000}
+.students-profile h1 strong{font-weight:700}
+.students-contact{border-top:.5px solid #757575;text-align:right;padding-top:8px;font:100 12px/20px FigmaInter,sans-serif;color:#707070}.students-contact strong{color:#161617;font-weight:700}
+.students-profile-footer{display:flex;justify-content:space-between;gap:8px;margin-top:14px;font-size:9px;color:#8e8e93}
+.students-payment{padding:24px 20px;display:flex;flex-direction:column}
+.students-payment header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:17px}
+.students-payment h2{font-size:12px;line-height:17px;font-weight:600}
+.students-percent{color:#348dff;font-size:12px;font-weight:600}
+.students-payment dl{margin:18px 0 0;display:grid;gap:12px;font-size:10px}.students-payment dl>div{display:flex;justify-content:space-between;gap:8px}.students-payment dt{color:#8e8e93}.students-payment dd{margin:0;color:#242220;font-weight:500}
+.students-paid-state{font-size:9px;color:#348dff;margin-top:17px}.students-open-details{font-size:10px;color:#242220;align-self:flex-start;margin-top:auto}
+.students-expanded{margin-top:20px;border-radius:18px;background:#ffffffbd;padding:16px 20px;font-size:11px}.students-expanded>summary{cursor:pointer;color:#656464}.students-expanded #student-detail{padding:20px 0 0;background:none;box-shadow:none;border:0}.students-expanded .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.students-expanded .detail-grid article{min-width:0}.students-expanded .detail-grid button{background:none;color:#242220}.students-expanded .detail-head{margin-bottom:8px}
+.students-empty{grid-column:1/-1;justify-self:center;align-self:center;text-align:center;font-size:12px;line-height:24px;color:#8e8e93;padding-top:80px}
+.work-hub.register-open>.browser-stage{padding:50px 28px!important}.work-hub.register-open #hub-register{padding-top:35px}
+/* The referenced face uses an organic glass rim and two eyes, without a mouth. */
+.ai-face{width:58px;height:46px;top:6px;left:23px;background:#080a0d;border:1.5px solid transparent;border-radius:32% 43% 37% 39%;background:linear-gradient(#080a0d,#080a0d) padding-box,linear-gradient(135deg,#888b8d,#a1a3a5 32%,#212325 75%,#676a6c) border-box;gap:14px;box-shadow:inset 0 0 4px #ffffff21}
+.ai-face:before{content:'';position:absolute;inset:6px 5px;border:3px solid transparent;border-radius:38% 42% 36% 39%;background:linear-gradient(#080a0d,#080a0d) padding-box,var(--student-blue-gradient) border-box;filter:drop-shadow(0 0 2px #348dff75);pointer-events:none}
+.ai-face i{position:relative;z-index:1;width:6px;height:11px;top:0;left:auto!important;background:white!important;border:0!important}
+.rise-notch[data-mood] .ai-face i{top:0;border-color:white!important}
+.rise-notch[data-mood=happy] .ai-face i{height:8px}.rise-notch[data-mood=thinking] .ai-face i:nth-child(2){height:6px}.rise-notch[data-mood=success] .ai-face i{background:#fff!important;height:6px;border:0!important}
+@media(min-width:761px){.work-hub[data-section=students]~*{min-width:0}.workspace:has(.work-hub[data-section=students]) .task-stack{padding-top:89px}}
+@media(min-width:1700px){#hub-students.student-workspace{padding-left:40px;padding-right:43px}.students-roster{grid-auto-rows:110px;height:501px}.students-card{height:110px;padding-top:19px}.students-panels{grid-template-columns:minmax(0,479fr) minmax(0,220fr)}}
+@media(max-width:1250px) and (min-width:761px){.students-toolbar{grid-template-columns:1.4fr 1fr 1fr;gap:8px;height:auto;margin-bottom:12px}.students-clear{justify-content:flex-start}.students-add{justify-self:end}.students-roster{grid-template-columns:repeat(2,minmax(0,1fr))}.students-panels{grid-template-columns:1fr}.students-payment{height:auto;min-height:240px}.students-profile h1{font-size:15px}.students-profile{padding-left:22px;padding-right:22px}.students-profile .large{left:40px}}
+@media(max-width:760px){#hub-students.student-workspace{padding:90px 18px 24px;min-height:100dvh}.students-toolbar{height:auto;grid-template-columns:1fr 1fr;gap:8px}.students-query{grid-column:1/-1}.students-roster{grid-template-columns:repeat(2,minmax(0,1fr));height:350px}.students-card{padding-left:8px;padding-right:8px;column-gap:6px;grid-template-columns:32px minmax(0,1fr)}.students-avatar{width:32px;height:32px}.students-card-name{font-size:9px}.students-panels{grid-template-columns:1fr;gap:16px}.students-profile{padding-left:22px;padding-right:22px}.students-profile .large{left:35px}.students-profile h1{font-size:15px;margin-left:100px}.students-payment{height:270px}.students-expanded .detail-grid{grid-template-columns:1fr}.students-expanded .detail-bottom{grid-template-columns:1fr 1fr}.students-expanded .detail-controls{flex-wrap:wrap}.students-expanded{padding:14px}.students-contact{font-size:11px}.students-meta{margin-bottom:23px}.students-toolbar select{width:100%}}
+@media(prefers-reduced-motion:reduce){.students-card,.students-progress>span{transition:none}.students-card:hover{transform:none}}

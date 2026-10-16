@@ -35,3 +35,13 @@ Monthly view now contains four buckets, explicitly requested by user. Days1–7/
 Custom clickable cursor: authored28px SVG with white center, separated white ring and black outer stroke, hotspot14/14; buttons/links/task bodies/student rows use it, text fields retain text cursor. Global pointer tracking updates AI gaze via one animation frame per pointer batch, clamped to5px horizontal/3px vertical. Neutral face smiles; notch hover smiles with arched eyes; focused input shows thinking; completion/cancellation show success/calm. Permanent warning icon removed. Notch shape is recomputed from its actual animated width/height during expansion, so no corner join seam or scaled corner distortion. Reduced-motion overrides cover newly added transitions/expressions.
 
 Browser checks: selected-card filter:none, transparent background over one white path; one black notch path at540×154 expanded state; no warning node; gaze x−3.74px on far left and+5px on far right; task cursor asset applied; input focus sets thinking; student hover background/shadow/radius verified; no browser errors observed.
+
+## Equal card grid and owned-task editing
+
+Replaced absolute tab offsets with three equal grid columns, shared chart width, and32px desktop gaps. At1433-reference viewport actual widths183.49/183.50/183.50px (subpixel allocation), equal heights88px, gaps32px. Third tab and chart share the exact same right edge959.55px. Surface path now uses unrounded element bounds and actual SVG viewport width, avoiding the tiny extra right-side corner caused by rounded offsetWidth/clientWidth geometry.
+
+Per explicit user correction, removed AI mouth markup and all mouth style rules. Expressions use eyes only.
+
+Yellow action is shown only for built-in personal tasks call/post and self-created records without a sender; director/teacher/incoming assignments expose red/green only. Yellow opens a dedicated edit/postpone form for title, body and due date; preserves state and inline note. Saves personal task records and task-state overrides, applies persisted edits on reload, and displays the updated due date. Incoming clones have inherited personal due labels removed. All dots scale1.3, lift1px and brighten with an outline/shadow on hover/focus; reduced-motion removes transform animation.
+
+Validation: isolated localhost origin created an owned task, edited title/body, postponed2026-10-20 to2026-10-24, saved and reloaded; all fields and due label persisted. Main127.0.0.1 user task data was not modified. Yellow absence verified for poster/test/incoming-director-post; presence for call/post. Hover transform measured1.299/brightness1.139 during transition. Built-in personal task editor opens with correct existing text. No browser errors.

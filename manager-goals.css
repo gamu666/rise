@@ -82,14 +82,26 @@ input:not([type=checkbox]):not([type=radio]),textarea{cursor:text}
 .rise-notch:is(:hover,:focus-visible) .notch-surface{filter:drop-shadow(0 14px 15px #0003)}
 .ai-face i{position:absolute;left:19px;top:10px;width:6px;height:10px;transition:height 220ms ease,border-radius 220ms ease,background-color 220ms ease;transform:translate(var(--look-x,0px),var(--look-y,0px));border:0;background:#161617}
 .ai-face i:nth-child(2){left:38px}
-.ai-mouth{position:absolute;left:25px;top:23px;width:15px;height:7px;border:0;border-bottom:2px solid #161617;border-radius:0 0 12px 12px;transform:translate(var(--look-x,0px),var(--look-y,0px));transition:width 220ms ease,height 220ms ease,border-radius 220ms ease}
+
 .rise-notch[data-mood=happy] .ai-face i,.rise-notch[data-mood=success] .ai-face i{top:12px;width:8px;height:6px;border-top:2px solid #161617;border-radius:50%;background:transparent;animation:none}
-.rise-notch[data-mood=happy] .ai-mouth,.rise-notch[data-mood=success] .ai-mouth{top:22px;height:9px;width:17px;border-bottom-width:3px}
+
 .rise-notch[data-mood=thinking] .ai-face i{height:9px;animation:none}
 .rise-notch[data-mood=thinking] .ai-face i:nth-child(2){height:6px;top:12px}
-.rise-notch[data-mood=thinking] .ai-mouth{left:28px;top:25px;width:8px;height:3px;border-radius:50%;border:1.5px solid #161617}
+
 .rise-notch[data-mood=calm] .ai-face i{height:5px;top:13px;animation:none}
-.rise-notch[data-mood=calm] .ai-mouth{height:2px;top:25px;width:11px;border-radius:4px}
+
 .rise-notch[data-mood=success] .ai-face{animation:rise-cheer 500ms ease both}
 @keyframes rise-cheer{0%,100%{transform:rotate(0)}35%{transform:translateY(-3px) rotate(-5deg)}70%{transform:rotate(4deg)}}
-@media(prefers-reduced-motion:reduce){.goal-periods>button,.goal-periods>button>span,.goal-surface,.student-item,.goal-table-row,.notch-surface,.ai-face i,.ai-mouth{transition:none!important;animation:none!important}.goal-periods>button:hover,.goal-periods>button:hover>span{transform:none!important}.rise-notch[data-mood=success] .ai-face{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.goal-periods>button,.goal-periods>button>span,.goal-surface,.student-item,.goal-table-row,.notch-surface,.ai-face i{transition:none!important;animation:none!important}.goal-periods>button:hover,.goal-periods>button:hover>span{transform:none!important}.rise-notch[data-mood=success] .ai-face{animation:none!important}}
+
+/* One aligned grid keeps the first/last tab flush with the chart's edges. */
+.goal-periods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2.25vw,32px)}
+.goal-periods>button,.goal-periods>button:nth-child(2),.goal-periods>button:nth-child(3){position:relative;left:auto;top:auto;width:100%;height:88px}
+.ai-face i{top:12px}
+.task-actions button[data-figma-dot]{transition:transform 180ms cubic-bezier(.2,.8,.2,1),box-shadow 180ms ease,filter 180ms ease;transform-origin:center}
+.task-actions button[data-figma-dot]:is(:hover,:focus-visible){transform:translateY(-1px) scale(1.3);filter:brightness(1.14)!important;box-shadow:0 0 0 2px #ffffff20,0 3px 9px #0008!important;z-index:2}
+.task-due{display:block;margin:0 12px 8px;font-size:10px;line-height:15px;color:#b8b8bd}
+.task-card[data-task]>p{white-space:pre-line!important}
+#own-task-editor form{display:grid;gap:14px}#own-task-editor h2{padding-right:20px}#own-task-editor input,#own-task-editor textarea{width:100%;font-size:13px}#own-task-editor .save-button{justify-self:end}
+@media(max-width:760px){.goal-periods>button{height:100px}}
+@media(prefers-reduced-motion:reduce){.task-actions button[data-figma-dot]{transition:none!important}.task-actions button[data-figma-dot]:is(:hover,:focus-visible){transform:none}}

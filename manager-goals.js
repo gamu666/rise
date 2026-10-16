@@ -3,12 +3,17 @@
  const stage=document.querySelector('.browser-stage');
  const view=document.createElement('section');view.id='hub-goals-design';view.className='hub-view goals-design';view.hidden=true;stage.append(view);
  const notch=document.createElement('button');notch.type='button';notch.className='rise-notch';notch.hidden=true;notch.setAttribute('aria-label','RISE AI — Нүүр рүү очих');
- notch.innerHTML='<span class="ai-face" aria-hidden="true"><i></i><i></i><em class="ai-alert"></em></span><span class="notch-summary">Өнөөдрийн зорилгоо хамтдаа биелүүлье.</span><span class="notch-details"><strong>RISE AI</strong><span>Асуултаа асууж, ажлаа төлөвлөхийн тулд дарна уу.</span><small>AI ажлын талбар руу →</small></span>';
+ notch.innerHTML='<svg class="notch-surface" aria-hidden="true"><path/></svg><span class="ai-face" aria-hidden="true"><i></i><i></i><span class="ai-mouth"></span></span><span class="notch-summary">Өнөөдрийн зорилгоо хамтдаа биелүүлье.</span><span class="notch-details"><strong>RISE AI</strong><span>Асуултаа асууж, ажлаа төлөвлөхийн тулд дарна уу.</span><small>AI ажлын талбар руу →</small></span>';
  document.querySelector('.main-column').append(notch);
  notch.onclick=()=>{workspaceSelect('profile');document.querySelector('#rise-ai-prompt').focus()};
- notch.onpointermove=e=>{const r=notch.getBoundingClientRect();notch.style.setProperty('--look-x',Math.max(-3,Math.min(3,(e.clientX-r.left-r.width/2)/35))+'px');notch.style.setProperty('--look-y',Math.max(-2,Math.min(2,(e.clientY-r.top-r.height/2)/15))+'px')};
- notch.onpointerleave=()=>{notch.style.setProperty('--look-x','0px');notch.style.setProperty('--look-y','0px')};
- let reactionTimer;document.querySelector('.task-stack').addEventListener('click',e=>{const action=e.target.closest('[data-action]')?.dataset.action;if(!['done','cancel'].includes(action))return;clearTimeout(reactionTimer);notch.dataset.reaction=action;notch.querySelector('.notch-summary').textContent=action==='done'?'Ажлын төлөв шинэчлэгдлээ. Сайн ажиллалаа!':'Ажлын төлөв шинэчлэгдлээ.';reactionTimer=setTimeout(()=>{delete notch.dataset.reaction;notch.querySelector('.notch-summary').textContent='Өнөөдрийн зорилгоо хамтдаа биелүүлье.'},2400)});
+ // Paint the entire notch silhouette once: no joined rectangles or corner seams.
+ const paintNotch=()=>{const w=notch.clientWidth,h=notch.clientHeight;if(!w||!h)return;const svg=notch.querySelector('.notch-surface');svg.setAttribute('viewBox','0 0 '+(w+32)+' '+h);svg.querySelector('path').setAttribute('d','M0 0 H'+(w+32)+' C'+(w+23.16)+' 0 '+(w+16)+' 7.16 '+(w+16)+' 16 V'+(h-20)+' Q'+(w+16)+' '+h+' '+(w-4)+' '+h+' H36 Q16 '+h+' 16 '+(h-20)+' V16 C16 7.16 8.84 0 0 0 Z')};
+ new ResizeObserver(paintNotch).observe(notch);
+ let gazeFrame=0,pointerX=0,pointerY=0;
+ document.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;pointerX=e.clientX;pointerY=e.clientY;if(gazeFrame)return;gazeFrame=requestAnimationFrame(()=>{gazeFrame=0;if(notch.hidden)return;const r=notch.querySelector('.ai-face').getBoundingClientRect();notch.style.setProperty('--look-x',Math.max(-5,Math.min(5,(pointerX-r.left-r.width/2)/innerWidth*12))+'px');notch.style.setProperty('--look-y',Math.max(-3,Math.min(3,(pointerY-r.top-r.height/2)/innerHeight*7))+'px')})},{passive:true});
+ function faceMood(){notch.dataset.mood=notch.dataset.reaction==='done'?'success':notch.dataset.reaction==='cancel'?'calm':document.activeElement?.matches('textarea,input:not([type=checkbox])')?'thinking':notch.matches(':hover,:focus-visible')?'happy':'idle'}
+ notch.addEventListener('pointerenter',faceMood);notch.addEventListener('pointerleave',faceMood);document.addEventListener('focusin',faceMood);document.addEventListener('focusout',()=>requestAnimationFrame(faceMood));
+ let reactionTimer;document.querySelector('.task-stack').addEventListener('click',e=>{const action=e.target.closest('[data-action]')?.dataset.action;if(!['done','cancel'].includes(action))return;clearTimeout(reactionTimer);notch.dataset.reaction=action;faceMood();notch.querySelector('.notch-summary').textContent=action==='done'?'Ажлын төлөв шинэчлэгдлээ. Сайн ажиллалаа!':'Ажлын төлөв шинэчлэгдлээ.';reactionTimer=setTimeout(()=>{delete notch.dataset.reaction;faceMood();notch.querySelector('.notch-summary').textContent='Өнөөдрийн зорилгоо хамтдаа биелүүлье.'},2400)});
  let period='week',metric='revenue',chosen=1,all=false;
  const labels={today:'ӨНӨӨДӨР',week:'7 ХОНОГ',month:'ЭНЭ САР'},metrics={revenue:'Орлогоор харах',tasks:'Таскаар харах',students:'Сурагчдын тоогоор харах'};
  // Explicit preview fixture: source chart has no connected transaction dataset.
@@ -16,7 +21,7 @@
  const names=['Даваа','Мягмар','Лхагва','Пүрэв','Баасан','Бямба','Ням'];
  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const previewDays=Array.from({length:31},(_,i)=>{const day=i+1,weekday=(day+2)%7,amount=day>=12&&day<=18?demo[day-12]:weekday<5?demo[weekday]:0;const count=amount?[5,4,3,3,2][weekday]:0;return {day,amount,count,tasks:amount?[4,3,2,4,3][weekday]:0}});
- function buckets(){return period==='today'?[previewDays.filter(d=>d.day===16)]:period==='week'?previewDays.filter(d=>d.day>=12&&d.day<=18).map(d=>[d]):Array.from({length:5},(_,i)=>previewDays.filter(d=>Math.floor((d.day-1)/7)===i))}
+ function buckets(){return period==='today'?[previewDays.filter(d=>d.day===16)]:period==='week'?previewDays.filter(d=>d.day>=12&&d.day<=18).map(d=>[d]):Array.from({length:4},(_,i)=>previewDays.filter(d=>Math.min(3,Math.floor((d.day-1)/7))===i))}
  function values(){return buckets().map(ds=>ds.reduce((sum,d)=>sum+(metric==='revenue'?d.amount:metric==='tasks'?d.tasks:d.count),0))}
  function render(){
  const nums=values(),max=Math.max(...nums,1),suffix=metric==='revenue'?'₮':metric==='tasks'?'ажил':'сурагч';
@@ -25,10 +30,10 @@
  const chart=view.querySelector('.goal-chart');
  const periodCards=[...view.querySelectorAll('[data-period]')];
  periodCards.forEach((card,i)=>{const ring=card.querySelector('.goal-ring');ring.style.removeProperty('--progress');ring.style.removeProperty('--ring');const base=new Image();base.src='assets/figma/goal-ring-base.svg';base.alt='';base.className='goal-ring-base';const arc=new Image();arc.src='assets/figma/goal-ring-'+['today','week','month'][i]+'.svg';arc.alt='';arc.className='goal-ring-arc';ring.prepend(base,arc)});
- function alignGoalSurface(){const active=view.querySelector('[data-period][aria-pressed="true"]'),connector=view.querySelector('.goal-connector');if(!active||view.hidden)return;const a=active.getBoundingClientRect(),v=view.getBoundingClientRect();connector.style.left=(a.left-v.left)+'px';connector.style.width=a.width+'px'}
- requestAnimationFrame(alignGoalSurface);
+ const surface=document.createElementNS('http://www.w3.org/2000/svg','svg');surface.classList.add('goal-surface');surface.setAttribute('aria-hidden','true');surface.innerHTML='<path/>';view.prepend(surface);
+ requestAnimationFrame(paintGoalSurface);
  if(period==='month'){
- const points=nums.map((n,i)=>[25+i*77,215-n/max*190]);
+ const points=nums.map((n,i)=>[25+i*308/(nums.length-1),215-n/max*190]);
  chart.innerHTML='<svg viewBox="0 0 370 240" preserveAspectRatio="none" role="img" aria-label="Сарын үзүүлэлт долоо хоногоор"><path d="M20 5V220H365" fill="none" stroke="#bbb"/><polyline points="'+points.map(p=>p.join(',')).join(' ')+'" fill="none" stroke="#2f00ff" stroke-width="3" stroke-linejoin="round"/></svg><div class="goal-line-points">'+points.map((p,i)=>'<button data-point="'+i+'" style="left:'+(p[0]/370*100)+'%;top:'+(p[1]/240*100)+'%" aria-label="'+(i+1)+'-р долоо хоног: '+nums[i]+' '+suffix+'" aria-pressed="'+(i===chosen)+'"></button>').join('')+'</div><div class="goal-line-labels">'+nums.map((_,i)=>'<span aria-current="'+(i===chosen)+'">'+(i+1)+'-р 7 хоног</span>').join('')+'</div>';
  }else if(period==='today'){
  chart.innerHTML='<div class="goal-today"><small>ӨНӨӨДРИЙН ГҮЙЦЭТГЭЛ</small><strong>'+nums[0].toLocaleString()+' '+suffix+'</strong><div><span style="width:78%"></span></div><p>Зорилгын биелэлт 78%</p></div>';
@@ -49,10 +54,20 @@
  if(!records.length)rows.insertAdjacentHTML('beforeend','<p class="goal-demo">Энэ хугацаанд бүртгэл алга.</p>');
  }
  }
- const oldSelect=workspaceSelect;workspaceSelect=function(key){oldSelect(key);view.hidden=key!=='goal';notch.hidden=key!=='goal';if(key==='goal'){document.querySelectorAll('.browser-stage>.hub-view').forEach(v=>v.hidden=v!==view);render()}document.querySelectorAll('.figma-menu [data-hub]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.hub===key)))};selectHub=workspaceSelect;
+ const oldSelect=workspaceSelect;workspaceSelect=function(key){oldSelect(key);view.hidden=key!=='goal';notch.hidden=key!=='goal';if(key==='goal'){document.querySelectorAll('.browser-stage>.hub-view').forEach(v=>v.hidden=v!==view);render();paintNotch();faceMood()}document.querySelectorAll('.figma-menu [data-hub]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.hub===key)))};selectHub=workspaceSelect;
  document.querySelectorAll('.figma-menu [data-hub]').forEach(b=>{if(b.dataset.hub!=='files')b.onclick=()=>workspaceSelect(b.dataset.hub)});
  window.addEventListener('rise-data-change',()=>{if(!view.hidden)render()});
- new ResizeObserver(()=>{if(view.hidden)return;const a=view.querySelector('[data-period][aria-pressed="true"]')?.getBoundingClientRect(),v=view.getBoundingClientRect(),c=view.querySelector('.goal-connector');if(a&&c){c.style.left=(a.left-v.left)+'px';c.style.width=a.width+'px'}}).observe(view);
+ function paintGoalSurface(){
+  if(view.hidden)return;const active=view.querySelector('.goal-periods [aria-pressed=true]'),panel=view.querySelector('.goal-chart-panel'),svg=view.querySelector('.goal-surface');if(!active||!panel||!svg)return;
+  // offset geometry excludes hover transforms; one path owns the complete white surface.
+  const l=panel.offsetLeft,r=l+panel.offsetWidth,y=panel.offsetTop,b=y+panel.offsetHeight,t=view.querySelector('.goal-periods').offsetLeft+active.offsetLeft,tr=t+active.offsetWidth,ty=view.querySelector('.goal-periods').offsetTop,rad=17;
+  let d='M'+(t+rad)+' '+ty+' H'+(tr-rad)+' Q'+tr+' '+ty+' '+tr+' '+(ty+rad);
+  d+=tr>=r-1?' V'+(b-rad)+' Q'+r+' '+b+' '+(r-rad)+' '+b:' V'+(y-rad)+' Q'+tr+' '+y+' '+(tr+rad)+' '+y+' H'+(r-rad)+' Q'+r+' '+y+' '+r+' '+(y+rad)+' V'+(b-rad)+' Q'+r+' '+b+' '+(r-rad)+' '+b;
+  d+=' H'+(l+rad)+' Q'+l+' '+b+' '+l+' '+(b-rad);
+  d+=t<=l+1?' V'+(ty+rad)+' Q'+l+' '+ty+' '+(l+rad)+' '+ty:' V'+(y+rad)+' Q'+l+' '+y+' '+(l+rad)+' '+y+' H'+(t-rad)+' Q'+t+' '+y+' '+t+' '+(y-rad)+' V'+(ty+rad)+' Q'+t+' '+ty+' '+(t+rad)+' '+ty;
+  svg.setAttribute('viewBox','0 0 '+view.clientWidth+' '+view.scrollHeight);svg.style.height=view.scrollHeight+'px';svg.querySelector('path').setAttribute('d',d+' Z');
+ }
+ new ResizeObserver(paintGoalSurface).observe(view);
  // Source uses three solid status dots, each 13px inside a 17px outline.
  const decorateActions=()=>document.querySelectorAll('.task-actions').forEach(actions=>{
   const order=[['cancel','red'],['more','yellow'],['done','green']];

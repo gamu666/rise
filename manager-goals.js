@@ -36,9 +36,10 @@
  view.querySelectorAll('[data-period]').forEach(b=>b.onclick=()=>{period=b.dataset.period;chosen=period==='week'?1:0;all=false;render()});
  view.querySelectorAll('[data-metric]').forEach(b=>b.onclick=()=>{metric=b.dataset.metric;render()});
  view.querySelectorAll('[data-point]').forEach(b=>b.onclick=()=>{chosen=Number(b.dataset.point);all=false;render()});
+ view.querySelector('.goal-all').hidden=period==='today';
  view.querySelector('.goal-all').onclick=()=>{all=!all;render()};
  const title=period==='today'?'Өнөөдрийн':period==='month'?(chosen+1)+'-р долоо хоногийн':names[chosen]+' гарагийн';
- view.querySelector('h2').textContent=(all?labels[period]+' —':title)+' '+({revenue:'орлогын',tasks:'ажлын',students:'сурагчдын'}[metric])+' дэлгэрэнгүй';
+ view.querySelector('h2').textContent=period==='today'?'Өнөөдрийн '+({revenue:'орлого',tasks:'ажил',students:'сурагчид'}[metric]):(all?labels[period]+' —':title)+' '+({revenue:'орлогын',tasks:'ажлын',students:'сурагчдын'}[metric])+' дэлгэрэнгүй';
  const rows=view.querySelector('.goal-records');
  const days=all?buckets().flat():buckets()[chosen];
  if(metric==='tasks'){

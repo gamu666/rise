@@ -23,3 +23,4 @@
 @media(max-width:760px){.goals-design .goal-chart-panel{height:auto;min-height:330px;padding:22px 18px;gap:18px}.goals-design .goal-metrics{width:100%;flex-direction:row;align-items:stretch;border-radius:16px}.goals-design .goal-metrics button,.goals-design .goal-metrics button[aria-pressed=true]{grid-template-columns:18px minmax(0,1fr);font-size:10px;min-height:48px}.goal-metric-check{display:none}.goal-metric-icon{font-size:18px}}
 @media(prefers-reduced-motion:reduce){.goals-design .goal-metrics button{transition:none;transform:none!important}}
 .goal-metric-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
+.goals-design .goal-periods>button[aria-pressed=true]{border-radius:17px}.goals-design .goal-bars button[data-empty=true]>span{background:#fff}

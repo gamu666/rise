@@ -32,3 +32,7 @@
  .goals-design .goal-periods>button,.goals-design .goal-periods>button:nth-child(2),.goals-design .goal-periods>button:nth-child(3){height:100%}
 }
 @media(max-width:1300px){.goals-design{grid-template-columns:minmax(0,1fr) 240px}}
+
+/* Give the plot and selector matching breathing room at both outer edges. */
+.goals-design .goal-chart-panel{padding-left:36px;padding-right:36px}
+@container(max-width:1040px){.goals-design .goal-chart-panel{padding-left:24px;padding-right:24px}}

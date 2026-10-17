@@ -17,3 +17,7 @@ body .save-button:hover,body button[type="submit"]:hover{filter:brightness(1.06)
 
 body .ai-composer button[type="submit"]:disabled{background:#111213!important;color:#fff!important;cursor:default;filter:none;opacity:1}
 body .ai-composer button[type="submit"]:not(:disabled){background:var(--action-green)!important;cursor:pointer}
+
+/* A caret belongs only in an editable field, including with browser caret navigation enabled. */
+body,body *{caret-color:transparent!important}
+body input,body textarea,body [contenteditable=true],body [contenteditable=true] *{caret-color:auto!important}

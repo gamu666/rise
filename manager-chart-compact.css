@@ -1,0 +1,21 @@
+.ai-composer textarea::placeholder{opacity:1;transition:opacity 220ms ease,filter 220ms ease}
+.ai-composer:focus-within textarea::placeholder{opacity:.48;filter:blur(.25px)}
+.goals-design{container-type:inline-size}
+.goals-design .goal-chart-panel{gap:24px}
+.goals-design .goal-chart{flex:0 0 auto;width:calc(41px + var(--bar-count,7) * 34px + (var(--bar-count,7) - 1) * 22px);max-width:100%}
+.goals-design .goal-bars{justify-content:flex-start;gap:22px;padding-left:9px;width:max-content;min-width:calc(100% - 31px)}
+.goals-design .goal-bars button{width:34px;max-width:34px;flex:0 0 34px}
+.goals-design .goal-bar-value{font-size:9px}
+.goals-design .goal-metrics{width:auto;flex:1;min-width:0;padding:9px;gap:8px;border-radius:21px}
+.goals-design .goal-metrics button,.goals-design .goal-metrics button:last-child,.goals-design .goal-metrics button[aria-pressed=true]{min-height:54px;grid-template-columns:22px minmax(0,1fr) minmax(72px,30%);gap:9px;padding:9px 10px;font-size:12px;line-height:16px}
+.goal-metric-mini{height:32px;min-width:0;border-radius:18px;background:#111213;color:#fff;display:flex;align-items:center;justify-content:center;padding:2px 6px}
+.goal-metric-mini svg{width:100%;height:28px;overflow:visible;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.goal-metric-mini circle{fill:currentColor;stroke:none}
+.goal-metrics [aria-pressed=true] .goal-metric-mini{color:#00ff6a}
+@container(max-width:720px){
+ .goals-design .goal-chart-panel{flex-direction:column;height:auto;min-height:298px;padding:25px 20px;align-items:stretch;gap:22px}
+ .goals-design .goal-chart{align-self:center;height:259px;min-height:259px;overflow-x:auto;overflow-y:hidden}
+ .goals-design .goal-metrics{flex-direction:column;width:100%;align-self:stretch;flex:none}
+ .goals-design .goal-metrics button,.goals-design .goal-metrics button[aria-pressed=true]{grid-template-columns:22px minmax(0,1fr) minmax(72px,30%)}
+}
+@media(prefers-reduced-motion:reduce){.ai-composer textarea::placeholder{transition:none}}

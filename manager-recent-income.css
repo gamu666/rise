@@ -1,4 +1,7 @@
 .task-viewport{display:flex;flex-direction:column;gap:14px}
+.recent-income{isolation:isolate;overflow:hidden}
+.recent-income:before{content:'';position:absolute;inset:0;z-index:-2;background:url('assets/income-warm-bg.svg') center/cover no-repeat}
+.recent-income:after{content:'';position:absolute;inset:0;z-index:-1;background:#ffffffa6;backdrop-filter:blur(12px) saturate(125%);-webkit-backdrop-filter:blur(12px) saturate(125%)}
 .task-viewport .tasks-column{height:auto;min-height:0;flex:1}
 .recent-income{position:relative;flex:none;min-height:156px;border:1px solid #fff;border-radius:26px;background:#ffffffed;padding:15px 17px;box-shadow:0 3px 14px #00000005;color:#18191a}
 .recent-income header{display:flex;align-items:center;justify-content:space-between;gap:8px}

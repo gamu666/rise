@@ -10,3 +10,7 @@ body .save-button:hover,body button[type="submit"]:hover{filter:brightness(1.06)
 .main-column,.task-viewport{filter:blur(var(--logout-blur,0px));opacity:var(--logout-opacity,1);transition:filter 180ms ease,opacity 180ms ease}
 .logout-dragging .main-column,.logout-dragging .task-viewport{transition:none}
 @media(prefers-reduced-motion:reduce){.main-column,.task-viewport{transition:none}}
+
+.logout-thumb{top:6.5px}
+.logout-thumb .logout-arrow{display:grid;place-items:center}
+.logout-thumb .logout-arrow svg{display:block;width:23px;height:23px;fill:none;stroke:white;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}

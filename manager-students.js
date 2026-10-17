@@ -16,6 +16,7 @@
  const details=document.createElement('dialog');details.id='students-record-dialog';details.className='students-expanded';details.setAttribute('aria-label','Сурагчийн дэлгэрэнгүй');
  const close=document.createElement('button');close.type='button';close.className='dialog-close';close.setAttribute('aria-label','Хаах');close.textContent='×';close.onclick=()=>details.close();details.append(close,legacy);document.body.append(details);
  view.replaceChildren(toolbar,roster,meta,panels);
+ const placeRecord=()=>{if(window.matchMedia("(min-width:761px)").matches)panels.append(legacy);else details.append(legacy)};placeRecord();window.addEventListener("resize",placeRecord,{passive:true});
  const query=document.querySelector('#student-search');
  const oldRender=renderStudents;
  function matched(){const q=query.value.trim().toLocaleLowerCase('mn');return students.filter(s=>(s.name+' '+s.phone+' '+s.rd).toLocaleLowerCase('mn').includes(q)&&(!courseFilter.value||studentEnrollments(s).some(e=>e.course===courseFilter.value))&&(!monthFilter.value||s.ends.startsWith(monthFilter.value))&&(filter!=='unpaid'||s.paid<s.total)&&(filter!=='paid'||s.paid>=s.total)&&(filter!=='graduating'||s.ends.startsWith('2026.10')))}

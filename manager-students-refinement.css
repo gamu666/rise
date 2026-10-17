@@ -83,3 +83,22 @@
  #hub-students .students-tags>span{font-size:8px;line-height:15px;padding:0 5px;border-radius:8.5px}
  #hub-students .students-profile h1{font-size:14px;line-height:20px}
 }
+
+/* Student workspace: one third list, two thirds selected record. */
+@media(min-width:761px){
+ #hub-students.student-workspace{grid-template-columns:minmax(0,1fr) minmax(0,2fr);grid-template-rows:auto minmax(0,1fr);column-gap:20px;padding-top:90px}
+ #hub-students .students-toolbar{grid-column:1;grid-row:1;display:flex;height:auto;flex-direction:column;align-items:stretch;gap:8px;margin:0 0 12px}
+ #hub-students .students-toolbar>*{width:100%;min-width:0;flex:none}
+ #hub-students .students-clear{height:26px;justify-content:flex-end}
+ #hub-students .students-roster{grid-column:1;grid-row:2;grid-template-columns:minmax(0,1fr);margin:0;padding:2px 7px 12px 0;gap:11px;overflow-x:hidden}
+ #hub-students .students-meta{display:none}
+ #hub-students .students-panels{grid-column:2;grid-row:1/-1;border-left:.5px solid #90909066;padding-left:20px;display:flex;flex-direction:column;gap:16px;justify-content:flex-start;overflow-y:auto;overscroll-behavior:contain;min-width:0}
+ #hub-students :is(.students-profile,.students-payment){height:auto;min-height:252px;flex:none;width:100%}
+ #hub-students .students-open-details{display:none}
+ #hub-students #student-detail{height:auto!important;min-height:0!important;display:block;padding:18px!important;border-radius:15px;background:#ffffffd9!important;color:#242220!important;box-shadow:none!important;border:0!important;flex:none;font-size:11px}
+ #hub-students #student-detail :is(strong,h3){color:#242220!important}
+ #hub-students #student-detail :is(.detail-label,.detail-grid span,.detail-bottom small){color:#72727a!important}
+ #hub-students #student-detail .detail-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+ #hub-students #student-detail :is(.detail-grid article,.detail-bottom){background:#f4f4f7!important;color:#242220!important;border-color:#ddd!important}
+ #hub-students #student-detail .detail-controls{display:flex;flex-wrap:wrap;gap:6px}
+}

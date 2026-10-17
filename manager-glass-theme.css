@@ -1,0 +1,69 @@
+/* Shared photo + glass presentation. Replace only --dashboard-wallpaper to change the BG. */
+:root{--dashboard-wallpaper:url('assets/glass-dunes-bg.png');--glass-panel:rgba(255,255,255,.34);--glass-edge:rgba(255,255,255,.86);--glass-card:rgba(255,255,255,.91);--frame-gap:24px}
+html{background:#a4a4a4}
+body{background:#a4a4a4 var(--dashboard-wallpaper) center/cover fixed no-repeat!important;color:#191a1b}
+.os-shell{background:var(--glass-panel)!important;border:1px solid var(--glass-edge);border-radius:34px!important;box-shadow:0 24px 70px #00000020,inset 0 1px 0 #ffffff66;backdrop-filter:blur(22px) saturate(115%);-webkit-backdrop-filter:blur(22px) saturate(115%);overflow:hidden}
+.os-shell:before{background:linear-gradient(135deg,#ffffff20,#ffffff08)!important;opacity:1!important;border-radius:inherit}
+.os-shell>.students-bg{display:none!important}
+.workspace{background:transparent;gap:0}
+.framed-rail{height:calc(100% - 24px);margin:12px 0 12px 12px;border:1px solid #ffffff;border-radius:28px;background:#ffffffed;box-shadow:0 3px 16px #00000005;overflow:hidden}
+.framed-rail:after,.sidebar-rule-top,.sidebar-rule-bottom{display:none!important}
+.framed-rail .brand{left:42px;top:32px}
+.figma-menu{left:18px;top:145px;width:calc(100% - 36px);gap:5px}
+.figma-menu button{width:100%;height:49px;padding:13px 17px;border-radius:26px;color:#363739;background:transparent;box-shadow:none;transition:background 170ms,color 170ms}
+.figma-menu button:hover{background:#ededed;color:#111}
+.figma-menu button[aria-selected=true],.figma-menu button[aria-selected=true]:hover{background:#111213!important;color:#fff!important;box-shadow:0 2px 4px #00000012}
+.figma-menu button[aria-selected=true] svg{color:#fff;stroke:currentColor}
+.figma-menu .nav-label{font-size:13px}
+.figma-menu button>svg{width:20px;height:20px;flex-basis:20px}
+.workspace-account{left:14px;right:14px;bottom:16px;padding:14px 10px 13px;border:1px solid #fff;background:#f0f0f0;border-radius:22px;box-shadow:none}
+.profile small{color:#838387}
+.reference-logout{box-shadow:0 2px 5px #00000021}
+.task-viewport{padding:18px 18px 18px 24px}
+.task-viewport:before{background:#fff!important;top:58px;bottom:36px;width:1px}
+.tasks-column{background:#ffffff38!important;border:1px solid #ffffffc9;border-radius:26px;box-shadow:inset 0 1px 0 #fff;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding-left:18px;padding-right:18px}
+.tasks-column>h2{margin-top:16px}
+.tasks-column .task-stack{margin-left:-18px;margin-right:-18px;padding-left:18px;padding-right:18px}
+.work-hub{background:transparent!important}
+.work-hub[data-section=profile]>.browser-stage{padding:76px 24px 24px!important}
+#hub-profile .ai-home{border-radius:26px;background:#ffffffa8;border:1px solid #ffffffed;box-shadow:0 5px 20px #00000005;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);overflow:hidden}
+.ai-welcome h1{font-size:34px;line-height:42px;color:#171819}
+.ai-welcome p{font-size:17px;line-height:30px;color:#77787c}
+.ai-composer{background:#ffffffeb;border-color:#fff;box-shadow:0 4px 18px #0000000b}
+.ai-status{color:#66686b}
+.goal-periods>button{box-shadow:0 3px 12px #00000006;border:1px solid #ffffffc9}
+.goal-details{padding:14px 18px 18px;border:1px solid #fff;border-radius:24px;background:#ffffffe6;box-shadow:0 4px 18px #00000005;margin-bottom:24px}
+.goal-details h2{font-size:18px;line-height:26px}
+.goal-table-head{background:#f3f3f5}
+.goal-table-row{border-bottom-color:#0000000f}
+.goal-all{background:#111213;color:#fff;border-radius:16px}
+#hub-students .students-toolbar{background:#ffffffa8;border-color:#fff;box-shadow:inset 0 1px 0 #fff}
+#hub-students .students-roster{border-radius:18px;background:#ffffff30}
+#hub-students .students-card{background:#ffffffa8;border-color:#ffffff85;box-shadow:0 1px 3px #00000003;margin-left:7px;margin-right:7px}
+#hub-students .students-card:hover{background:#fff}
+#hub-students .students-card[aria-pressed=true]{background:#fff;border-color:#a3a4ac;box-shadow:inset 3px 0 0 #111213}
+#hub-students .students-panels{border-left-color:#fff}
+#hub-students :is(.students-profile,.students-payment),#hub-students #student-detail{background:var(--glass-card)!important;border:1px solid #fff!important;box-shadow:0 3px 14px #00000005!important}
+.hub-view:not(#hub-profile):not(#hub-students):not(#hub-goals-design){border:1px solid #fff;border-radius:24px;background:#ffffffd9;padding:22px}
+.profile-menu{background:#ffffffed;border:1px solid #fff;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+dialog{border:1px solid #ffffffc9;box-shadow:0 20px 70px #0004}
+dialog::backdrop{background:#00000024;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+@media(min-width:761px){
+ .os-shell{left:var(--frame-gap);top:var(--frame-gap);width:calc(100vw / var(--dashboard-scale,1) - 2 * var(--frame-gap));height:calc(var(--dashboard-height,100dvh) - 2 * var(--frame-gap))}
+ .goals-design{min-height:100%;padding-bottom:10px}
+ #hub-students.student-workspace{padding-bottom:20px}
+}
+@media(max-width:760px){
+ :root{--frame-gap:8px}
+ .os-shell{margin:8px;width:calc(100% - 16px);height:auto;min-height:calc(100dvh - 16px);border-radius:24px!important}
+ .framed-rail{margin:8px 0 8px 7px;height:calc(100% - 16px);border-radius:20px}
+ .framed-rail .brand{left:8px;top:24px}
+ .figma-menu{left:4px;width:calc(100% - 8px);top:100px;gap:7px}
+ .figma-menu button{padding:14px;justify-content:center;width:100%;height:46px}
+ .figma-menu button>svg{width:19px;height:19px;flex-basis:19px}
+ .work-hub[data-section=profile]>.browser-stage{padding:62px 12px 12px!important}
+ .ai-welcome h1{font-size:23px;line-height:31px}.ai-welcome p{font-size:13px;line-height:22px}
+ .task-viewport{padding:12px}.goal-details{padding:10px;margin-left:5%;margin-right:5%}
+}
+@media(prefers-reduced-transparency:reduce){.os-shell{background:#e3e3e3!important;backdrop-filter:none;-webkit-backdrop-filter:none}.tasks-column{background:#eeeeee!important;backdrop-filter:none;-webkit-backdrop-filter:none}}
+@media(prefers-reduced-motion:reduce){.figma-menu button{transition:none}}

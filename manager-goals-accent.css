@@ -18,3 +18,12 @@
 @media(max-width:1100px){.goal-bar-value{font-size:8px}.goal-bars button:not([aria-pressed=true]) .goal-bar-value{display:none}}
 @media(max-width:760px){.goals-design .goal-periods>button,.goals-design .goal-periods>button:nth-child(2),.goals-design .goal-periods>button:nth-child(3){width:calc(100% - 8px)}.ai-composer:focus-within{width:calc(100% - 20px);padding-left:14px}.ai-composer:focus-within textarea{font-size:16px}}
 @media(prefers-reduced-motion:reduce){.ai-composer{transition:none}.goals-design .goal-periods>button[aria-pressed=true]{transform:none!important}}
+/* Replace the old fixed-size composer bitmap with a single responsive control. */
+.ai-composer:before{content:none!important;background:none!important}
+.ai-composer{height:auto;padding:4px 8px 4px 18px;border-radius:22px}
+.ai-composer button{position:static;width:30px;height:30px;background:#111213;color:#fff;flex:none;display:grid;place-items:center}
+.ai-composer button svg{visibility:visible;width:20px;height:20px}
+.ai-composer textarea{min-width:0;flex:1;width:auto}
+.ai-composer:focus-within{padding:5.6px 11.2px 5.6px 25.2px;border-radius:30.8px}
+.ai-composer:focus-within button{width:42px;height:42px}
+.ai-composer:focus-within button svg{width:28px;height:28px}

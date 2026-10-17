@@ -1,0 +1,20 @@
+/* Online green for selection; distinct requested colors for the three time rings. */
+.goals-design{--goal-online:#00ff6a}
+.goals-design .goal-bars button[aria-pressed=true]>span{background:var(--goal-online);box-shadow:0 0 18px #00ff6a20}
+.goals-design .goal-metrics button[aria-pressed=true]{background:#dcffe9}
+.goals-design .goal-metrics button:focus-visible{outline-color:#00d85a}
+.goals-design .goal-today>div>span{background:var(--goal-online)}
+.goals-design .goal-bars button>span{position:relative;overflow:visible}
+.goal-bar-value{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);white-space:nowrap;font:500 10px/14px ReferenceInter,Arial,sans-serif;color:#fff;font-variant-numeric:tabular-nums;pointer-events:none}
+.goal-bars button[aria-pressed=true] .goal-bar-value{color:#00ff6a;font-weight:700}
+.goals-design .goal-periods>button,.goals-design .goal-periods>button:nth-child(2),.goals-design .goal-periods>button:nth-child(3){width:calc(100% - 30px);max-width:270px;justify-self:center}
+.goals-design .goal-periods>button[aria-pressed=true],.goals-design .goal-periods>button[aria-pressed=true]:hover{transform:translateY(-3px) scale(1.07)!important;box-shadow:0 14px 30px #00000038,0 3px 8px #00000014!important;z-index:4;border-color:#fff}
+.goals-design .goal-periods>button[aria-pressed=true]:is(:hover,:focus-visible)>span{transform:none}
+.ai-composer{transition:width 220ms ease,min-height 220ms ease,padding 220ms ease}
+.ai-composer:focus-within{width:min(764.4px,calc(100% - 40px));min-height:58.8px;padding:5.6px 11.2px 5.6px 25.2px;gap:14px;border-radius:30.8px}
+.ai-composer:focus-within textarea{font-size:18.2px;line-height:30.8px;padding:7px 0}
+.ai-composer:focus-within button{width:42px;height:42px}
+.ai-composer:focus-within button svg{width:28px;height:28px}
+@media(max-width:1100px){.goal-bar-value{font-size:8px}.goal-bars button:not([aria-pressed=true]) .goal-bar-value{display:none}}
+@media(max-width:760px){.goals-design .goal-periods>button,.goals-design .goal-periods>button:nth-child(2),.goals-design .goal-periods>button:nth-child(3){width:calc(100% - 8px)}.ai-composer:focus-within{width:calc(100% - 20px);padding-left:14px}.ai-composer:focus-within textarea{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.ai-composer{transition:none}.goals-design .goal-periods>button[aria-pressed=true]{transform:none!important}}

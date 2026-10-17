@@ -1,0 +1,15 @@
+.task-card[data-task]>p{font-size:13px!important;font-weight:400!important;line-height:19px!important}
+.goal-records .goal-table-head{font-size:12px}
+.goal-records .goal-table-row{font-size:14px}
+.receipt-avatar.student-illustration{background-image:url(assets/student-avatars-2d.png);background-size:300% 200%;background-position:var(--avatar-x) var(--avatar-y);background-repeat:no-repeat;overflow:hidden}
+.income-latest strong{font-size:11px;line-height:16px}
+.income-latest time{font-size:10px;line-height:15px}
+.income-amount{font-size:15px}
+.receipt-list article strong{font-size:14px}
+.receipt-list article small,.receipt-list article time{font-size:12px}
+.receipt-list article>b{font-size:15px}
+#hub-students .students-card-name{font-size:14px;line-height:19px}
+#hub-students .students-profile h1{font-size:17px;line-height:23px}
+#hub-students .students-contact{font-size:13px}
+#hub-students .students-profile-footer{font-size:11px}
+#hub-students .students-payment dl{font-size:13px}

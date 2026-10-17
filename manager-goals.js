@@ -31,8 +31,12 @@
  periodCards.forEach((card,i)=>{const ring=card.querySelector('.goal-ring');ring.style.removeProperty('--progress');ring.style.removeProperty('--ring');const base=new Image();base.src='assets/figma/goal-ring-base.svg';base.alt='';base.className='goal-ring-base';const arc=new Image();arc.src='assets/figma/goal-ring-'+['today','week','month'][i]+'-v2.svg';arc.alt='';arc.className='goal-ring-arc';ring.prepend(base,arc)});
  const surface=document.createElementNS('http://www.w3.org/2000/svg','svg');surface.classList.add('goal-surface');surface.setAttribute('aria-hidden','true');surface.innerHTML='<path/>';view.prepend(surface);
  requestAnimationFrame(paintGoalSurface);
+ if(period==='today'){
+ chart.innerHTML='<div class="goal-today-summary"><small>'+({revenue:'Өнөөдрийн орлого',tasks:'Өнөөдрийн дууссан ажил',students:'Өнөөдрийн сурагчид'}[metric])+'</small><strong>'+Number(nums[0]).toLocaleString('en-US')+' <span>'+suffix+'</span></strong><div class="goal-today-track" aria-hidden="true"><span></span></div></div>';
+ }else{
  const pointNames=nums.map((_,i)=>period==='today'?'Өнөөдөр':period==='month'?(i+1)+'-р 7 хоног':['Да','Мя','Лха','Пү','Ба','Бя','Ня'][i]);
  chart.innerHTML='<div class="goal-axis">'+[max,max*2/3,max/3,0].map(n=>'<span>'+(metric==='revenue'?(n===0?'0':n>=1e6?(n/1e6).toFixed(1)+'m':Math.round(n/1000)+'k'):Math.round(n))+'</span>').join('')+'</div><div class="goal-bars" aria-label="'+(period==='month'?'Сарын үзүүлэлт долоо хоногоор':'7 хоногийн үзүүлэлт өдрөөр')+'">'+nums.map((n,i)=>'<button data-point="'+i+'" data-empty="'+(n===0)+'" aria-pressed="'+(chosen===i)+'" aria-label="'+pointNames[i]+': '+n+' '+suffix+'"><span style="height:'+Math.max(23,n/max*216)+'px"><b class="goal-bar-value">'+Number(n).toLocaleString('en-US')+(metric==='revenue'?'₮':'')+'</b></span><small>'+(period==='month'?'<span>'+(i+1)+'-р</span><span>7 хоног</span>':pointNames[i])+'</small></button>').join('')+'</div>';
+ }
  view.querySelectorAll('[data-period]').forEach(b=>b.onclick=()=>{period=b.dataset.period;chosen=period==='week'?1:0;all=false;render()});
  view.querySelectorAll('[data-metric]').forEach(b=>b.onclick=()=>{metric=b.dataset.metric;render()});
  view.querySelectorAll('[data-point]').forEach(b=>b.onclick=()=>{chosen=Number(b.dataset.point);all=false;render()});

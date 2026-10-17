@@ -44,6 +44,7 @@
  view.querySelector('.goal-all').onclick=()=>{all=!all;render()};
  const title=period==='today'?'Өнөөдрийн':period==='month'?(chosen+1)+'-р долоо хоногийн':names[chosen]+' гарагийн';
  view.querySelector('h2').textContent=period==='today'?'Өнөөдрийн '+({revenue:'орлого',tasks:'ажил',students:'сурагчид'}[metric]):(all?labels[period]+' —':title)+' '+({revenue:'орлогын',tasks:'ажлын',students:'сурагчдын'}[metric])+' дэлгэрэнгүй';
+ if(period!=='today'&&metric==='revenue'){const amount=all?nums.reduce((sum,n)=>sum+n,0):nums[chosen];view.querySelector('h2').append(' — '+Number(amount).toLocaleString('en-US')+'₮')}
  const rows=view.querySelector('.goal-records');
  const days=all?buckets().flat():buckets()[chosen];
  if(metric==='tasks'){

@@ -84,4 +84,4 @@
 
 #hub-students .students-avatar.student-illustration,#hub-students .students-card .students-avatar.student-illustration{background-image:url(assets/student-avatars-2d.png);background-size:300% 200%;background-position:var(--avatar-x) var(--avatar-y);background-repeat:no-repeat}
 
-.goal-table-row i.student-illustration{background-image:url(assets/student-avatars-2d.png);background-size:300% 200%;background-position:var(--avatar-x) var(--avatar-y);background-repeat:no-repeat;overflow:hidden}
+#hub-goals-design .goal-table-row i.student-illustration{background-image:url(assets/student-avatars-2d.png);background-size:300% 200%;background-position:var(--avatar-x) var(--avatar-y);background-repeat:no-repeat;overflow:hidden}

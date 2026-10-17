@@ -1,0 +1,25 @@
+/* Dark goal graph and inset metric selector, based on the supplied reference. */
+.goals-design .goal-surface{display:none}
+.goals-design .goal-periods>button[aria-pressed=true],.goals-design .goal-periods>button[aria-pressed=true]:hover{background:#fff}
+.goals-design .goal-chart-panel{background:#111213;border-radius:25px;color:#fff;gap:22px;padding:30px 22px 24px 26px;box-shadow:0 3px 12px #00000009}
+.goals-design .goal-bars{border-left-color:#ffffff52}
+.goals-design .goal-bars button>span,.goals-design .goal-bars button[data-empty]>span{background:#fff;border-radius:18px}
+.goals-design .goal-bars button[data-empty=true]>span{background:#ffffff70}
+.goals-design .goal-bars button[aria-pressed=true]>span{background:#7960ff;box-shadow:0 0 18px #7960ff20}
+.goals-design .goal-axis,.goals-design .goal-bars small{color:#ffffffb3}
+.goals-design .goal-bars button[aria-pressed=true] small{color:#fff;font-weight:700}
+.goals-design .goal-bars button:focus-visible{outline:2px solid #b8acff;outline-offset:5px;border-radius:18px}
+.goals-design .goal-metrics{width:158px;align-self:center;gap:7px;padding:8px;background:#fff;border-radius:20px;box-shadow:inset 0 0 0 1px #00000008,0 2px 8px #00000018}
+.goals-design .goal-metrics button,.goals-design .goal-metrics button:last-child,.goals-design .goal-metrics button[aria-pressed=true]{width:100%;max-width:none;min-height:50px;padding:9px 8px;display:grid;grid-template-columns:22px minmax(0,1fr) 18px;gap:5px;align-items:center;border-radius:13px;background:#f3f3f3;color:#171819;text-align:left;font-size:11px;line-height:14px;box-shadow:none;transition:background 160ms,transform 160ms}
+.goals-design .goal-metrics button:hover{background:#e7e7eb;transform:translateY(-1px)}
+.goals-design .goal-metrics button[aria-pressed=true]{background:#e9e5ff}
+.goals-design .goal-metrics button:focus-visible{outline:2px solid #7960ff;outline-offset:1px}
+.goal-metric-icon{font:500 23px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-align:center}
+.goal-metric-check{width:18px;height:18px;border-radius:50%;background:#111213;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px}
+.goals-design .goal-metrics button[aria-pressed=false] .goal-metric-check{background:#dedee3}
+.goals-design .goal-today small,.goals-design .goal-today p,.goals-design .goal-today strong{color:#fff}
+.goals-design .goal-today>div{background:#ffffff24}
+.goals-design .goal-today>div>span{background:#7960ff}
+@media(max-width:760px){.goals-design .goal-chart-panel{height:auto;min-height:330px;padding:22px 18px;gap:18px}.goals-design .goal-metrics{width:100%;flex-direction:row;align-items:stretch;border-radius:16px}.goals-design .goal-metrics button,.goals-design .goal-metrics button[aria-pressed=true]{grid-template-columns:18px minmax(0,1fr);font-size:10px;min-height:48px}.goal-metric-check{display:none}.goal-metric-icon{font-size:18px}}
+@media(prefers-reduced-motion:reduce){.goals-design .goal-metrics button{transition:none;transform:none!important}}
+.goal-metric-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}

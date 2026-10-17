@@ -1,0 +1,12 @@
+:root{--action-red:#ff3b30;--action-green:#00c853}
+body .dialog-close,body button[aria-label="Хаах"],body button[data-action="cancel"]{background:var(--action-red)!important;color:white!important;border:0!important;border-radius:50%!important;box-shadow:0 2px 7px #ff3b3029}
+body .dialog-close,body button[aria-label="Хаах"]{width:28px!important;height:28px!important;min-width:28px;padding:0!important;display:grid;place-items:center;font:22px/1 Arial,sans-serif!important;cursor:pointer}
+body .save-button,body .dialog-submit,body .registration-submit,body button[type="submit"],body button[data-action="done"]{background:var(--action-green)!important;color:white!important;border-color:transparent!important}
+body .dialog-close:hover,body button[aria-label="Хаах"]:hover{background:#e52e25!important;transform:scale(1.08)}
+body .save-button:hover,body button[type="submit"]:hover{filter:brightness(1.06)}
+.logout-thumb{background:var(--action-red);border-radius:50%}
+.logout-thumb .logout-knob{visibility:hidden}
+.logout-thumb .logout-arrow img{filter:brightness(0) invert(1)}
+.main-column,.task-viewport{filter:blur(var(--logout-blur,0px));opacity:var(--logout-opacity,1);transition:filter 180ms ease,opacity 180ms ease}
+.logout-dragging .main-column,.logout-dragging .task-viewport{transition:none}
+@media(prefers-reduced-motion:reduce){.main-column,.task-viewport{transition:none}}

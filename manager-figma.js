@@ -28,13 +28,13 @@
  document.querySelector('.profile-menu').append(account.querySelector('.workspace-appearance'));
  const swipe=document.createElement('div');swipe.className='logout-swipe';swipe.innerHTML='<span class="logout-copy" aria-hidden="true"><small>СИСТЕМЭЭС</small><strong>ГАРАХ</strong></span><div class="logout-thumb" role="slider" tabindex="0" aria-label="Системээс гарахын тулд баруун тийш чирнэ үү" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Баруун тийш чирж гарна"><img class="logout-knob" src="assets/figma/logout-knob.svg" alt=""><span class="logout-arrow"><img class="arrow-shaft" src="assets/figma/logout-arrow-shaft.svg" alt=""><img class="arrow-upper" src="assets/figma/logout-arrow-upper.svg" alt=""><img class="arrow-lower" src="assets/figma/logout-arrow-lower.svg" alt=""></span></div>';
  account.querySelector('.reference-logout').replaceWith(swipe);
- const thumb=swipe.querySelector('.logout-thumb');let dragging=false,startX=0,position=0,done=false;
+ const thumb=swipe.querySelector('.logout-thumb');let dragging=false,startX=0,startPosition=0,dragScale=1,position=0,done=false;
  const travel=81;
- function setSwipe(x){position=Math.max(0,Math.min(travel,x));swipe.style.setProperty('--swipe-x',position+'px');swipe.style.setProperty('--swipe-progress',position/travel);thumb.setAttribute('aria-valuenow',String(Math.round(position/travel*100)))}
- function resetSwipe(){dragging=false;swipe.classList.remove('is-dragging');setSwipe(0)}
- function completeSwipe(){if(done)return;done=true;setSwipe(travel);thumb.setAttribute('aria-valuetext','Системээс гарч байна');document.querySelector('#logout').click()}
- thumb.addEventListener('pointerdown',e=>{if(e.button!==0)return;e.preventDefault();dragging=true;startX=e.clientX-position;thumb.setPointerCapture(e.pointerId);swipe.classList.add('is-dragging')});
- thumb.addEventListener('pointermove',e=>{if(dragging)setSwipe(e.clientX-startX)});
+ function setSwipe(x){position=Math.max(0,Math.min(travel,x));swipe.style.setProperty('--swipe-x',position+'px');swipe.style.setProperty('--swipe-progress',position/travel);document.body.style.setProperty('--logout-blur',(position/travel*28)+'px');document.body.style.setProperty('--logout-opacity',String(1-position/travel));thumb.setAttribute('aria-valuenow',String(Math.round(position/travel*100)))}
+ function resetSwipe(){dragging=false;swipe.classList.remove('is-dragging');document.body.classList.remove('logout-dragging');setSwipe(0)}
+ function completeSwipe(){if(done)return;done=true;setSwipe(travel);thumb.setAttribute('aria-valuetext','Системээс гарч байна');setTimeout(()=>document.querySelector('#logout').click(),180)}
+ thumb.addEventListener('pointerdown',e=>{if(e.button!==0)return;e.preventDefault();dragging=true;startX=e.clientX;startPosition=position;dragScale=thumb.getBoundingClientRect().width/thumb.offsetWidth;document.body.classList.add('logout-dragging');thumb.setPointerCapture(e.pointerId);swipe.classList.add('is-dragging')});
+ thumb.addEventListener('pointermove',e=>{if(dragging)setSwipe(startPosition+(e.clientX-startX)/dragScale)});
  thumb.addEventListener('pointerup',()=>{if(!dragging)return;if(position>=travel*.95)completeSwipe();else resetSwipe()});
  thumb.addEventListener('pointercancel',resetSwipe);thumb.addEventListener('lostpointercapture',()=>{if(!done&&dragging)resetSwipe()});
  thumb.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft','Home','End','Escape','Enter',' '].includes(e.key))return;e.preventDefault();if(e.key==='Escape'||e.key==='Home')resetSwipe();else if(e.key==='ArrowRight')setSwipe(position+travel/10);else if(e.key==='ArrowLeft')setSwipe(position-travel/10);else if(e.key==='End')setSwipe(travel);else if(position>=travel*.95)completeSwipe();thumb.setAttribute('aria-valuetext',position>=travel*.95?'Enter дарж системээс гарна':'Баруун тийш чирж гарна')});

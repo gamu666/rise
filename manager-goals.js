@@ -21,7 +21,7 @@
  const previewDays=Array.from({length:31},(_,i)=>{const day=i+1,weekday=(day+2)%7,amount=day>=12&&day<=18?demo[day-12]:weekday<5?demo[weekday]:0;const count=amount?[5,4,3,3,2][weekday]:0;return {day,amount,count,tasks:amount?[4,3,2,4,3][weekday]:0}});
  function buckets(){return period==='today'?[previewDays.filter(d=>d.day===16)]:period==='week'?previewDays.filter(d=>d.day>=12&&d.day<=18).map(d=>[d]):Array.from({length:4},(_,i)=>previewDays.filter(d=>Math.min(3,Math.floor((d.day-1)/7))===i))}
  function values(){return buckets().map(ds=>ds.reduce((sum,d)=>sum+(metric==='revenue'?d.amount:metric==='tasks'?d.tasks:d.count),0))}
- function miniMetric(m){const series=buckets().map(ds=>ds.reduce((sum,d)=>sum+(m==='revenue'?d.amount:m==='tasks'?d.tasks:d.count),0)),peak=Math.max(1,...series);const pts=series.map((n,i)=>[(series.length===1?48:6+i*84/(series.length-1)),23-n/peak*20]);return '<span class="goal-metric-mini" aria-hidden="true"><svg viewBox="0 0 96 28">'+(pts.length>1?'<polyline points="'+pts.map(p=>p.join(',')).join(' ')+'"/>':'')+'<circle cx="'+pts.at(-1)[0]+'" cy="'+pts.at(-1)[1]+'" r="2.5"/></svg></span>'}
+ function miniMetric(m){const series=buckets().map(ds=>ds.reduce((sum,d)=>sum+(m==='revenue'?d.amount:m==='tasks'?d.tasks:d.count),0)),peak=Math.max(1,...series),step=84/series.length;return '<span class="goal-metric-mini" aria-hidden="true"><svg viewBox="0 0 96 44">'+series.map((n,i)=>{const h=Math.max(3,n/peak*32);return '<rect x="'+(6+i*step+step*.2)+'" y="'+(38-h)+'" width="'+Math.min(12,step*.6)+'" height="'+h+'" rx="3"/>'}).join('')+'</svg></span>'}
  function render(){
  const nums=values(),max=Math.max(...nums,1),suffix=metric==='revenue'?'₮':metric==='tasks'?'ажил':'сурагч';
  const cardDates=['10.16.2026','10.12–10.16.2026','10.01–10.31.2026'];
@@ -31,12 +31,8 @@
  periodCards.forEach((card,i)=>{const ring=card.querySelector('.goal-ring');ring.style.removeProperty('--progress');ring.style.removeProperty('--ring');const base=new Image();base.src='assets/figma/goal-ring-base.svg';base.alt='';base.className='goal-ring-base';const arc=new Image();arc.src='assets/figma/goal-ring-'+['today','week','month'][i]+'-v2.svg';arc.alt='';arc.className='goal-ring-arc';ring.prepend(base,arc)});
  const surface=document.createElementNS('http://www.w3.org/2000/svg','svg');surface.classList.add('goal-surface');surface.setAttribute('aria-hidden','true');surface.innerHTML='<path/>';view.prepend(surface);
  requestAnimationFrame(paintGoalSurface);
- if(period==='today'){
- chart.innerHTML='<div class="goal-today"><small>ӨНӨӨДРИЙН ГҮЙЦЭТГЭЛ</small><strong>'+nums[0].toLocaleString()+' '+suffix+'</strong><div><span style="width:78%"></span></div><p>Зорилгын биелэлт 78%</p></div>';
- }else{
- const pointNames=nums.map((_,i)=>period==='month'?(i+1)+'-р 7 хоног':['Да','Мя','Лха','Пү','Ба','Бя','Ня'][i]);
+ const pointNames=nums.map((_,i)=>period==='today'?'Өнөөдөр':period==='month'?(i+1)+'-р 7 хоног':['Да','Мя','Лха','Пү','Ба','Бя','Ня'][i]);
  chart.innerHTML='<div class="goal-axis">'+[max,max*2/3,max/3,0].map(n=>'<span>'+(metric==='revenue'?(n===0?'0':n>=1e6?(n/1e6).toFixed(1)+'m':Math.round(n/1000)+'k'):Math.round(n))+'</span>').join('')+'</div><div class="goal-bars" aria-label="'+(period==='month'?'Сарын үзүүлэлт долоо хоногоор':'7 хоногийн үзүүлэлт өдрөөр')+'">'+nums.map((n,i)=>'<button data-point="'+i+'" data-empty="'+(n===0)+'" aria-pressed="'+(chosen===i)+'" aria-label="'+pointNames[i]+': '+n+' '+suffix+'"><span style="height:'+Math.max(23,n/max*216)+'px"><b class="goal-bar-value">'+Number(n).toLocaleString('en-US')+(metric==='revenue'?'₮':'')+'</b></span><small>'+pointNames[i]+'</small></button>').join('')+'</div>';
- }
  view.querySelectorAll('[data-period]').forEach(b=>b.onclick=()=>{period=b.dataset.period;chosen=period==='week'?1:0;all=false;render()});
  view.querySelectorAll('[data-metric]').forEach(b=>b.onclick=()=>{metric=b.dataset.metric;render()});
  view.querySelectorAll('[data-point]').forEach(b=>b.onclick=()=>{chosen=Number(b.dataset.point);all=false;render()});

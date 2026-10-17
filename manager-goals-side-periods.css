@@ -1,0 +1,16 @@
+.goals-design{display:grid;grid-template-columns:minmax(0,1fr) 220px;grid-template-rows:298px auto;align-content:start;gap:20px 24px}
+.goals-design .goal-periods{grid-column:2;grid-row:1;display:grid;grid-template-columns:1fr;grid-template-rows:repeat(3,88px);gap:17px;width:100%;height:298px;margin:0}
+.goals-design .goal-periods>button,.goals-design .goal-periods>button:nth-child(2),.goals-design .goal-periods>button:nth-child(3){width:100%;max-width:none;height:88px;flex-direction:row;padding:12px;gap:10px}
+.goals-design .goal-chart-panel{grid-column:1;grid-row:1;width:100%;height:298px;min-height:0;margin:0;padding:30px 18px 24px 20px;gap:16px;flex-direction:row;align-items:center;min-width:0}
+.goals-design .goal-chart{flex:0 1 auto;min-width:0;align-self:auto;height:244px;min-height:244px;overflow-x:auto;overflow-y:hidden}
+.goals-design .goal-metrics{flex:1 0 174px;min-width:174px;width:auto;max-width:260px;align-self:center;padding:7px;gap:7px}
+.goals-design .goal-metrics button,.goals-design .goal-metrics button:last-child,.goals-design .goal-metrics button[aria-pressed=true]{grid-template-columns:18px minmax(0,1fr) 48px;min-height:50px;padding:7px;gap:5px;font-size:10px;line-height:14px}
+.goals-design .goal-metric-mini{height:27px;padding:2px 4px}
+.goals-design .goal-metric-mini svg{height:22px}
+.goals-design .goal-details{grid-column:1 / -1;grid-row:2;width:100%;margin:0}
+@container(max-width:740px){
+ .goals-design .goal-chart-panel{gap:10px;padding-left:10px;padding-right:10px}
+ .goals-design .goal-metrics{flex-basis:150px;min-width:150px}
+ .goals-design .goal-metrics button,.goals-design .goal-metrics button[aria-pressed=true]{grid-template-columns:16px minmax(0,1fr) 32px;font-size:9px}
+}
+@media(max-width:760px){.goals-design{grid-template-columns:minmax(0,1fr) 140px;gap:18px 12px}.goals-design .goal-periods>button{padding:8px;gap:6px}.goals-design .goal-periods strong{font-size:10px}.goals-design .goal-periods small{font-size:8px}.goals-design .goal-metrics{flex-basis:125px;min-width:125px}}

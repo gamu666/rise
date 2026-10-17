@@ -30,3 +30,7 @@
 @media(max-width:760px){.recent-income{padding:13px;border-radius:20px;min-height:145px}.recent-income h2{font-size:13px}.receipt-list article{flex-wrap:wrap}.receipt-list article>b{margin-left:39px}}
 
 .recent-income:before,.recent-income:after{border-radius:inherit}
+
+.recent-income:before,.recent-income:after{content:none}
+.recent-income .income-spark>span{background:#00c853}
+.recent-income .income-spark>span[data-empty=true]{background:#dedee1}

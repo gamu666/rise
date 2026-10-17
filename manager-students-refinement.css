@@ -57,3 +57,12 @@
  #hub-students .students-roster{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){.students-filter-trigger{transition:none}.students-filter-popover{animation:none}}
+
+/* Keep the student overview inside the desktop viewport; scroll only the roster. */
+@media(min-width:761px){
+ .work-hub[data-section=students]>.browser-stage{overflow:hidden;scrollbar-gutter:auto}
+ #hub-students.student-workspace{height:100%;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;overflow:hidden}
+ #hub-students .students-roster{height:auto;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+ #hub-students .students-panels{min-height:0;align-items:stretch}
+ #hub-students :is(.students-profile,.students-payment){height:clamp(252px,calc(var(--dashboard-height,100dvh) * .307),292px);min-height:0}
+}

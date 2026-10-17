@@ -41,7 +41,8 @@
  thumb.addEventListener('blur',()=>{if(!dragging&&!done)resetSwipe()});
  const home=document.createElement('section');home.className='ai-home';home.innerHTML='<div class="ai-welcome"><h1>Тавтай морил, Тэмүүлэн!</h1><p>Өнөөдрийн ажилд тань юугаар туслах вэ?</p></div><form class="ai-composer"><label class="sr-only" for="rise-ai-prompt">RISE AI-д бичих</label><textarea id="rise-ai-prompt" rows="1" placeholder="Асуултаа асуугаарай, эсвэл хийх ажлаа бичээрэй…" required></textarea><button type="submit" aria-label="Илгээх"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button></form><p class="ai-status" role="status"></p>';
  document.querySelector('#hub-profile').append(home);
- home.querySelector('form').onsubmit=e=>{e.preventDefault();home.querySelector('.ai-status').textContent='AI үйлчилгээ хараахан холбогдоогүй байна. Таны бичсэн зүйл илгээгдээгүй.'};
+ const prompt=home.querySelector('textarea'),sendButton=home.querySelector('button[type=submit]');const syncSend=()=>{sendButton.disabled=!prompt.value.trim()};prompt.addEventListener('input',syncSend);syncSend();
+ home.querySelector('form').onsubmit=e=>{e.preventDefault();if(!prompt.value.trim())return;home.querySelector('.ai-status').textContent='AI үйлчилгээ хараахан холбогдоогүй байна. Таны бичсэн зүйл илгээгдээгүй.'};
  const files=document.createElement('section');files.className='file-home';files.hidden=true;files.innerHTML='<h1>Файлууд</h1><p>Файлын хэсгийг дараагийн шатанд холбоно.</p>';document.querySelector('#hub-profile').append(files);
  const select=workspaceSelect;workspaceSelect=function(key){select(key);home.hidden=false;files.hidden=true};selectHub=workspaceSelect;
  const tasks=document.querySelector('.tasks-column');tasks.querySelector('h2').childNodes.forEach(n=>{if(n.nodeType===3)n.textContent='Миний ажлууд '});

@@ -14,3 +14,6 @@ body .save-button:hover,body button[type="submit"]:hover{filter:brightness(1.06)
 .logout-thumb{top:6.5px}
 .logout-thumb .logout-arrow{display:grid;place-items:center}
 .logout-thumb .logout-arrow svg{display:block;width:23px;height:23px;fill:none;stroke:white;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+
+body .ai-composer button[type="submit"]:disabled{background:#111213!important;color:#fff!important;cursor:default;filter:none;opacity:1}
+body .ai-composer button[type="submit"]:not(:disabled){background:var(--action-green)!important;cursor:pointer}

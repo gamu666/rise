@@ -34,5 +34,5 @@
 @media(max-width:1300px){.goals-design{grid-template-columns:minmax(0,1fr) 240px}}
 
 /* Give the plot and selector matching breathing room at both outer edges. */
-.goals-design .goal-chart-panel{padding-left:36px;padding-right:36px}
-@container(max-width:1040px){.goals-design .goal-chart-panel{padding-left:24px;padding-right:24px}}
+.goals-design .goal-chart-panel{padding-left:72px;padding-right:36px}
+@container(max-width:1040px){.goals-design .goal-chart-panel{padding-left:48px;padding-right:24px}}

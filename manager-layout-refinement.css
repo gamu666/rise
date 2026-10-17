@@ -1,0 +1,34 @@
+/* Alignment and density corrections from the user's annotated references. */
+.os-shell{--glass-panel:rgba(255,255,255,.238);backdrop-filter:blur(15.4px) saturate(115%);-webkit-backdrop-filter:blur(15.4px) saturate(115%)}
+.tasks-column{backdrop-filter:blur(11.2px);-webkit-backdrop-filter:blur(11.2px)}
+#hub-profile .ai-home{backdrop-filter:blur(8.4px);-webkit-backdrop-filter:blur(8.4px)}
+.ai-composer textarea:focus,.ai-composer textarea:focus-visible{outline:none!important;box-shadow:none!important;border:0!important}
+.ai-composer:focus-within{box-shadow:0 4px 18px #0000000b}
+@media(min-width:761px){
+ .work-hub[data-section=profile]>.browser-stage{padding:12px 24px!important}
+ .task-viewport{padding-top:12px;padding-bottom:12px}
+ .goals-design{padding-left:24px;padding-right:24px}
+ .goal-periods{width:100%;margin-left:0;gap:24px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+ .goal-periods>button,.goal-periods>button:nth-child(2),.goal-periods>button:nth-child(3){width:100%;left:auto;justify-content:center;position:relative}
+ .goals-design .goal-chart-panel{width:100%;margin-left:0;margin-right:0}
+ .goals-design .goal-details{margin-left:0;margin-right:0}
+}
+.goals-design .goal-details{background:transparent;border:0;box-shadow:none;padding:0;margin-top:20px}
+.goal-details header{padding:0 12px 10px;min-height:56px}
+.goal-details .goal-all{background:#ffffffde;color:#666;border-radius:9px;box-shadow:none}
+.goal-records{background:#fff;border:1px solid #ffffffd9;border-radius:20px;overflow:hidden;min-height:280px;padding-bottom:18px}
+.goal-records .goal-table-head{border-radius:0;background:#fafafbc9;padding:10px 18px 10px 48px;font-size:11px;color:#777}
+.goal-records .goal-table-row{padding:10px 18px;min-height:58px;border-radius:0;border-bottom:1px solid #e4e4e6;font-size:13px}
+.goal-records .goal-table-row:last-child{border-bottom:0}
+.goal-records .goal-table-row>strong{font-weight:700}
+.goal-records .goal-table-row i{background:#d9d9d9;color:transparent;width:32px;height:32px}
+.goal-records .goal-task-record{padding:18px;border-bottom:1px solid #e4e4e6}
+.task-card[data-task]{transition:transform 200ms ease,box-shadow 200ms ease,margin 200ms ease;transform-origin:center}
+.task-card[data-task]:has(.task-actions:not([hidden])){transform:scale(1.035)!important;z-index:3;margin-top:6px!important;margin-bottom:6px!important;box-shadow:0 12px 26px #00000070!important}
+.task-actions{padding-bottom:5.2px!important;gap:5.2px;row-gap:5.2px}
+.task-actions .task-reply{height:29.9px;min-height:29.9px;font-size:13px;line-height:19.5px;padding:3.9px 13px;border-radius:19.5px;resize:none}
+.task-actions button,.task-actions button[data-figma-dot]{width:22.1px!important;height:22.1px!important;min-width:22.1px!important;font-size:13px!important;line-height:16.9px;padding:0!important}
+.task-actions .task-dot-ring{width:22.1px;height:22.1px}
+.task-actions .task-dot-fill{width:16.9px;height:16.9px;left:2.6px;top:2.6px}
+@media(max-width:760px){.goal-records{overflow-x:auto;min-height:230px}.goal-details header{padding:0 5px 10px}.task-card[data-task]:has(.task-actions:not([hidden])){transform:scale(1.02)!important}}
+@media(prefers-reduced-motion:reduce){.task-card[data-task]{transition:none}}

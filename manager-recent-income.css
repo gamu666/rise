@@ -1,0 +1,27 @@
+.task-viewport{display:flex;flex-direction:column;gap:14px}
+.task-viewport .tasks-column{height:auto;min-height:0;flex:1}
+.recent-income{position:relative;flex:none;min-height:156px;border:1px solid #fff;border-radius:26px;background:#ffffffed;padding:15px 17px;box-shadow:0 3px 14px #00000005;color:#18191a}
+.recent-income header{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.recent-income h2{display:flex;align-items:center;gap:7px;font-size:14px;line-height:20px;font-weight:700;white-space:nowrap}
+.recent-income h2 svg{width:16px;height:16px;fill:currentColor;stroke:none}
+.recent-income-all{font-size:10px;color:#777;white-space:nowrap;border-radius:8px;padding:4px 2px}
+.recent-income-all:hover{color:#111;background:#f0f0f2}
+.income-spark{height:48px;display:flex;align-items:flex-end;gap:4px;padding:3px 0 5px;border-bottom:1px solid #eeeeef;margin:4px 0 11px}
+.income-spark>span{height:var(--income-height);flex:1;min-width:0;background:#191a1b;border-radius:2px 2px 0 0}
+.income-spark>span[data-empty=true]{background:#dedee1}
+.recent-income footer{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:32px}
+.income-latest{display:flex;align-items:center;gap:7px;min-width:0}
+.income-latest>span:last-child{min-width:0}
+.income-latest strong{display:block;font-size:10px;line-height:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.income-latest time{display:block;font-size:9px;line-height:14px;color:#888}
+.income-amount{font-size:14px;white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:700}
+.income-empty{font-size:10px;color:#85858b}
+.receipt-avatar{display:grid;place-items:center;flex:none;width:29px;height:29px;border-radius:50%;background:#e9e9ec;border:2px solid #fff;color:#4b4b50;font-size:11px}
+.recent-income-dialog{width:min(580px,calc(100vw - 32px));max-height:80dvh;padding:24px;border-radius:24px;background:#fff;color:#191a1b}
+.recent-income-dialog h2{font-size:20px;font-weight:700;margin-bottom:20px;padding-right:30px}
+.receipt-list article{display:flex;align-items:center;gap:10px;padding:14px 0;border-bottom:1px solid #eee}
+.receipt-list article>div{flex:1;min-width:0}
+.receipt-list article strong{font-size:13px}.receipt-list article small,.receipt-list article time{display:block;font-size:11px;color:#85858b;margin-top:3px}
+.receipt-list article>b{font-size:14px;font-variant-numeric:tabular-nums}
+.receipt-empty{font-size:13px;padding:20px 0;color:#777}
+@media(max-width:760px){.recent-income{padding:13px;border-radius:20px;min-height:145px}.recent-income h2{font-size:13px}.receipt-list article{flex-wrap:wrap}.receipt-list article>b{margin-left:39px}}

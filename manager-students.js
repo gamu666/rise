@@ -21,7 +21,9 @@
  const oldRender=renderStudents;
  function matched(){const q=query.value.trim().toLocaleLowerCase('mn');return students.filter(s=>(s.name+' '+s.phone+' '+s.rd).toLocaleLowerCase('mn').includes(q)&&(!courseFilter.value||studentEnrollments(s).some(e=>e.course===courseFilter.value))&&(!monthFilter.value||s.ends.startsWith(monthFilter.value))&&(filter!=='unpaid'||s.paid<s.total)&&(filter!=='paid'||s.paid>=s.total)&&(filter!=='graduating'||s.ends.startsWith('2026.10')))}
  function name(s){const parts=s.name.trim().split(/\s+/);return esc(parts.slice(0,-1).join(' '))+' <strong>'+esc(parts.at(-1))+'</strong>'}
- function avatar(s,large=false){const sample=large&&s.id==='TR-26104';return '<span class="students-avatar '+(large?'large':'')+(sample?' sample-photo':'')+'" aria-hidden="true">'+(sample?'<img src="assets/figma/students/c8c70.png" alt="">':esc(s.initial||s.name[0]))+'</span>'}
+ const avatarImages=['assets/cat-black.jpg','assets/cat-mint.jpg','assets/cat-yellow.jpg'];
+ function avatar(s,large=false){const index=Math.max(0,students.findIndex(item=>item.id===s.id))%avatarImages.length;return '<span class="students-avatar '+(large?'large':'')+'" aria-hidden="true"><img src="'+avatarImages[index]+'" alt="" loading="lazy" decoding="async"></span>'}
+
  function progress(s){return s.total>0?Math.floor(Math.max(0,Math.min(1,s.paid/s.total))*100):100}
  function paint(){
   const records=matched();if(!records.some(s=>s.id===selected))selected=records[0]?.id;

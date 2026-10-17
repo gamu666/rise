@@ -15,6 +15,22 @@
  document.querySelector('.task-stack').addEventListener('click',e=>{const action=e.target.closest('[data-action]')?.dataset.action;if(action==='done')flash('success');else if(action==='cancel')restore()});
  // The future service can supply its actual loading/reading lifecycle through this event.
  window.addEventListener('rise-ai-state',e=>{if(['idle','reading','loading','warning','success'].includes(e.detail?.state))setState(e.detail.state,e.detail.label)});
- let frame=0;document.addEventListener('pointermove',e=>{if(e.pointerType==='touch'||frame)return;const x=e.clientX,y=e.clientY;frame=requestAnimationFrame(()=>{frame=0;const r=homeFace.getBoundingClientRect();home.style.setProperty('--look-x',Math.max(-3,Math.min(3,(x-r.left-r.width/2)/innerWidth*8))+'px');home.style.setProperty('--look-y',Math.max(-2,Math.min(2,(y-r.top-r.height/2)/innerHeight*5))+'px')})},{passive:true});
+ // Use each face's own geometry, not the viewport, and keep following at its edges.
+ let frame=0,pointerX=innerWidth/2,pointerY=innerHeight/2;
+ function updateGaze(){frame=0;for(const face of [notch.querySelector('.ai-face'),homeFace]){
+  const r=face.getBoundingClientRect();if(!r.width||!r.height)continue;
+  const eyes=Array.from(face.querySelectorAll('i'));
+  const left=Math.min(...eyes.map(e=>e.offsetLeft)),right=Math.max(...eyes.map(e=>e.offsetLeft+e.offsetWidth));
+  const top=Math.min(...eyes.map(e=>e.offsetTop)),bottom=Math.max(...eyes.map(e=>e.offsetTop+e.offsetHeight));
+  const nx=Math.max(-1,Math.min(1,(pointerX-r.left-r.width/2)/(r.width*2)));
+  const ny=Math.max(-1,Math.min(1,(pointerY-r.top-r.height/2)/(r.height*2)));
+  const x=nx*(nx<0?Math.max(0,left-5):Math.max(0,face.clientWidth-right-5));
+  const y=ny*(ny<0?Math.max(0,top-5):Math.max(0,face.clientHeight-bottom-5));
+  face.style.setProperty('--look-x',x+'px');face.style.setProperty('--look-y',y+'px');
+ }}
+ function scheduleGaze(){if(!frame)frame=requestAnimationFrame(updateGaze)}
+ document.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;pointerX=e.clientX;pointerY=e.clientY;scheduleGaze()},{passive:true});
+ window.addEventListener('resize',scheduleGaze,{passive:true});
+ new ResizeObserver(scheduleGaze).observe(notch);new ResizeObserver(scheduleGaze).observe(homeFace);
  setState(navigator.onLine?'idle':'offline');
 })();

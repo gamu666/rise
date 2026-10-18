@@ -52,3 +52,9 @@
 .chat-unseen-circle{display:block;width:14px;height:14px;border:1.5px solid #9999a1;border-radius:50%;background:transparent;box-sizing:border-box}
 .chat-thread[aria-pressed=true] .chat-unseen-circle{border-color:#ffffffa6}
 .chat-thread-meta .chat-seen-avatar{width:17px;height:17px;min-width:17px;border-radius:50%;font-size:9px;overflow:hidden}
+
+/* Header identity, received bubble and composer share the same content rail. */
+#hub-chat .chat-header{padding-left:var(--message-inset);padding-right:calc(var(--message-inset) + var(--chat-scrollbar-gap,0px));gap:12px}
+#hub-chat .chat-header>.chat-avatar{width:32px;height:32px;min-width:32px;flex:0 0 32px;font-size:15px}
+#hub-chat .chat-sender-name{padding-left:0}
+.work-hub[data-section=chat] .chat-thread-list{padding-left:0;padding-right:0}

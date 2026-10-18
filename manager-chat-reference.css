@@ -70,3 +70,7 @@
 .work-hub[data-section=chat] .chat-thread>.chat-avatar{width:42px;height:42px;min-width:42px}
 .work-hub[data-section=chat] .chat-thread-list{gap:12px}
 .work-hub[data-section=chat] .chat-list-toolbar{margin-bottom:18px}
+
+/* Reserve space for the shared hover scale without clipping card edges. */
+.work-hub[data-section=chat] .browser-options{padding-inline:8px}
+.work-hub[data-section=chat] .chat-thread-list{padding:8px;margin-inline:-8px;width:calc(100% + 16px);max-width:none;scroll-padding-block:8px}

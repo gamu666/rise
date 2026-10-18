@@ -42,7 +42,7 @@
 .chat-list-actions button,.chat-contact-picker button{display:flex;align-items:center;gap:10px;width:100%;padding:10px;background:transparent;border:0;border-radius:9px;color:#171719;text-align:left;font-size:14px}
 .chat-list-actions button:hover,.chat-contact-picker button:hover{background:#f0f0f3}
 .work-hub[data-section=chat] .chat-thread-list{display:flex;flex-direction:column;gap:14px;padding:3px;overflow-x:hidden}
-.work-hub[data-section=chat] .chat-thread{grid-template-columns:48px minmax(0,1fr) auto;gap:12px;min-height:104px;padding:20px 17px;border-radius:23px;border:0;background:#fffffff2;text-align:left;width:100%}
+.work-hub[data-section=chat] .chat-thread{grid-template-columns:42px minmax(0,1fr) auto;gap:12px;min-height:82px;padding:13px 16px;border-radius:20px;border:0;background:#fffffff2;text-align:left;width:100%}
 .work-hub[data-section=chat] .chat-thread .chat-thread-info{display:flex;flex-direction:column;min-width:0;overflow:hidden}
 .work-hub[data-section=chat] .chat-thread strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px;line-height:23px;font-weight:650}
 .work-hub[data-section=chat] .chat-thread small{display:block;font-size:13px;line-height:20px;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -58,3 +58,11 @@
 #hub-chat .chat-header>.chat-avatar{width:32px;height:32px;min-width:32px;flex:0 0 32px;font-size:15px}
 #hub-chat .chat-sender-name{padding-left:0}
 .work-hub[data-section=chat] .chat-thread-list{padding-left:0;padding-right:0}
+
+.work-hub[data-section=chat] .chat-list-toolbar .chat-new-conversation{display:grid;place-items:center;width:30px;height:30px;min-height:30px;padding:3px;margin-left:auto;border-radius:50%;background:transparent;color:#171719;flex:none}
+.work-hub[data-section=chat] .chat-new-conversation svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.work-hub[data-section=chat] .chat-list-toolbar .chat-new-conversation:hover{background:#ffffffa6}
+.work-hub[data-section=chat] .chat-list-filters button{font-size:14px;line-height:20px;padding:5px 9px;min-height:30px}
+.work-hub[data-section=chat] .chat-thread>.chat-avatar{width:42px;height:42px;min-width:42px}
+.work-hub[data-section=chat] .chat-thread-list{gap:12px}
+.work-hub[data-section=chat] .chat-list-toolbar{margin-bottom:18px}

@@ -1,0 +1,27 @@
+/* Conversation layout follows the user's supplied three-column reference. */
+@media(min-width:761px){
+ :root .workspace:has(.work-hub[data-section=chat]){grid-template-columns:266px minmax(0,1fr)!important}
+ .workspace:has(.work-hub[data-section=chat])>.task-viewport{display:none!important}
+ :root .main-column>.work-hub[data-section=chat]{grid-template-columns:minmax(280px,.37fr) minmax(0,.63fr)!important;padding:78px 24px 24px!important}
+ .work-hub[data-section=chat]>.browser-sidebar{padding:22px!important;background:#ffffff38;border:0;border-right:1px solid #ffffff9c;border-radius:0;backdrop-filter:none}
+ .work-hub[data-section=chat]>.browser-stage{padding:22px 22px 22px 28px!important;background:transparent;border:0;border-radius:0}
+ #hub-chat.chat-workspace{background:#ffffffb3!important;border:1px solid #ffffffe0!important;border-radius:24px;padding:0!important;box-shadow:0 3px 16px #00000005}
+}
+#hub-chat{--message-inset:28px;--sender-slot:44px}
+#hub-chat .chat-header{padding:22px 28px;min-height:91px;background:#ffffffbc}
+#hub-chat .chat-message{max-width:72%}
+#hub-chat .chat-message.outgoing{max-width:68%}
+#hub-chat .chat-message.incoming p{background:#fff;color:#171719;border:1px solid #e9e9ed;box-shadow:0 2px 6px #00000005}
+#hub-chat .chat-compose-entry{display:flex;align-items:flex-end;gap:4px;min-width:0;flex:1;background:#f3f3f6;border:1px solid #dfdfe5;border-radius:23px;padding:0 7px 0 0}
+#hub-chat .chat-compose-entry:focus-within{outline:2px solid #17171920;outline-offset:1px}
+#hub-chat .chat-compose-entry textarea{background:transparent!important;border:0!important;outline:none!important;box-shadow:none!important;flex:1;width:0;min-width:0;padding:10px 14px!important}
+#hub-chat .chat-compose-entry .chat-attachment-tools{padding:0 0 7px;gap:4px;flex:none;min-height:0}
+#hub-chat .chat-compose-entry .chat-attach-button{width:28px;height:28px;min-height:28px}
+#hub-chat .chat-composer{background:#ffffffad;padding-top:18px;padding-bottom:18px}
+.work-hub[data-section=chat] .chat-thread{background:#ffffffde;border:1px solid #ffffffdb;border-radius:18px;min-height:86px;padding:13px}
+.work-hub[data-section=chat] .chat-thread[aria-pressed=true]{background:#171719;border-color:#171719}
+.work-hub[data-section=chat] .chat-thread-list{gap:10px}
+/* The notch remains visible everywhere except the Home menu. */
+.work-hub:not([data-section=profile]):not([data-section=students]):not([data-section=goal]):not([data-section=chat])>.browser-stage{padding-top:78px!important}
+@media(max-width:1100px) and (min-width:761px){:root .main-column>.work-hub[data-section=chat]{grid-template-columns:minmax(250px,.34fr) minmax(0,.66fr)!important;padding-left:16px!important;padding-right:16px!important}.work-hub[data-section=chat]>.browser-stage{padding-left:18px!important;padding-right:8px!important}.work-hub[data-section=chat]>.browser-sidebar{padding-left:8px!important;padding-right:16px!important}}
+@container(max-width:500px){#hub-chat{--message-inset:16px;--sender-slot:40px}#hub-chat .chat-header{padding:18px 20px}#hub-chat .chat-message,#hub-chat .chat-message.outgoing{max-width:94%}#hub-chat .chat-compose-entry .chat-attachment-tools{gap:0}#hub-chat .chat-compose-entry .chat-attach-button{width:25px}}

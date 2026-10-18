@@ -33,5 +33,13 @@
 #hub-chat .message-reaction-picker .message-reaction-more{background:#f0f0f4;color:#53535b;margin-left:2px}
 #hub-chat .message-reaction-more svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
 
-#hub-chat .chat-message.chat-group-follow{margin-top:-14px}
+#hub-chat .chat-message.chat-group-follow{margin-top:-18px}
 #hub-chat .chat-group-continues .chat-message-avatar{visibility:hidden}
+
+/* Connected bubble corners indicate the start, middle and end of a message group. */
+#hub-chat .outgoing.chat-group-continues p{border-bottom-right-radius:4px}
+#hub-chat .outgoing.chat-group-follow p{border-top-right-radius:4px}
+#hub-chat .outgoing.chat-group-follow:not(.chat-group-continues) p{border-bottom-right-radius:21px}
+#hub-chat .incoming.chat-group-continues p{border-bottom-left-radius:4px}
+#hub-chat .incoming.chat-group-follow p{border-top-left-radius:4px}
+#hub-chat .incoming.chat-group-follow:not(.chat-group-continues) p{border-bottom-left-radius:21px}

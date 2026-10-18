@@ -49,5 +49,7 @@
 @media(prefers-reduced-motion:reduce){.chat-thread-row:hover>.chat-thread{transition:none}}
 
 /* The menu trigger sits outside the card in its own hover-safe gutter. */
-.work-hub[data-section=chat] .chat-thread-list{padding-right:46px}
+.work-hub[data-section=chat]>.browser-sidebar{overflow:visible}
+.work-hub[data-section=chat] .browser-options{overflow:visible}
+.work-hub[data-section=chat] .chat-thread-list{width:calc(100% + 54px);padding-right:46px;margin-right:-46px}
 .chat-thread-row:after{content:'';position:absolute;right:-40px;top:0;bottom:0;width:40px}

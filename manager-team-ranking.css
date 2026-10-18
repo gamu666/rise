@@ -87,3 +87,19 @@
 @media(max-width:760px){:root .main-column>.work-hub[data-section=ranking]{padding:70px 12px 16px!important;height:100%!important}.work-hub[data-section=ranking]>.browser-stage{min-height:600px;border-radius:22px}}
 
 #overview .work-hub[data-section=ranking]>.browser-stage{padding:0!important}
+
+/* Native table cells keep every heading and value on the same column. */
+.team-rank-row:before{display:none;content:none}
+.team-rank-row{--rank-line:#e7e9ee;--rank-paper:#fff}
+.team-rank-row.place-1{--rank-line:#dfc46d;--rank-paper:#fffef8}
+.team-rank-row.place-2{--rank-line:#becbd7}
+.team-rank-row.place-3{--rank-line:#d7bfa1}
+.team-rank-row td{background:var(--rank-paper);border-top:1px solid var(--rank-line);border-bottom:1px solid var(--rank-line);font-size:14px}
+.team-rank-row td:first-child{border-left:1px solid var(--rank-line);border-radius:10px 0 0 10px}
+.team-rank-row td:last-child{border-right:1px solid var(--rank-line);border-radius:0 10px 10px 0}
+.team-table th{font-size:12px}
+.team-member-name strong{font-size:15px;line-height:21px}
+.team-member-name small{font-size:11px;line-height:16px}
+.team-highlight small{font-size:11px;line-height:16px}
+.team-highlight strong{font-size:14px;line-height:20px}
+.team-highlight{padding-top:15px;padding-bottom:15px}

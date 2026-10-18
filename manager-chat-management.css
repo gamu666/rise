@@ -1,9 +1,9 @@
 .chat-thread-row{position:relative;flex:none;min-width:0;width:100%}
 .work-hub[data-section=chat] .chat-thread-row:hover>.chat-thread{scale:1.025}
-.work-hub[data-section=chat] .chat-thread-more{position:absolute;right:13px;top:50%;transform:translateY(-50%);width:30px;height:30px;padding:5px;border-radius:50%;background:#ededf1;color:#3c3c43;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .15s;z-index:3}
+.work-hub[data-section=chat] .chat-thread-more{position:absolute;right:-38px;top:50%;transform:translateY(-50%);width:30px;height:30px;padding:5px;border-radius:50%;background:#ededf1;color:#3c3c43;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .15s;z-index:3}
 .chat-thread-more svg{width:20px;height:20px;fill:currentColor;stroke:none}
 .work-hub[data-section=chat] .chat-thread-row:hover>.chat-thread-more,.work-hub[data-section=chat] .chat-thread-row:focus-within>.chat-thread-more{opacity:1;pointer-events:auto}
-.work-hub[data-section=chat] .chat-thread-row:hover .chat-thread-meta,.work-hub[data-section=chat] .chat-thread-row:focus-within .chat-thread-meta{opacity:0}
+
 .chat-pin-label{display:block;font-size:10px;line-height:14px;color:#85858d;font-weight:400}
 .chat-thread[aria-pressed=true] .chat-pin-label{color:#ffffffa6}
 .chat-thread-menu{position:fixed;width:210px;padding:7px;background:#fffffff7;color:#171719;border:1px solid #fff;border-radius:15px;box-shadow:0 8px 30px #00000025;backdrop-filter:blur(20px);z-index:1000}
@@ -45,5 +45,9 @@
 .chat-new-person label{font-size:13px;line-height:20px;color:#686871;display:flex;flex-direction:column;gap:5px}
 .chat-new-person input{background:white;color:#171719;border:1px solid #ddddE4;border-radius:9px;height:40px;padding:9px 10px;font-size:15px}
 .chat-manage-dialog .chat-manage-error{color:#e43b34;font-size:13px}
-@media(hover:none){.work-hub[data-section=chat] .chat-thread-more{opacity:1;pointer-events:auto}.work-hub[data-section=chat] .chat-thread-meta{opacity:0}}
+@media(hover:none){.work-hub[data-section=chat] .chat-thread-more{opacity:1;pointer-events:auto}}
 @media(prefers-reduced-motion:reduce){.chat-thread-row:hover>.chat-thread{transition:none}}
+
+/* The menu trigger sits outside the card in its own hover-safe gutter. */
+.work-hub[data-section=chat] .chat-thread-list{padding-right:46px}
+.chat-thread-row:after{content:'';position:absolute;right:-40px;top:0;bottom:0;width:40px}

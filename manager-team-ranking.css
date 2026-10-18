@@ -116,3 +116,5 @@
 .team-table th[aria-sort=descending]{color:#242a36}
 .team-table th[aria-sort=descending] .team-column-sort:after{content:' ↓';color:#9a9da5}
 @container(max-width:650px){.team-card-metrics{grid-template-columns:1fr}.team-profile-dialog .team-card-metrics{grid-template-columns:1fr}}
+
+#hub-ranking.team-champions>.team-rank-tabs{margin-top:0}

@@ -59,8 +59,9 @@ function messageAvatar(t,m){
  if(t.group&&m.sender){const at=students.findIndex(s=>s.name.split(/\s+/).at(-1)===m.sender.split(/\s+/).at(-1));if(at>=0){const a=document.createElement('span');a.className='chat-avatar chat-message-avatar student-illustration';a.style.setProperty('--avatar-x',(at%3)*50+'%');a.style.setProperty('--avatar-y',Math.floor((at%6)/3)*100+'%');a.setAttribute('aria-label',m.sender);return a}}
  const a=chatAvatar(t);a.classList.add('chat-message-avatar');a.setAttribute('aria-label',m.sender||t.name);return a;
 }
+let chatResizeObserver;
 function renderWorkspaceChat(t){
- RiseChatFiles.release();workspaceShow('hub-chat');chatView.replaceChildren();
+ chatResizeObserver?.disconnect();RiseChatFiles.release();workspaceShow('hub-chat');chatView.replaceChildren();
  const header=document.createElement('header');header.className='chat-header';const info=document.createElement('div'),title=document.createElement('h2'),status=document.createElement('small');title.textContent=t.name;status.textContent=t.members;info.append(title,status);header.append(chatAvatar(t),info);
  const messages=document.createElement('div');messages.className='chat-messages';messages.setAttribute('role','log');messages.setAttribute('aria-label',t.name+' — Зурвасууд');
  const records=chatMessages[t.id]||t.messages;records.forEach(m=>{const row=document.createElement('div');row.className='chat-message '+(m.from==='self'?'outgoing':'incoming');const content=document.createElement('div');content.className='chat-message-content';if(m.from!=='self')row.append(messageAvatar(t,m));if(m.sender){const sender=document.createElement('small');sender.className='chat-sender-name';sender.textContent=m.sender;content.append(sender)}if(m.text){const bubble=document.createElement('p');bubble.textContent=m.text;content.append(bubble)}(m.attachments||[]).forEach(file=>content.append(RiseChatFiles.node(file)));const time=document.createElement('time');time.textContent=m.time;if(m.sentAt)time.dateTime=m.sentAt;content.append(time);row.append(content);messages.append(row)});
@@ -76,7 +77,7 @@ function renderWorkspaceChat(t){
  input.addEventListener('input',sync);form.append(strip,row,tools,error);send.disabled=!input.value.trim()&&!draftFiles.length;
  form.onsubmit=e=>{e.preventDefault();const text=input.value.trim();if(busy||(!text&&!draftFiles.length))return;const sentAt=new Date().toISOString();chatMessages[t.id]=[...records,{text,attachments:[...draftFiles],from:'self',time:new Intl.DateTimeFormat('mn-MN',{timeZone:'Asia/Ulaanbaatar',hour:'2-digit',minute:'2-digit'}).format(new Date()),sentAt}];saveLocal('rise-chat-messages',chatMessages);delete chatDrafts[t.id];saveLocal('rise-chat-drafts',chatDrafts);delete chatAttachmentDrafts[t.id];saveLocal('rise-chat-attachment-drafts',chatAttachmentDrafts);refreshChatList();renderWorkspaceChat(t);chatView.querySelector('textarea').focus()};
  input.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();if(!send.disabled)form.requestSubmit()}};
- chatView.append(header,messages,form);drawFiles();requestAnimationFrame(()=>{sync();messages.scrollTop=messages.scrollHeight});
+ chatView.append(header,messages,form);const alignScrollbar=()=>chatView.style.setProperty('--chat-scrollbar-gap',Math.max(0,messages.offsetWidth-messages.clientWidth)+'px');chatResizeObserver=new ResizeObserver(alignScrollbar);chatResizeObserver.observe(messages);alignScrollbar();drawFiles();requestAnimationFrame(()=>{sync();messages.scrollTop=messages.scrollHeight});
 }
 
 const originalRegistrationSubmit=document.querySelector('#registration-form');originalRegistrationSubmit.addEventListener('submit',()=>queueMicrotask(()=>{if(workspaceSection==='students')renderStudents()}));

@@ -18,3 +18,8 @@
 @container(max-width:450px){.emoji-grid{grid-template-columns:repeat(6,minmax(0,1fr))}.chat-emoji-panel{right:12px;max-height:420px}}
 
 .apple-emoji{display:inline-block;flex:none;vertical-align:-.2em;background-image:url("assets/emoji/apple-32.png");background-repeat:no-repeat;pointer-events:none}
+
+#hub-chat .chat-composer .chat-emoji-panel button{flex-shrink:0}
+#hub-chat .chat-composer .emoji-grid{overflow-x:hidden;overflow-y:auto;align-content:start;grid-auto-rows:35px}
+#hub-chat .chat-composer .emoji-item{min-width:0;max-width:100%;height:35px;min-height:35px}
+#hub-chat .chat-composer .emoji-categories{overflow-y:hidden}

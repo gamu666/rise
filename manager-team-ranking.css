@@ -103,3 +103,16 @@
 .team-highlight small{font-size:11px;line-height:16px}
 .team-highlight strong{font-size:14px;line-height:20px}
 .team-highlight{padding-top:15px;padding-bottom:15px}
+
+/* Simplified periods and two metrics, following the user's revisions. */
+.team-podium{margin-top:25px;padding-top:0}
+.team-card-metrics{grid-template-columns:1fr 1fr}
+.team-champion-identity>.team-avatar{border-radius:50%;clip-path:none}
+.team-champion .team-champion-cover{background:#0b0b0b url('assets/team-covers/green.jpg') center 51%/cover no-repeat}
+.team-champion.place-2 .team-champion-cover{background-image:url('assets/team-covers/blue.jpg');background-position:center 55%}
+.team-champion.place-3 .team-champion-cover{background-image:url('assets/team-covers/amber.jpg');background-position:center 58%}
+.team-place{color:#ffffffc9;text-shadow:0 1px 8px #00000040}
+.team-column-sort{padding:0;background:none;color:inherit;font-size:12px;line-height:19px;font-weight:500;text-align:left}
+.team-table th[aria-sort=descending]{color:#242a36}
+.team-table th[aria-sort=descending] .team-column-sort:after{content:' ↓';color:#9a9da5}
+@container(max-width:650px){.team-card-metrics{grid-template-columns:1fr}.team-profile-dialog .team-card-metrics{grid-template-columns:1fr}}

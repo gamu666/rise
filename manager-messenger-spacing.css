@@ -1,0 +1,40 @@
+#hub-chat{container-type:inline-size;--message-inset:clamp(26px,10cqw,78px);--sender-slot:44px}
+#hub-chat .chat-header{padding-left:clamp(24px,9cqw,72px);padding-right:clamp(24px,9cqw,72px)}
+.work-hub[data-section=chat]>.browser-stage{background:rgba(250,250,251,.405)}
+#hub-chat .chat-messages{padding-left:var(--message-inset);padding-right:var(--message-inset);overflow-x:hidden}
+#hub-chat .chat-message{display:flex;flex-direction:row;align-items:flex-end;gap:12px;max-width:90%;min-width:0}
+#hub-chat .chat-message.incoming{align-self:flex-start}
+#hub-chat .chat-message.outgoing{align-self:flex-end;justify-content:flex-end;max-width:85%}
+#hub-chat .chat-message-content{display:flex;flex-direction:column;align-items:flex-start;min-width:0;gap:0}
+#hub-chat .outgoing .chat-message-content{align-items:flex-end}
+#hub-chat .chat-message-avatar{width:32px;height:32px;min-width:32px;flex:0 0 32px;margin-bottom:25px;font-size:13px}
+#hub-chat .chat-message-avatar.student-illustration{background-image:url(assets/student-avatars-2d.png);background-size:300% 200%;background-position:var(--avatar-x) var(--avatar-y);background-repeat:no-repeat}
+#hub-chat .chat-sender-name{padding:0 5px 5px;font-size:12px;line-height:18px;color:#68686f}
+#hub-chat .chat-message-content>p{max-width:100%}
+#hub-chat .chat-composer{display:flex;flex-direction:column;align-items:stretch;padding:16px var(--message-inset) 16px calc(var(--message-inset) + var(--sender-slot));gap:9px}
+#hub-chat .chat-compose-row{display:flex;align-items:flex-end;gap:10px;min-width:0;width:100%}
+#hub-chat .chat-compose-row textarea{flex:1;min-width:0;width:0}
+#hub-chat .chat-compose-row>button{flex:0 0 42px}
+#hub-chat .chat-attachment-tools{display:flex;gap:12px;padding:0 8px;min-height:26px;align-items:center}
+#hub-chat .chat-attachment-tools .chat-attach-button{display:grid;place-items:center;width:28px;height:28px;min-height:28px;padding:2px;background:transparent!important;color:#62626a;border:0;border-radius:7px}
+#hub-chat .chat-attachment-tools .chat-attach-button:hover{background:#e9e9ed!important;color:#171719}
+#hub-chat .chat-attachment-tools svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.chat-attachment-drafts{display:flex;gap:9px;overflow-x:auto;max-width:100%;padding:3px}
+.chat-attachment-drafts[hidden]{display:none}
+.chat-attachment{position:relative;max-width:100%;margin-top:6px;min-width:0}
+.chat-attachment-download{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #dcdce1;border-radius:16px;background:#f2f2f5;color:#171719;text-decoration:none;max-width:260px;min-width:0}
+.chat-attachment-download>span:last-child{min-width:0}
+.chat-attachment-download strong{display:block;font-size:13px;line-height:19px;font-weight:600;overflow-wrap:anywhere}
+.chat-attachment-download small{display:block;font-size:11px;line-height:17px;color:#77777e}
+.chat-file-icon{font-size:25px;line-height:32px;min-width:26px;text-align:center}
+.chat-attachment-image{display:block;width:72px;height:62px;object-fit:cover;border-radius:8px;flex:none}
+.chat-message-content .chat-attachment-download:has(.chat-attachment-image){flex-direction:column;align-items:stretch;padding:5px;min-width:180px}
+.chat-message-content .chat-attachment-image{width:100%;height:auto;max-height:260px;object-fit:contain}
+.chat-message-content .chat-attachment-download:has(img)>span{padding:4px 6px}
+#hub-chat .chat-remove-attachment{position:absolute;right:-3px;top:-4px;width:21px;height:21px;min-height:21px;border-radius:50%;display:grid;place-items:center;padding:0;background:#ff3b30!important;color:#fff;font:18px/1 Arial,sans-serif;border:2px solid #fff;cursor:pointer}
+.chat-attachment-drafts .chat-attachment{flex:0 0 auto;max-width:230px}
+.chat-attachment-drafts .chat-attachment-download{padding-right:20px;min-height:66px}
+.chat-attachment-error{font-size:12px;line-height:18px;color:#c93229;margin:0}
+.work-hub[data-section=chat] .browser-options,.work-hub[data-section=chat] .chat-thread-list{overflow-x:hidden;min-width:0;max-width:100%;box-sizing:border-box}
+.work-hub[data-section=chat] .chat-thread{min-width:0;max-width:100%;width:100%;box-sizing:border-box}
+@media(max-width:760px){#hub-chat{--message-inset:20px;--sender-slot:40px}#hub-chat .chat-header{padding-left:28px;padding-right:28px}.work-hub[data-section=chat] .chat-thread-list{overflow-x:hidden;overflow-y:auto;flex-direction:column}.work-hub[data-section=chat] .chat-thread{min-width:0;flex:none}}

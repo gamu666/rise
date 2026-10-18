@@ -4,7 +4,7 @@
  const view=document.querySelector('#hub-students'),legacy=document.querySelector('#student-detail');
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const toolbar=document.createElement('div');toolbar.className='students-toolbar';
- toolbar.innerHTML='<label class="students-query"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></svg><input type="search" aria-label="Нэр, дугаараар хайх" placeholder="Нэр, дугаараар хайх"></label><select aria-label="Сургалтын төрлөөр шүүх"><option value="">Сургалтын төрөл</option></select><select aria-label="Төгсөх он сараар шүүх"><option value="">Он сараар хайх</option></select><select aria-label="Төлбөрийн төлөвөөр шүүх"><option value="all">Төлбөрийн төлөв</option><option value="paid">Бүрэн төлсөн</option><option value="unpaid">Үлдэгдэлтэй</option></select><button class="students-clear" type="button" aria-label="Шүүлтүүр цэвэрлэх">⊗ <span>Шүүлтүүр цэвэрлэх</span></button>';
+ toolbar.innerHTML='<header class="students-list-heading"><h2>Сурагчид</h2><span class="students-result-count"></span></header><label class="students-query"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></svg><input type="search" aria-label="Нэр, дугаараар хайх" placeholder="Нэр, дугаараар хайх"></label><select aria-label="Сургалтын төрлөөр шүүх"><option value="">Сургалтын төрөл</option></select><select aria-label="Төгсөх он сараар шүүх"><option value="">Он сараар хайх</option></select><select aria-label="Төлбөрийн төлөвөөр шүүх"><option value="all">Төлбөрийн төлөв</option><option value="paid">Бүрэн төлсөн</option><option value="unpaid">Үлдэгдэлтэй</option></select><button class="students-clear" type="button" aria-label="Шүүлтүүр цэвэрлэх">⊗ <span>Шүүлтүүр цэвэрлэх</span></button>';
  const search=toolbar.querySelector('input'),[course,month,payment]=toolbar.querySelectorAll('select');
  const filterControls=[];
  const roster=document.createElement('div');roster.className='students-roster';roster.setAttribute('aria-label','Сурагчид');
@@ -33,7 +33,7 @@
    b.innerHTML=avatar(s)+'<span class="students-card-info"><span class="students-card-name">'+name(s)+'</span><span class="students-progress" role="progressbar" aria-label="Төлсөн төлбөр" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+progress(s)+'" title="'+esc(money(s.paid)+' / '+money(s.total))+'"><span style="width:'+progress(s)+'%"></span></span></span><span class="students-tags">'+studentEnrollments(s).map(e=>'<span>'+esc(e.course)+'</span>').join('')+'</span>';
    b.onclick=()=>{selected=s.id;renderStudents()};roster.append(b)
   });
-  meta.textContent=records.length+' сурагч';
+  meta.textContent='';toolbar.querySelector('.students-result-count').textContent=records.length+' сурагч';
   if(!records.length){roster.innerHTML='<p class="students-empty">Тохирох сурагч олдсонгүй.<br>Хайлт эсвэл шүүлтүүрээ өөрчлөөрэй.</p>';profile.hidden=summary.hidden=true;return}
   profile.hidden=summary.hidden=false;
   const s=students.find(s=>s.id===selected),entries=studentEnrollments(s),entry=entries.find(e=>e.course===selectedCourses[s.id])||entries[0];

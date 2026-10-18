@@ -1,0 +1,102 @@
+/* Apple list/material hierarchy adapted to THE RISE's monochrome workspace. */
+#hub-students{--student-label:#171719;--student-secondary:#68686e;--student-divider:#e4e4e7;--student-accent:#00a84f;font-family:ReferenceInter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+@media(min-width:761px){
+ #hub-students.student-workspace{padding:78px 24px 20px;grid-template-columns:minmax(270px,1fr) minmax(0,2fr);column-gap:20px;grid-template-rows:auto minmax(0,1fr);height:100%;overflow:hidden}
+ #hub-students .students-toolbar{grid-column:1;grid-row:1;display:flex;flex-direction:column;height:auto;margin:0;padding:18px;gap:10px;border:1px solid #ffffffd9;border-radius:22px 22px 0 0;background:#fffffff0;box-shadow:none;backdrop-filter:blur(16px)}
+ #hub-students .students-list-heading{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:8px}
+ #hub-students .students-list-heading h2{font-size:23px;line-height:30px;font-weight:700;letter-spacing:-.5px}
+ #hub-students .students-result-count{font-size:12px;color:#717177;white-space:nowrap}
+ #hub-students .students-query{width:100%;height:40px;min-height:40px;border-radius:12px;background:#f0f0f2;box-shadow:none;padding:0 12px;gap:8px}
+ #hub-students .students-query input{font-size:14px;line-height:22px;font-weight:400;background:none!important;padding:0!important;border:0!important;box-shadow:none!important}
+ #hub-students .students-query svg{width:18px;height:18px;stroke:#6e6e73}
+ #hub-students .students-filter-trigger{height:36px;min-height:36px;background:#f6f6f7;border:1px solid #e8e8eb;border-radius:10px;padding:0 11px;font-size:13px;line-height:20px;font-weight:400}
+ #hub-students .students-filter-trigger.has-value{background:#171719;color:#fff;border-color:#171719}
+ #hub-students .students-clear{font-size:12px;height:26px;min-height:26px;align-self:flex-end;color:#65656b;white-space:nowrap}
+ #hub-students .students-roster{grid-column:1;grid-row:2;display:flex;flex-direction:column;gap:7px;margin:0;padding:8px 12px 14px;border:1px solid #ffffffd9;border-top:0;border-radius:0 0 22px 22px;background:#fffffff0;min-height:0;overflow-y:auto;scroll-padding:8px;scrollbar-gutter:stable}
+ #hub-students .students-card{display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-rows:auto auto;height:auto;min-height:106px;flex:none;padding:13px 12px;column-gap:11px;row-gap:10px;border:1px solid #e9e9ec;border-radius:16px;background:#f8f8fa;box-shadow:none;transform:none}
+ #hub-students .students-card .students-avatar{width:44px;height:44px;grid-column:1;grid-row:1}
+ #hub-students .students-card-name{font-size:15px;line-height:21px;letter-spacing:0;white-space:normal;color:#171719}
+ #hub-students .students-card-name strong{font-weight:650}
+ #hub-students .students-card[aria-pressed=true]{background:#171719;border-color:#171719;box-shadow:0 5px 12px #00000012}
+ #hub-students .students-card[aria-pressed=true] .students-card-name{color:#fff}
+ #hub-students .students-card .students-progress{height:5px;background:#dcdce1;margin-top:8px}
+ #hub-students .students-progress>span{background:#00b85a}
+ #hub-students .students-card[aria-pressed=true] .students-progress{background:#ffffff29}
+ #hub-students .students-tags{grid-column:1/-1;gap:5px;flex-wrap:wrap}
+ #hub-students .students-tags>span{font-size:10px;line-height:18px;padding:0 7px;background:#fff;color:#69696e;border:1px solid #e6e6e9;box-shadow:none;border-radius:7px}
+ #hub-students .students-card[aria-pressed=true] .students-tags>span{background:#ffffff12;color:#ffffffc9;border-color:#ffffff24}
+ #hub-students .students-meta{display:none}
+ #hub-students .students-panels{grid-column:2;grid-row:1/-1;border:0;padding:0 3px 4px 0;gap:16px;min-width:0;min-height:0;overflow-y:auto}
+ #hub-students .students-profile{min-height:156px;padding:24px;grid-template-columns:72px minmax(0,1fr);column-gap:18px;row-gap:5px;border-radius:22px;background:#171719!important;border:1px solid #171719!important;color:#fff;box-shadow:0 5px 16px #00000012!important}
+ #hub-students .students-profile .large{width:72px;height:72px}
+ #hub-students .students-profile h1{font-size:22px;line-height:29px;letter-spacing:-.4px;color:#fff;font-weight:400}
+ #hub-students .students-profile h1 strong{font-weight:700}
+ #hub-students .students-contact{font-size:15px;line-height:24px;color:#fff}
+ #hub-students .students-contact>span{color:#ffffff7a}
+ #hub-students .students-profile-footer{font-size:12px;line-height:20px;color:#ffffff9c}
+ #hub-students .students-payment{min-height:224px;padding:24px;border-radius:22px;background:#fffffff5!important;border:1px solid #fff!important;box-shadow:none!important}
+ #hub-students .students-payment h2{font-size:17px;line-height:24px;font-weight:650}
+ #hub-students .students-percent{font-size:17px;line-height:24px;font-weight:650;color:#00a84f}
+ #hub-students .students-payment>.students-progress{height:7px;background:#e8e8eb;border-radius:7px}
+ #hub-students .students-payment dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:24px;font-size:14px}
+ #hub-students .students-payment dl>div{display:flex;flex-direction:column;align-items:flex-start;gap:9px;padding:0;border:0;min-width:0}
+ #hub-students .students-payment dt{font-size:12px;line-height:18px;color:#717177}
+ #hub-students .students-payment dd{font-size:clamp(16px,1.4vw,22px);line-height:27px;font-weight:650;letter-spacing:-.4px;color:#171719;white-space:nowrap}
+ #hub-students .students-paid-state{font-size:12px;line-height:19px;color:#67676d;margin-top:18px}
+ #hub-students #student-detail{padding:22px 24px!important;border-radius:22px;background:#fffffff0!important;border:1px solid #fff!important;box-shadow:none!important}
+ #hub-students #student-detail .detail-head{margin-bottom:18px}
+ #hub-students #student-detail .detail-label{font-size:12px;line-height:18px}
+ #hub-students #student-detail .detail-head h3{font-size:17px;line-height:24px}
+ #hub-students #student-detail .detail-phone strong{font-size:14px}
+ #hub-students #student-detail .detail-grid{display:flex;flex-direction:column;gap:0;border-radius:14px;background:#f4f4f6}
+ #hub-students #student-detail .detail-grid article{padding:15px 16px!important;min-height:52px}
+ #hub-students #student-detail .detail-grid strong{font-size:14px!important;line-height:21px;font-weight:500}
+ #hub-students #student-detail .detail-grid span{font-size:13px;line-height:20px}
+ #hub-students #student-detail select{font-size:14px;padding:9px 11px;border-radius:9px}
+ #hub-students #student-detail .detail-button{min-height:36px;font-size:13px;padding:8px 12px;background:#171719}
+ #hub-students #student-detail .detail-button:disabled{background:#ededf0;color:#95959b}
+}
+.students-filter-popover{background:#fffffff0;border:1px solid #fff;border-radius:16px;padding:7px;box-shadow:0 14px 40px #00000024,inset 0 1px 0 #fff;backdrop-filter:blur(20px)}
+.students-filter-popover button{font-size:14px;line-height:21px;min-height:36px;padding:7px 10px;border-radius:9px}
+.students-filter-popover button:is(:hover,:focus-visible){background:#171719;color:#fff}
+.students-filter-popover button[aria-checked=true]{background:#eeeeef;box-shadow:none;color:#171719}
+/* A full-height conversation, with a quiet white list and restrained glass chrome. */
+:root .main-column>.work-hub[data-section=chat]{grid-template-columns:minmax(270px,.32fr) minmax(0,.68fr)!important;grid-template-rows:minmax(0,1fr)!important;gap:0!important;height:100%!important;padding:24px!important;background:none!important;border:0!important;box-shadow:none!important}
+.work-hub[data-section=chat]>.browser-sidebar{grid-column:1;grid-row:1;padding:22px 14px!important;margin:0!important;max-height:none;min-height:0;border:1px solid #fff;border-radius:24px 0 0 24px;background:#fffffff0;color:#171719;overflow:hidden;backdrop-filter:blur(16px)}
+.work-hub[data-section=chat] .browser-list-head{display:flex;padding:0 8px;margin:0 0 20px}
+.work-hub[data-section=chat] .browser-list-head h2{font-size:24px;line-height:31px;letter-spacing:-.6px;font-weight:700}
+.work-hub[data-section=chat] .browser-options{display:flex;flex-direction:column;overflow:hidden;gap:0;flex:1;min-height:0}
+.work-hub[data-section=chat] .chat-search{flex:none;height:40px;min-height:40px;border:0;border-radius:12px;background:#f0f0f2;color:#171719;padding:9px 13px;margin:0 0 17px;font-size:14px}
+.work-hub[data-section=chat] .chat-thread-list{flex:1;overflow-y:auto;gap:7px;margin:0;min-height:0;scrollbar-width:thin;padding:2px}
+.work-hub[data-section=chat] .chat-thread{position:relative;display:grid;grid-template-columns:46px minmax(0,1fr);column-gap:11px;row-gap:4px;padding:16px 11px;min-height:94px;background:#f8f8fa;color:#171719;border:1px solid #eaeaec;border-radius:16px;align-items:center}
+.work-hub[data-section=chat] .chat-thread[aria-pressed=true]{background:#171719;color:white;border-color:#171719}
+.chat-thread>span:nth-child(2){min-width:0}
+.work-hub[data-section=chat] .chat-thread strong{font-size:15px;line-height:21px;font-weight:650;padding-right:0}
+.work-hub[data-section=chat] .chat-thread small{max-width:100%;font-size:12px;line-height:18px;margin-top:6px;color:#737379;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+.work-hub[data-section=chat] .chat-thread[aria-pressed=true] small{color:#ffffffa6}
+.chat-thread>time{grid-column:2;font-size:10px;color:#828288;line-height:15px}
+.chat-thread[aria-pressed=true]>time{color:#ffffff80}
+.chat-avatar{width:46px;height:46px;font-size:20px}
+.chat-group-avatar{background:#e8e8ed!important;color:#171719;font-weight:700}
+.chat-search-empty{padding:30px 12px;font-size:14px;line-height:22px;color:#717177;text-align:center}
+.chat-search-empty button{display:block;margin:16px auto 0;background:#171719;color:#fff;padding:9px 14px;border-radius:12px;font-size:13px}
+.work-hub[data-section=chat]>.browser-stage{grid-column:2;grid-row:1;padding:0!important;margin:0;min-height:0;height:100%;overflow:hidden;background:#fafafbcf;border:1px solid #fff;border-left:1px solid #dedee2;border-radius:0 24px 24px 0}
+.browser-stage>#hub-chat:not([hidden]){display:flex!important;flex-direction:column;height:100%!important;min-height:0!important;overflow:hidden!important;background:transparent;border:0;border-radius:0;padding:0}
+#hub-chat .chat-header{padding:20px 24px;min-height:92px;background:#ffffffc9;border-bottom:1px solid #e5e5e8;backdrop-filter:blur(20px);gap:13px}
+#hub-chat .chat-header h2{font-size:19px;line-height:26px;font-weight:650;letter-spacing:-.3px;color:#171719}
+#hub-chat .chat-header small{font-size:13px;line-height:20px;color:#737379;margin-top:2px}
+#hub-chat .chat-messages{padding:28px 26px;gap:20px;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+#hub-chat .chat-message{max-width:82%;font-size:16px;line-height:1.5;letter-spacing:0;overflow-wrap:anywhere;flex:none}
+#hub-chat .chat-message p{background:#e9e9ed;color:#171719;padding:12px 16px;border-radius:21px 21px 21px 6px;box-shadow:none;white-space:pre-wrap;margin:0}
+#hub-chat .chat-message.outgoing p{background:#171719;color:#fff;border-radius:21px 21px 6px 21px}
+#hub-chat .chat-message>small{font-size:12px;color:#717177;padding:0 5px 5px;line-height:18px}
+#hub-chat .chat-message time{font-size:11px;line-height:18px;color:#85858b;padding:5px 6px 0}
+#hub-chat .chat-composer{padding:16px 20px 20px;gap:10px;background:#ffffffba;border-top:1px solid #e4e4e8;backdrop-filter:blur(20px);align-items:flex-end}
+#hub-chat .chat-composer textarea{font:400 15px/22px ReferenceInter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:44px;max-height:128px;padding:10px 16px!important;background:#fff!important;border:1px solid #dcdce1!important;border-radius:23px!important;resize:none;overflow-y:auto;box-shadow:none;min-width:0;color:#171719}
+#hub-chat .chat-composer textarea:focus{outline:2px solid #17171920;outline-offset:1px}
+#hub-chat .chat-composer button{width:42px;height:42px;min-height:42px;border-radius:50%;background:#00c853!important;color:#fff}
+#hub-chat .chat-composer button:disabled{background:#171719!important;cursor:default;opacity:.38}
+#hub-chat .chat-composer svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:1100px) and (min-width:761px){#hub-students.student-workspace{grid-template-columns:minmax(240px,.38fr) minmax(0,.62fr);gap:14px}#hub-students .students-payment dl{grid-template-columns:1fr;gap:12px}#hub-students .students-payment dl>div{flex-direction:row;justify-content:space-between;align-items:center}#hub-students .students-payment dd{font-size:17px}:root .main-column>.work-hub[data-section=chat]{grid-template-columns:240px minmax(0,1fr)!important;padding:18px!important}#hub-chat .chat-message{max-width:94%}}
+@media(max-width:760px){.students-list-heading{display:flex;justify-content:space-between;align-items:center;grid-column:1/-1}.students-list-heading h2{font-size:22px}.students-result-count{font-size:12px;color:#737379}:root .main-column>.work-hub[data-section=chat]{grid-template-columns:1fr!important;grid-template-rows:220px 540px!important;height:auto!important;min-height:760px!important;padding:12px!important}.work-hub[data-section=chat]>.browser-sidebar{grid-column:1;grid-row:1;border-radius:20px 20px 0 0;padding:15px!important}.work-hub[data-section=chat] .browser-list-head{margin-bottom:10px}.work-hub[data-section=chat] .chat-search{margin-bottom:8px}.work-hub[data-section=chat] .chat-thread-list{flex-direction:row;overflow-x:auto;overflow-y:hidden}.work-hub[data-section=chat] .chat-thread{min-width:210px;min-height:85px}.work-hub[data-section=chat]>.browser-stage{grid-column:1;grid-row:2;border-radius:0 0 20px 20px}#hub-chat .chat-message{font-size:15px;max-width:94%}}
+@media(prefers-reduced-transparency:reduce){#hub-students .students-toolbar,.work-hub[data-section=chat]>.browser-sidebar,#hub-chat .chat-header,#hub-chat .chat-composer{background:#fff;backdrop-filter:none}}

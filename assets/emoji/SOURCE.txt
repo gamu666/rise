@@ -1,0 +1,4 @@
+Unicode Emoji 18.0: https://unicode.org/Public/emoji/latest/emoji-test.txt
+Mongolian annotations: Unicode CLDR common/annotations/mn.xml and annotationsDerived/mn.xml
+Data only; glyph artwork is supplied by the device system font.
+License: https://www.unicode.org/license.txt

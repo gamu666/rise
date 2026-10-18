@@ -1,4 +1,8 @@
 Unicode Emoji 18.0: https://unicode.org/Public/emoji/latest/emoji-test.txt
 Mongolian annotations: Unicode CLDR common/annotations/mn.xml and annotationsDerived/mn.xml
-Data only; glyph artwork is supplied by the device system font.
+Apple sprite artwork: emoji-datasource-apple 16.0.0, macOS 15.5 / Emoji 16.0.
+https://github.com/iamcal/emoji-data
+https://cdn.jsdelivr.net/npm/emoji-datasource-apple@16.0.0/img/apple/sheets-clean/32.png
+Apple artwork copyright Apple Inc.; upstream MIT data licensing does not license Apple images for commercial use.
+The textarea remains a native system input; picker and rendered messages use sprites.
 License: https://www.unicode.org/license.txt

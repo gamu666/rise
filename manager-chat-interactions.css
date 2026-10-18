@@ -1,6 +1,6 @@
 #hub-chat .chat-message-content{position:relative}
-#hub-chat .message-react-trigger{position:absolute;right:-34px;top:8px;display:grid;place-items:center;width:27px;height:27px;padding:4px;border:1px solid #dfdfe5;border-radius:50%;background:#ffffffed;color:#727279;opacity:0;pointer-events:none;transition:opacity .16s,transform .16s;cursor:pointer}
-#hub-chat .outgoing .message-react-trigger{right:auto;left:-34px}
+#hub-chat .message-react-trigger{position:absolute;right:-38px;top:8px;display:grid;place-items:center;width:32px;height:32px;padding:5px;border:1px solid #dfdfe5;border-radius:50%;background:#fff;color:#45454d;opacity:0;pointer-events:none;transition:opacity .16s,transform .16s;cursor:pointer}
+#hub-chat .outgoing .message-react-trigger{right:auto;left:-38px}
 #hub-chat .chat-message:hover .message-react-trigger,#hub-chat .chat-message:focus-within .message-react-trigger{opacity:1;pointer-events:auto}
 #hub-chat .message-react-trigger svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
 #hub-chat .message-reaction-picker{position:absolute;bottom:calc(100% + 7px);left:0;display:flex;align-items:center;gap:3px;padding:7px;background:#fff;border:1px solid #e6e6eb;border-radius:28px;box-shadow:0 6px 22px #0000001f;z-index:6;width:max-content}
@@ -23,3 +23,9 @@
 @media(prefers-reduced-motion:reduce){#hub-chat .chat-typing-bubble i{animation:none}#hub-chat .message-react-trigger,#hub-chat .message-reaction-picker button{transition:none}}
 
 #hub-chat .message-reaction-picker.below{bottom:auto;top:calc(100% - 8px)}
+
+/* Keep hover active across the small path between a bubble and its action. */
+#hub-chat .chat-message-content:before{content:'';position:absolute;top:0;bottom:0;right:-40px;width:40px;pointer-events:auto}
+#hub-chat .outgoing .chat-message-content:before{right:auto;left:-40px}
+#hub-chat .message-react-trigger{z-index:3;box-shadow:0 2px 7px #00000012}
+#hub-chat .message-react-trigger:hover,#hub-chat .message-react-trigger[aria-expanded=true]{background:#eef5ff;border-color:#a7cfff;color:#087cda;opacity:1;pointer-events:auto}

@@ -102,3 +102,15 @@
 @media(prefers-reduced-transparency:reduce){#hub-students .students-toolbar,.work-hub[data-section=chat]>.browser-sidebar,#hub-chat .chat-header,#hub-chat .chat-composer{background:#fff;backdrop-filter:none}}
 
 #hub-students .students-profile .students-contact strong{color:#fff!important}
+#hub-chat.chat-workspace{padding:0!important;border:0!important;background:transparent!important}
+@container(max-width:850px){
+ #hub-students .students-payment dl{grid-template-columns:1fr;gap:12px}
+ #hub-students .students-payment dl>div{flex-direction:row;align-items:center;justify-content:space-between;gap:8px}
+ #hub-students .students-payment dd{font-size:17px}
+ #hub-students .students-profile{grid-template-columns:52px minmax(0,1fr);gap:10px;padding:20px}
+ #hub-students .students-profile .large{width:52px;height:52px}
+ #hub-students .students-profile h1{font-size:18px;line-height:25px}
+ #hub-students .students-profile-footer{grid-column:1/-1}
+ #hub-students .students-payment,#hub-students #student-detail{padding:20px!important}
+ #hub-students #student-detail .detail-head .detail-phone{display:none}
+}

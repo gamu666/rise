@@ -29,3 +29,9 @@
 #hub-chat .outgoing .chat-message-content:before{right:auto;left:-40px}
 #hub-chat .message-react-trigger{z-index:3;box-shadow:0 2px 7px #00000012}
 #hub-chat .message-react-trigger:hover,#hub-chat .message-react-trigger[aria-expanded=true]{background:#eef5ff;border-color:#a7cfff;color:#087cda;opacity:1;pointer-events:auto}
+
+#hub-chat .message-reaction-picker .message-reaction-more{background:#f0f0f4;color:#53535b;margin-left:2px}
+#hub-chat .message-reaction-more svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+
+#hub-chat .chat-message.chat-group-follow{margin-top:-14px}
+#hub-chat .chat-group-continues .chat-message-avatar{visibility:hidden}

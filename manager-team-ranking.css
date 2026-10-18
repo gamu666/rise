@@ -108,7 +108,7 @@
 .team-podium{margin-top:25px;padding-top:0}
 .team-card-metrics{grid-template-columns:1fr 1fr}
 .team-champion-identity>.team-avatar{border-radius:50%;clip-path:none}
-.team-champion .team-champion-cover{background:#0b0b0b url('assets/team-covers/green.jpg') center 51%/cover no-repeat}
+.team-champion .team-champion-cover{background:#0b0b0b url('assets/team-covers/green.jpg') center 51%/130% auto no-repeat}
 .team-champion.place-2 .team-champion-cover{background-image:url('assets/team-covers/blue.jpg');background-position:center 55%}
 .team-champion.place-3 .team-champion-cover{background-image:url('assets/team-covers/amber.jpg');background-position:center 58%}
 .team-place{color:#ffffffc9;text-shadow:0 1px 8px #00000040}

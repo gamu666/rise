@@ -1,10 +1,8 @@
 /* Conversation layout follows the user's supplied three-column reference. */
 @media(min-width:761px){
- :root .workspace:has(.work-hub[data-section=chat]){grid-template-columns:266px minmax(0,1fr)!important}
- .workspace:has(.work-hub[data-section=chat])>.task-viewport{display:none!important}
- :root .main-column>.work-hub[data-section=chat]{grid-template-columns:minmax(280px,.37fr) minmax(0,.63fr)!important;padding:78px 24px 24px!important}
+ :root .main-column>.work-hub[data-section=chat]{grid-template-columns:minmax(250px,.34fr) minmax(0,.66fr)!important;padding:78px 24px 24px!important}
  .work-hub[data-section=chat]>.browser-sidebar{padding:22px!important;background:#ffffff38;border:0;border-right:1px solid #ffffff9c;border-radius:0;backdrop-filter:none}
- .work-hub[data-section=chat]>.browser-stage{padding:22px 22px 22px 28px!important;background:transparent;border:0;border-radius:0}
+ .work-hub[data-section=chat]>.browser-stage{padding:22px 0 22px 20px!important;background:transparent;border:0;border-radius:0}
  #hub-chat.chat-workspace{background:#ffffffb3!important;border:1px solid #ffffffe0!important;border-radius:24px;padding:0!important;box-shadow:0 3px 16px #00000005}
 }
 #hub-chat{--message-inset:28px;--sender-slot:44px}

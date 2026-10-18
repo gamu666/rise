@@ -1,0 +1,87 @@
+/* Champions composition: podium, four highlights, then a full ranking table. */
+:root .main-column>.work-hub[data-section=ranking]{display:block!important;padding:78px 24px 22px!important;background:transparent!important;border:0!important;box-shadow:none!important;height:100%!important;overflow:hidden!important}
+.work-hub[data-section=ranking]>.browser-sidebar{display:none!important}
+.work-hub[data-section=ranking]>.browser-stage{padding:0!important;height:100%;min-height:0;overflow-y:auto;overflow-x:hidden;border:0;background:#fafbfce6;border-radius:28px;scrollbar-width:thin;container-type:inline-size}
+#hub-ranking.team-champions{padding:27px 30px 32px;min-height:100%;color:#171719;max-width:1200px;margin:0 auto}
+.team-page-heading{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.team-eyebrow{font-size:10px;font-weight:600;letter-spacing:1.6px;color:#8c8e94}
+.team-page-heading h1{font-size:24px;line-height:32px;font-weight:700;letter-spacing:-.7px;margin-top:3px}
+.team-period{font-size:12px;color:#8b8c93;white-space:nowrap}
+.team-rank-tabs{display:flex;justify-content:center;gap:3px;width:max-content;max-width:100%;margin:21px auto 0;padding:4px;background:#eaecef;border-radius:11px}
+.team-rank-tabs button{padding:7px 24px;min-height:33px;border-radius:8px;border:0;background:transparent;font-size:13px;font-weight:500;color:#777a83}
+.team-rank-tabs button[aria-pressed=true]{background:#fff;color:#171719;box-shadow:0 2px 5px #00000009}
+.team-podium{position:relative;margin-top:7px;padding-top:49px}
+.team-hero-word{position:absolute;left:0;right:0;top:0;text-align:center;font-size:clamp(35px,5.8cqw,70px);line-height:1.1;font-weight:750;letter-spacing:-3px;color:#dfe2e7;white-space:nowrap;user-select:none}
+.team-top-three{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;width:88%;max-width:860px;margin:0 auto;padding:0 2px}
+.team-champion{position:relative;overflow:hidden;border-radius:18px;background:#fff;border:1px solid #fff;box-shadow:0 7px 18px #2529450a;padding:0 17px 15px;min-width:0}
+.team-champion-cover{height:83px;margin:0 -17px;background:linear-gradient(115deg,#e7f4ed,#dceab0 55%,#f6eed1)}
+.team-champion.place-2 .team-champion-cover{background:linear-gradient(115deg,#efe5f7,#bde9e8 55%,#d8eef5)}
+.team-champion.place-3 .team-champion-cover{background:linear-gradient(115deg,#dcefd8,#f0e5c8 55%,#f8dbd5)}
+.team-place{position:absolute;right:16px;top:11px;font-size:45px;line-height:48px;font-weight:750;color:#1c273f28;letter-spacing:-3px}
+.team-place small{font-size:17px;letter-spacing:-1px;vertical-align:top;margin-left:2px;line-height:33px;color:inherit}
+.team-avatar{display:inline-grid;place-items:center;width:38px;height:38px;flex:none;overflow:hidden;border-radius:50%;background:#f0f1f5;color:#24272e;font-weight:600}
+.team-avatar img{width:100%;height:100%;object-fit:cover}
+.team-illustration{background-image:url('assets/student-avatars-2d.png');background-size:300% 200%;background-position:var(--avatar-x) var(--avatar-y);background-repeat:no-repeat}
+.team-champion-identity{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin-top:-36px;position:relative}
+.team-champion-identity>.team-avatar{width:67px;height:67px;border:3px solid white;border-radius:20px;clip-path:polygon(24% 0,76% 0,100% 50%,76% 100%,24% 100%,0 50%)}
+.team-score{display:block;border-radius:7px;background:#171719;color:white;padding:4px 8px;font-size:11px;font-weight:600;white-space:nowrap;margin-bottom:3px}
+.team-champion h3{font-size:17px;font-weight:650;line-height:23px;margin-top:10px;letter-spacing:-.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team-self{font-size:10px;line-height:16px;padding:1px 5px;background:#eafff1;color:#009942;border-radius:5px;margin-left:6px;vertical-align:middle;font-weight:500}
+.team-role{font-size:11px;color:#93949b;line-height:17px;margin-top:1px}
+.team-card-metrics{display:grid;grid-template-columns:.9fr .9fr 1.2fr;gap:7px;margin-top:19px}
+.team-card-metrics>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.team-card-metrics strong{font-size:13px;font-weight:650;line-height:19px;white-space:nowrap;letter-spacing:-.2px}
+.team-card-metrics small{font-size:10px;color:#94969d;line-height:15px}
+.team-profile-button{display:block;width:100%;padding:7px 9px;border:1px solid #e2e4e9;border-radius:7px;background:#fff;color:#252832;font-size:12px;line-height:17px;margin-top:18px}
+.team-highlights{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:24px}
+.team-highlight{display:flex;align-items:center;gap:9px;padding:14px 11px;background:#fff;border:1px solid #fff;border-radius:13px;box-shadow:0 4px 12px #25294506;min-width:0;text-align:left}
+.team-highlight>.team-avatar,.team-total-symbol{width:34px;height:34px;min-width:34px}
+.team-highlight>span:not(.team-avatar):not(.team-total-symbol){display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+.team-highlight small{font-size:9px;line-height:13px;color:#92949d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team-highlight strong{font-size:12px;line-height:17px;font-weight:550;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team-highlight b{font-size:20px;font-weight:750;line-height:25px;letter-spacing:-.8px;white-space:nowrap;color:#1e2d49}
+.team-highlight:nth-child(3) b{font-size:15px;letter-spacing:-.5px}
+.team-total-symbol{display:grid;place-items:center;background:#e7fff0;color:#00ad50;border-radius:50%}
+.team-total-symbol svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7}
+.team-table-section{margin-top:28px}
+.team-table-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.team-table-heading h2{font-size:17px;font-weight:650;line-height:25px}
+.team-table-heading>small{font-size:11px;color:#989aa1}
+.team-table-wrap{padding:0 8px;overflow-x:auto}
+.team-table{border-collapse:separate;border-spacing:0 7px;width:100%;text-align:left;font-size:13px;table-layout:auto}
+.team-table th{font-size:10px;line-height:15px;font-weight:450;color:#979aa3;padding:0 10px 5px;white-space:nowrap}
+.team-table th:nth-child(2){width:35%}
+.team-rank-row{position:relative;isolation:isolate}
+.team-rank-row:before{content:'';position:absolute;inset:0 -3px;border:1px solid #e7e9ee;border-radius:8px;background:#ffffffd9;transform:skewX(-6deg);z-index:-1}
+.team-rank-row.place-1:before{border-color:#dfc46d;background:#fffef8}
+.team-rank-row.place-2:before{border-color:#becbd7}
+.team-rank-row.place-3:before{border-color:#d7bfa1}
+.team-rank-row td{padding:10px;white-space:nowrap;font-size:13px;line-height:20px;color:#656975}
+.team-table .team-table-place{font-size:17px;font-weight:700;color:#b8bac2;width:42px}
+.team-table .place-1 .team-table-place{color:#bd9d3c}.team-table .place-2 .team-table-place{color:#8093ac}.team-table .place-3 .team-table-place{color:#ab8863}
+.team-member-name{display:flex;align-items:center;gap:10px;text-align:left;background:none;padding:0;min-width:0}
+.team-member-name .team-avatar{width:34px;height:34px;min-width:34px}
+.team-member-name>span:last-child{display:flex;flex-direction:column;gap:3px;min-width:0}
+.team-member-name strong{font-size:13px;line-height:18px;font-weight:600;color:#252b37}
+.team-member-name small{font-size:10px;color:#999ca5;line-height:15px}
+.team-table .team-active-metric{font-weight:700;color:#25314c}
+.team-row-open{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;font-size:23px;color:#999da8;background:none;padding:0}
+.team-sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.team-profile-dialog{width:min(510px,calc(100% - 32px));padding:28px;border:1px solid #fff;border-radius:25px;background:#fff;color:#171719;box-shadow:0 20px 70px #00000030}
+.team-profile-dialog::backdrop{background:#00000033;backdrop-filter:blur(8px)}
+.team-profile-close{position:absolute;right:17px;top:17px;display:grid;place-items:center;width:25px;height:25px;min-height:25px;border:0;border-radius:50%;padding:0;background:#ff3b30;color:#fff;font:20px/1 Arial,sans-serif}
+.team-profile-identity{display:flex;align-items:center;gap:14px;margin-top:10px}
+.team-profile-identity>.team-avatar{width:65px;height:65px;min-width:65px}
+.team-profile-dialog h2{font-size:23px;line-height:30px;font-weight:650;margin:0}
+.team-profile-dialog p{font-size:13px;color:#8b8d95;margin:5px 0 0}
+.team-profile-dialog .team-profile-place{margin-top:22px;font-size:14px;color:#434955}
+.team-profile-dialog .team-card-metrics{margin-top:18px;padding:18px 14px;background:#f5f6f8;border-radius:14px}
+.team-profile-dialog .team-card-metrics strong{font-size:17px}
+.team-profile-progress{display:flex;flex-direction:column;gap:18px;margin-top:25px}
+.team-profile-progress p{display:flex;justify-content:space-between;gap:14px;color:#777c87;margin-bottom:8px}
+.team-profile-progress strong{color:#242a35;font-weight:600}
+.team-progress-track{height:7px;border-radius:10px;background:#e8e9ee;overflow:hidden}
+.team-progress-track i{height:100%;display:block;border-radius:inherit;background:#00c853}
+@container(max-width:950px){.team-top-three{width:100%}.team-highlights{grid-template-columns:repeat(2,minmax(0,1fr))}.team-highlight{padding:12px 14px}.team-highlight small{font-size:11px}.team-highlight strong{font-size:13px}}
+@container(max-width:650px){#hub-ranking.team-champions{padding:22px 20px}.team-page-heading{align-items:flex-start}.team-page-heading h1{font-size:22px}.team-period{font-size:10px}.team-top-three{gap:8px}.team-champion{padding:0 11px 12px;border-radius:14px}.team-champion-cover{margin:0 -11px;height:70px}.team-champion-identity>.team-avatar{width:53px;height:53px}.team-champion-identity{margin-top:-26px}.team-place{font-size:34px;right:10px}.team-score{font-size:9px;padding:3px 5px}.team-champion h3{font-size:14px}.team-card-metrics{grid-template-columns:1fr;gap:8px;margin-top:12px}.team-card-metrics>div{flex-direction:row;justify-content:space-between}.team-card-metrics strong{font-size:12px}.team-table{min-width:600px}.team-profile-dialog .team-card-metrics{grid-template-columns:1fr}.team-hero-word{font-size:37px;letter-spacing:-1.5px}}
+@media(max-width:760px){:root .main-column>.work-hub[data-section=ranking]{padding:70px 12px 16px!important;height:100%!important}.work-hub[data-section=ranking]>.browser-stage{min-height:600px;border-radius:22px}}

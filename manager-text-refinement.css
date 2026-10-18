@@ -24,3 +24,8 @@
 button,a,[role=button]{transition:scale 160ms ease}
 @media(hover:hover){button:not(:disabled):hover,a:hover,[role=button]:hover{scale:1.025}.goal-table-row>span:first-child:hover{transform:scale(1.025)}}
 @media(prefers-reduced-motion:reduce){button,a,[role=button],.goal-table-row>span:first-child{transition:none}.goal-table-row>span:first-child:hover{transform:none}button:hover,a:hover,[role=button]:hover{scale:1}}
+.goal-table-row>span:first-child:hover{transform:none}
+[data-open-student]{cursor:pointer;transition:transform 180ms ease,box-shadow 180ms ease,background-color 180ms ease;transform-origin:center}
+[data-open-student]:focus-visible{outline:2px solid #00c853;outline-offset:-2px}
+@media(hover:hover){.goal-records .goal-table-row[data-open-student]:hover{transform:scale(1.012);position:relative;z-index:2;box-shadow:0 4px 16px #00000012}.recent-income footer[data-open-student]:hover,.receipt-list article[data-open-student]:hover{transform:scale(1.025);background:#f3f3f5;border-radius:12px}}
+@media(prefers-reduced-motion:reduce){[data-open-student],[data-open-student]:hover{transition:none!important;transform:none!important}}

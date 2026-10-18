@@ -1,0 +1,25 @@
+#hub-chat .chat-message-content{position:relative}
+#hub-chat .message-react-trigger{position:absolute;right:-34px;top:8px;display:grid;place-items:center;width:27px;height:27px;padding:4px;border:1px solid #dfdfe5;border-radius:50%;background:#ffffffed;color:#727279;opacity:0;pointer-events:none;transition:opacity .16s,transform .16s;cursor:pointer}
+#hub-chat .outgoing .message-react-trigger{right:auto;left:-34px}
+#hub-chat .chat-message:hover .message-react-trigger,#hub-chat .chat-message:focus-within .message-react-trigger{opacity:1;pointer-events:auto}
+#hub-chat .message-react-trigger svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
+#hub-chat .message-reaction-picker{position:absolute;bottom:calc(100% + 7px);left:0;display:flex;align-items:center;gap:3px;padding:7px;background:#fff;border:1px solid #e6e6eb;border-radius:28px;box-shadow:0 6px 22px #0000001f;z-index:6;width:max-content}
+#hub-chat .outgoing .message-reaction-picker{left:auto;right:0}
+#hub-chat .message-reaction-picker button{display:grid;place-items:center;width:32px;height:32px;min-height:32px;padding:3px;border:0;border-radius:50%;background:transparent;font-size:23px;cursor:pointer;transition:transform .16s}
+#hub-chat .message-reaction-picker button:hover{transform:scale(1.18);background:#f2f2f6}
+#hub-chat .message-reaction-picker button[aria-pressed=true]{background:#ddecff}
+#hub-chat .message-reaction-badge{position:relative;display:grid;place-items:center;align-self:flex-end;min-width:31px;height:27px;padding:1px 5px;margin-top:-5px;margin-right:7px;border:2px solid #fff;border-radius:18px;background:#f1f1f5;box-shadow:0 1px 4px #0000000d;cursor:pointer;z-index:1}
+#hub-chat .message-reaction-badge[hidden],#hub-chat .chat-typing[hidden]{display:none}
+#hub-chat .chat-typing{flex:none;min-height:38px;margin-top:4px}
+#hub-chat .chat-typing-row{display:flex;align-items:flex-end;gap:12px}
+#hub-chat .chat-typing-row .chat-message-avatar{margin-bottom:0}
+#hub-chat .chat-typing-bubble{display:flex;align-items:center;gap:5px;position:relative;height:35px;padding:0 13px;border-radius:19px;background:#e5e5ea}
+#hub-chat .chat-typing-bubble:before{content:'';position:absolute;width:9px;height:9px;background:#e5e5ea;left:-3px;bottom:0;border-radius:50%}
+#hub-chat .chat-typing-bubble i{width:7px;height:7px;border-radius:50%;background:#929298;animation:rise-typing 1.25s infinite ease-in-out}
+#hub-chat .chat-typing-bubble i:nth-child(2){animation-delay:.16s}
+#hub-chat .chat-typing-bubble i:nth-child(3){animation-delay:.32s}
+@keyframes rise-typing{0%,55%,100%{transform:translateY(0);opacity:.55}28%{transform:translateY(-4px);opacity:1}}
+@media(hover:none){#hub-chat .message-react-trigger{opacity:.7;pointer-events:auto}}
+@media(prefers-reduced-motion:reduce){#hub-chat .chat-typing-bubble i{animation:none}#hub-chat .message-react-trigger,#hub-chat .message-reaction-picker button{transition:none}}
+
+#hub-chat .message-reaction-picker.below{bottom:auto;top:calc(100% - 8px)}

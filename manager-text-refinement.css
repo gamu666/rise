@@ -13,3 +13,14 @@
 #hub-students .students-contact{font-size:13px}
 #hub-students .students-profile-footer{font-size:11px}
 #hub-students .students-payment dl{font-size:13px}
+.income-latest strong{font-size:13px;line-height:18px}
+.income-latest time{font-size:12px;line-height:17px}
+.income-latest .receipt-avatar{width:33px;height:33px}
+.income-amount{font-size:18px}
+.receipt-list article strong{font-size:16px}
+.receipt-list article small,.receipt-list article time{font-size:14px}
+.receipt-list article>b{font-size:18px}
+.goal-table-row>span:first-child{transform-origin:left center;transition:transform 180ms ease}
+button,a,[role=button]{transition:scale 160ms ease}
+@media(hover:hover){button:not(:disabled):hover,a:hover,[role=button]:hover{scale:1.025}.goal-table-row>span:first-child:hover{transform:scale(1.025)}}
+@media(prefers-reduced-motion:reduce){button,a,[role=button],.goal-table-row>span:first-child{transition:none}.goal-table-row>span:first-child:hover{transform:none}button:hover,a:hover,[role=button]:hover{scale:1}}

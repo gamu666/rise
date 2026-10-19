@@ -27,7 +27,7 @@
 .team-list-income{color:#e0eaf1;white-space:nowrap}
 .team-list-task{color:#8ea1ac;white-space:nowrap;border-left:1px solid #ffffff26;padding-left:7px}
 .team-list-place{display:grid;place-items:center;flex:none;width:25px;height:25px;border:1px solid #ffffff1c;border-radius:50%;font-size:13px;color:#bfced4}
-.team-podium{position:relative;min-width:0;align-self:stretch;height:auto;min-height:clamp(435px,49cqw,550px);border-radius:30px;overflow:hidden;background:linear-gradient(160deg,#1045d1 0%,#052793 42%,#020818 100%);isolation:isolate;box-shadow:inset 0 1px 1px #ffffff1c,0 16px 34px #0002}
+.team-podium{position:relative;min-width:0;align-self:stretch;height:auto;min-height:clamp(435px,49cqw,550px);container-type:size;border-radius:30px;overflow:hidden;background:linear-gradient(160deg,#1045d1 0%,#052793 42%,#020818 100%);isolation:isolate;box-shadow:inset 0 1px 1px #ffffff1c,0 16px 34px #0002}
 .team-podium:before,.team-podium:after{content:'';position:absolute;z-index:-1;border:2px solid #02165355;border-radius:50%;width:145%;height:90%;left:-23%;top:21%;pointer-events:none;box-shadow:0 0 0 14px #03185418,0 0 0 31px #03185415}
 .team-podium:after{width:185%;height:115%;left:-42%;top:38%;border-color:#06134188;box-shadow:none}
 .team-top-three{height:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;padding:36px 22px 0;gap:0}
@@ -45,7 +45,7 @@
 .team-score{display:inline-flex;align-items:center;justify-content:center;gap:5px;max-width:100%;padding:7px 9px;border-radius:24px;background:#a9a0e544;color:#f1f3ff;white-space:nowrap;margin-top:3px}
 .team-score strong{font-size:clamp(12px,1.5cqw,18px);line-height:22px;font-weight:550}
 .team-currency{color:#c19bf9;font-size:16px;line-height:20px}
-.team-podium-step{position:relative;display:flex;justify-content:center;padding-top:25px;height:var(--step-height);background:linear-gradient(180deg,#245ce9,#86a8fa);color:#dbe4fe;font-size:64px;line-height:1.2;font-weight:400;text-shadow:0 1px 2px #0001;border-right:1px solid #ffffff0c}
+.team-podium-step{position:relative;display:flex;justify-content:center;padding-top:25px;height:calc(var(--step-height) + clamp(0px,100cqh - 550px,240px));background:linear-gradient(180deg,#245ce9,#86a8fa);color:#dbe4fe;font-size:64px;line-height:1.2;font-weight:400;text-shadow:0 1px 2px #0001;border-right:1px solid #ffffff0c}
 .team-podium-step:before{content:'';position:absolute;inset:-22px 0 auto;height:23px;clip-path:polygon(14% 0,86% 0,100% 100%,0 100%);background:linear-gradient(110deg,#3471ff,#597ef2)}
 .place-1 .team-podium-step{background:linear-gradient(180deg,#2155df,#86a8fa)}
 .team-profile-button:focus-visible,.team-member-name:focus-visible,.team-rank-tabs button:focus-visible{outline:2px solid #a5cefa;outline-offset:-3px}

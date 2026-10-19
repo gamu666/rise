@@ -53,3 +53,77 @@
 .work-hub[data-section=chat] .browser-options{overflow:visible}
 .work-hub[data-section=chat] .chat-thread-list{width:calc(100% + 54px);padding-right:46px;margin-right:-46px}
 .chat-thread-row:after{content:'';position:absolute;right:-40px;top:0;bottom:0;width:40px}
+
+/* Reference refinement: wider outer breathing room, compact rows and grouped conversations. */
+@media(min-width:1101px){
+ :root .main-column>.work-hub[data-section=chat]{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;padding-left:48px!important;padding-right:48px!important}
+}
+.work-hub[data-section=chat] .chat-thread-list{gap:7px}
+.work-hub[data-section=chat] .chat-thread-section-title{flex:none;margin:9px 3px 4px;color:#606067;font-size:12px;line-height:17px;font-weight:650;letter-spacing:.01em}
+.work-hub[data-section=chat] .chat-thread-section-title:first-child{margin-top:0}
+.work-hub[data-section=chat] .chat-thread{grid-template-columns:36px minmax(0,1fr) auto;gap:10px;min-height:64px;padding:8px 12px;border-radius:16px}
+.work-hub[data-section=chat] .chat-thread>.chat-avatar{width:36px;height:36px;min-width:36px;font-size:16px}
+.work-hub[data-section=chat] .chat-thread strong{font-size:14px;line-height:19px}
+.work-hub[data-section=chat] .chat-thread small{font-size:11px;line-height:16px;margin-top:2px}
+.work-hub[data-section=chat] .chat-thread-meta{gap:5px;min-width:39px;max-width:68px}
+.work-hub[data-section=chat] .chat-thread-meta>time{font-size:9px;line-height:13px}
+.work-hub[data-section=chat] .chat-unseen-circle{width:12px;height:12px}
+.work-hub[data-section=chat] .chat-thread-meta .chat-seen-avatar{width:15px;height:15px;min-width:15px}
+.work-hub[data-section=chat] .chat-thread-row+.chat-thread-section-title{margin-top:15px}
+@media(max-width:760px){
+ .work-hub[data-section=chat] .chat-thread-section-title{display:none}
+ .work-hub[data-section=chat] .chat-thread{min-width:190px;min-height:64px}
+}
+
+/* Match the light glass material used by My Tasks. */
+.work-hub[data-section=chat]{
+ --chat-glass:rgba(37,41,42,.55);
+ --chat-glass-strong:rgba(21,24,25,.64);
+ --chat-glass-soft:rgba(255,255,255,.11);
+ --chat-glass-line:rgba(255,255,255,.24);
+ --chat-glass-text:#191a1b;
+ --chat-glass-muted:#68686f;
+}
+.work-hub[data-section=chat]>.browser-stage{background:transparent!important}
+#hub-chat.chat-workspace{
+ background:#ffffff38!important;
+ border:1px solid #ffffffc9!important;
+ box-shadow:inset 0 1px 0 #fff!important;
+ backdrop-filter:blur(11.2px)!important;
+ -webkit-backdrop-filter:blur(11.2px)!important;
+ color:var(--chat-glass-text)!important;
+}
+#hub-chat.chat-workspace{border-radius:24px!important;overflow:hidden!important}
+#hub-chat .chat-header,
+#hub-chat .chat-composer{
+ background:rgba(255,255,255,.16)!important;
+ border-color:rgba(255,255,255,.35)!important;
+ backdrop-filter:none;
+ -webkit-backdrop-filter:none;
+}
+#hub-chat .chat-header h2{color:var(--chat-glass-text)}
+#hub-chat .chat-header small,
+#hub-chat .chat-sender-name,
+#hub-chat .chat-message time,
+#hub-chat .chat-message>small{color:var(--chat-glass-muted)}
+#hub-chat .chat-members-button{background:rgba(255,255,255,.4);color:var(--chat-glass-text)}
+#hub-chat .chat-message.incoming p{
+ background:rgba(238,238,242,.72);
+ border:1px solid rgba(255,255,255,.35);
+ color:var(--chat-glass-text);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+}
+#hub-chat .chat-compose-entry{
+ background:rgba(255,255,255,.4);
+ border-color:rgba(255,255,255,.6);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+}
+#hub-chat .chat-compose-entry textarea{color:var(--chat-glass-text)!important}
+#hub-chat .chat-compose-entry textarea::placeholder{color:var(--chat-glass-muted)}
+#hub-chat .chat-attachment-tools .chat-attach-button{color:#62626a}
+#hub-chat .chat-attachment-tools .chat-attach-button:hover{background:rgba(255,255,255,.55)!important;color:#191a1b}
+#hub-chat .chat-composer button:disabled{background:rgba(25,26,27,.35)!important;color:#fff;opacity:1}
+@media(prefers-reduced-transparency:reduce){
+ #hub-chat.chat-workspace{background:#eeeeee!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+}
+

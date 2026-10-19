@@ -29,3 +29,7 @@ button,a,[role=button]{transition:scale 160ms ease}
 [data-open-student]:focus-visible{outline:2px solid #00c853;outline-offset:-2px}
 @media(hover:hover){.goal-records .goal-table-row[data-open-student]:hover{transform:scale(1.012);position:relative;z-index:2;box-shadow:0 4px 16px #00000012}.recent-income footer[data-open-student]:hover,.receipt-list article[data-open-student]:hover{transform:scale(1.025);background:#f3f3f5;border-radius:12px}}
 @media(prefers-reduced-motion:reduce){[data-open-student],[data-open-student]:hover{transition:none!important;transform:none!important}}
+
+/* Center notification counts independently of inherited text styles. */
+:is(.hub-badge,.category-unread,.notification-center-total,.notif-count){box-sizing:border-box;display:inline-flex!important;align-items:center!important;justify-content:center!important;flex-shrink:0;min-width:18px;min-height:18px;padding:0 4px!important;border-radius:999px!important;font-family:Arial,sans-serif!important;font-size:11px!important;line-height:1!important;font-weight:600!important;letter-spacing:0!important;text-indent:0!important;text-align:center!important;font-variant-numeric:tabular-nums;white-space:nowrap}
+:is(.hub-badge,.category-unread,.notification-center-total,.notif-count)[hidden]{display:none!important}

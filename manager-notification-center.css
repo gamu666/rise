@@ -32,7 +32,8 @@
 .notif-unread-dot{display:block;width:6px;height:6px;border-radius:50%;background:#00c853}
 .notif-entry:not(.is-read) .notif-entry-copy>strong{color:#151519}
 .notif-expanded{margin:0 0 17px 52px;padding:0;background:transparent;border-radius:0}
-.notif-entry.is-expanded .notif-summary{display:none}
+.notif-entry.is-expanded .notif-summary{white-space:pre-wrap;mask-image:none;color:#72727b;overflow-wrap:anywhere}
+.notif-expanded:empty{display:none}
 .notif-expanded p{font-size:14px;line-height:23px;color:#72727b;white-space:pre-wrap;overflow-wrap:anywhere}
 .notification-center .notif-accept{background:#00c853;color:white;border-radius:20px;padding:8px 15px;font-size:13px;font-weight:500;margin-top:12px;min-height:34px}
 .notification-center .notif-accept:disabled{background:#e3e3e9;color:#8c8c95;opacity:1}

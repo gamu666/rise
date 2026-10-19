@@ -15,7 +15,7 @@
  document.querySelector('.task-stack').addEventListener('click',e=>{const action=e.target.closest('[data-action]')?.dataset.action;if(action==='done')flash('success');else if(action==='cancel')restore()});
  // The future service can supply its actual loading/reading lifecycle through this event.
  window.addEventListener('rise-ai-state',e=>{if(['idle','reading','loading','warning','success'].includes(e.detail?.state))setState(e.detail.state,e.detail.label)});
- // Use each face's own geometry, not the viewport, and keep following at its edges.
+ // Keep a generous vertical inset and a short, symmetric gaze range on both faces.
  let frame=0,pointerX=innerWidth/2,pointerY=innerHeight/2;
  function updateGaze(){frame=0;for(const face of [notch.querySelector('.ai-face'),homeFace]){
   const r=face.getBoundingClientRect();if(!r.width||!r.height)continue;
@@ -25,12 +25,15 @@
   const nx=Math.max(-1,Math.min(1,(pointerX-r.left-r.width/2)/(r.width*2)));
   const ny=Math.max(-1,Math.min(1,(pointerY-r.top-r.height/2)/(r.height*2)));
   const x=nx*(nx<0?Math.max(0,left-5):Math.max(0,face.clientWidth-right-5));
-  const y=ny*(ny<0?Math.max(0,top-5):Math.max(0,face.clientHeight-bottom-5));
+  const verticalInset=face.clientHeight*.22;
+  const maxY=Math.max(0,Math.min(face.clientHeight*.08,top-verticalInset,face.clientHeight-bottom-verticalInset));
+  const y=ny*maxY;
   face.style.setProperty('--look-x',x+'px');face.style.setProperty('--look-y',y+'px');
  }}
  function scheduleGaze(){if(!frame)frame=requestAnimationFrame(updateGaze)}
  document.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;pointerX=e.clientX;pointerY=e.clientY;scheduleGaze()},{passive:true});
  window.addEventListener('resize',scheduleGaze,{passive:true});
- new ResizeObserver(scheduleGaze).observe(notch);new ResizeObserver(scheduleGaze).observe(homeFace);
+ const gazeObserver=new ResizeObserver(scheduleGaze);
+ for(const face of [notch.querySelector('.ai-face'),homeFace]){gazeObserver.observe(face);face.querySelectorAll('i').forEach(eye=>gazeObserver.observe(eye))}
  setState(navigator.onLine?'idle':'offline');
 })();

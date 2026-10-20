@@ -41,7 +41,7 @@ body.role-workflows{--owner-top:16px;--owner-width:240px;--owner-content-top:78p
 .role-manager-option{min-height:44px;gap:8px;padding:7px 8px!important;border-radius:9px!important}.role-manager-option>i{width:28px;height:28px;font-size:12px;border-radius:9px}.role-manager-option>span{gap:1px}.role-manager-option strong{font-size:14px;line-height:18px;font-weight:600}.role-owner-picker .role-manager-option small{font-size:11px;line-height:15px}.role-manager-option>svg{width:14px;height:14px}.role-manager-options{max-height:232px}
 body.owner-menu-open .sidebar,body.owner-menu-open .right-column,body.owner-menu-open .income-panel,body.owner-menu-open .tasks-column,body.owner-menu-open .rise-notch,body.owner-menu-open .role-owner-picker.owner-menu-open~*,body.owner-menu-open #hub-goals-design:has(.owner-menu-open)>:not(.role-owner-picker){filter:blur(3px);pointer-events:none}
 .role-owner-picker.owner-menu-open{z-index:100!important}.role-team-heading>div>span:empty,.role-task-dialog header span:empty{display:none}
-@media(max-width:760px){body.role-workflows{--owner-top:61px;--owner-content-top:126px}#hub-students>.role-owner-picker{left:16px;right:19px}}
+@media(max-width:760px){body.role-workflows{--owner-top:61px;--owner-content-top:126px}#hub-students>.role-owner-picker{left:16px;right:21px}}
 #hub-team.team-workspace.leadership-home{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 body.owner-menu-open .top-nav,body.owner-menu-open .os-header,body.owner-menu-open .task-viewport{filter:blur(3px);pointer-events:none}
 

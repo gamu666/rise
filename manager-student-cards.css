@@ -335,3 +335,37 @@
 .student-history-total span{font-size:10px;color:#82728d}
 .student-history-total strong{font-size:14px;font-weight:550;color:#4b3a57}
 @media(prefers-reduced-motion:reduce){.student-wallet-front,.student-wallet-back{transition:none}}
+
+/* Read-only certificate payment and a second face for course selection. */
+#hub-students.student-cards-layout #student-detail.student-completion-card{position:relative;perspective:1000px;display:block}
+.student-certificate-front,.student-certificate-back{position:absolute;inset:18px;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.2,.75,.2,1)}
+.student-certificate-front{transform:rotateY(0deg)}
+.student-certificate-back{transform:rotateY(180deg)}
+.is-certificate-flipped .student-certificate-front{transform:rotateY(-180deg)}
+.is-certificate-flipped .student-certificate-back{transform:rotateY(0deg)}
+.student-certificate-front .student-completion-body{height:100%;width:100%;min-height:0;gap:10px}
+.student-certificate-status-box{border:1px solid #ffffffa3;border-radius:13px;background:#ffffff66;padding:10px 12px;margin-top:auto;box-shadow:inset 0 1px 0 #fff5}
+.student-certificate-status-box>span{display:flex;align-items:center;gap:6px;font-size:11px;line-height:17px;color:#727680}
+.student-certificate-status-box svg{width:15px;height:15px}
+.student-certificate-status-box>div{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px}
+.student-certificate-status-box strong{font-size:19px;line-height:23px;font-weight:550;color:#32363d}
+.student-cert-paid-state{font-size:10px;line-height:17px;padding:2px 7px;border-radius:6px;background:#00000006;color:#858892}
+.student-cert-paid-state.is-paid{background:#259f6b13;color:#25845b}
+#hub-students.student-cards-layout #certificate-order.student-certificate-choose{background:#292b30;color:#fff;min-height:36px;font-size:12px;margin:0}
+.student-certificate-action{margin-top:0}
+.student-certificate-return{width:27px;height:27px;padding:6px;display:grid;place-items:center;background:#ffffff80;color:#6b707a;border:1px solid #ffffffb3;border-radius:50%}
+.student-certificate-return svg{width:15px;height:15px}
+.student-certificate-options{border:0;margin:13px 0 8px;padding:0;display:flex;flex-direction:column;gap:7px;flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin}
+.student-certificate-option{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid #ffffffa0;border-radius:12px;background:#ffffff5e;cursor:pointer}
+.student-certificate-option:has(input:checked){border-color:#8476b7;background:#f2ecff85}
+.student-certificate-option:has(input:disabled){cursor:default;opacity:.7}
+.student-certificate-option input{width:14px;height:14px;min-height:14px!important;accent-color:#8170b1;flex:none;margin:0}
+.student-certificate-option>span{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
+.student-certificate-option strong{font-size:12px;font-weight:550;line-height:17px;color:#41434b}
+.student-certificate-option small{font-size:10px;line-height:15px;color:#81828e}
+.student-certificate-option b{font-size:12px;line-height:17px;font-weight:500;color:#5e586a;white-space:nowrap}
+.student-certificate-choice-status{font-size:10px;line-height:16px;color:#777581;min-height:16px;margin:0 0 8px}
+.student-certificate-submit{background:#292b30;color:#fff;border:0;border-radius:11px;min-height:36px;padding:8px 12px;font-size:12px;font-weight:500;flex:none}
+.student-certificate-submit:disabled{background:#ffffff60;color:#898994;cursor:default}
+@media(max-width:760px){#hub-students.student-cards-layout #student-detail.student-completion-card{min-height:325px!important}}
+@media(prefers-reduced-motion:reduce){.student-certificate-front,.student-certificate-back{transition:none}}

@@ -27,6 +27,21 @@
 #hub-team{background:#ffffff85;border-color:#ffffffd9;color:#202124}.role-team-heading h1{color:#202124}.role-team-heading p{color:#5e6066}.role-team-heading>div>span{color:#62646b}.role-team-heading>strong{background:#eeeeef;color:#44464c}.role-directory-search input{background:#ffffffeb;border-color:#ffffff;color:#242529}.role-directory-search input::placeholder{color:#686b73}.role-member-card{background:#fffffff0;border:1px solid #fff;box-shadow:0 4px 14px #00000008;padding:18px;border-radius:18px}.role-member-card:hover,.role-member-card[aria-expanded=true]{background:#fff;border-color:#c7c9cd;box-shadow:0 5px 18px #00000010}.role-member-card .role-member-copy strong{color:#202124;font-weight:600}.role-member-card .role-member-copy>span{color:#4e5158}.role-member-card .role-member-copy>small{color:#62656c}.role-member-card .demo-manager-avatar{background:#eeeeef;color:#303238;border-radius:50%}.role-member-more{fill:#62656c}.role-branch-group h2{color:#25262a}.role-member-actions header strong{color:#202124}.role-member-actions header span{color:#62656c}.role-member-actions button{color:#303238}.role-member-actions svg{stroke:#565b64}.role-member-actions button:hover{background:#eeeeef}.role-member-copy{gap:4px}
 @media(max-width:760px){.goals-design>.role-owner-picker{top:61px;left:16px;right:16px}.goals-design>.role-owner-picker .role-manager-control{width:240px;min-width:0}.goals-design.has-owner-picker{padding-top:126px!important}#hub-students>.role-owner-picker{top:80px;left:16px;right:16px}#hub-students.student-workspace.student-cards-layout.has-owner-picker{padding-top:144px!important}}
 .goals-design>.role-owner-picker .role-manager-control{width:240px;max-width:100%;min-width:0}
-
-
 @media(max-width:760px){.goals-design>.role-owner-picker{right:0}}
+/* Shared owner control geometry. The popup never exceeds its trigger width. */
+body.role-workflows{--owner-top:16px;--owner-width:240px;--owner-content-top:78px}
+.goals-design>.role-owner-picker,#hub-students>.role-owner-picker{top:var(--owner-top);padding:0;border:0;background:transparent}
+.goals-design>.role-owner-picker .role-manager-control,#hub-students>.role-owner-picker .role-manager-control{width:var(--owner-width);min-width:0;max-width:100%}
+.goals-design.has-owner-picker{padding-top:var(--owner-content-top)!important}
+#hub-students.student-workspace.student-cards-layout.has-owner-picker{padding-top:var(--owner-content-top)!important}
+#hub-students>.role-owner-picker{left:48px;right:51px}
+.role-manager-popup{box-sizing:border-box;left:0;right:0;width:100%;min-width:0;padding:6px;border-radius:13px;box-shadow:0 10px 30px #00000025;background:#fffffff7}
+.role-manager-search{padding:8px;margin-bottom:4px;gap:7px;border-radius:9px;background:#f2f2f3;border-color:#e6e6e9}
+.role-owner-picker .role-manager-search input{font-size:13px;line-height:18px}.role-manager-search svg{width:15px;height:15px;stroke:#62666f}
+.role-manager-option{min-height:44px;gap:8px;padding:7px 8px!important;border-radius:9px!important}.role-manager-option>i{width:28px;height:28px;font-size:12px;border-radius:9px}.role-manager-option>span{gap:1px}.role-manager-option strong{font-size:14px;line-height:18px;font-weight:600}.role-owner-picker .role-manager-option small{font-size:11px;line-height:15px}.role-manager-option>svg{width:14px;height:14px}.role-manager-options{max-height:232px}
+body.owner-menu-open .sidebar,body.owner-menu-open .right-column,body.owner-menu-open .income-panel,body.owner-menu-open .tasks-column,body.owner-menu-open .rise-notch,body.owner-menu-open .role-owner-picker.owner-menu-open~*,body.owner-menu-open #hub-goals-design:has(.owner-menu-open)>:not(.role-owner-picker){filter:blur(3px);pointer-events:none}
+.role-owner-picker.owner-menu-open{z-index:100!important}.role-team-heading>div>span:empty,.role-task-dialog header span:empty{display:none}
+@media(max-width:760px){body.role-workflows{--owner-top:61px;--owner-content-top:126px}#hub-students>.role-owner-picker{left:16px;right:19px}}
+#hub-team.team-workspace.leadership-home{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body.owner-menu-open .top-nav,body.owner-menu-open .os-header,body.owner-menu-open .task-viewport{filter:blur(3px);pointer-events:none}
+

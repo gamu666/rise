@@ -28,3 +28,5 @@
 @media(max-width:760px){.goals-design>.role-owner-picker{top:61px;left:16px;right:16px}.goals-design>.role-owner-picker .role-manager-control{width:240px;min-width:0}.goals-design.has-owner-picker{padding-top:126px!important}#hub-students>.role-owner-picker{top:80px;left:16px;right:16px}#hub-students.student-workspace.student-cards-layout.has-owner-picker{padding-top:144px!important}}
 .goals-design>.role-owner-picker .role-manager-control{width:240px;max-width:100%;min-width:0}
 
+
+@media(max-width:760px){.goals-design>.role-owner-picker{right:0}}

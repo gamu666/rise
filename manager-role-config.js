@@ -1,0 +1,2 @@
+// Demo page selection only, never an authentication or authorization boundary.
+(()=>{const pages={'senior-manager.html':2,'branch-director.html':3,'general-director.html':4};const level=pages[location.pathname.split('/').pop()]||1;window.RISE_CONFIG={...(window.RISE_CONFIG||{}),staffLevel:level};document.addEventListener('DOMContentLoaded',()=>{document.body.dataset.staffLevel=String(level)});})();

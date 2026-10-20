@@ -1,5 +1,5 @@
 if(window.RISE_CONFIG.staffLoginUrl){const real=document.querySelector('#production-login');real.href=window.RISE_CONFIG.staffLoginUrl;real.hidden=false}
-document.querySelector('#demo-login').addEventListener('submit',e=>{e.preventDefault();const name=document.querySelector('#staff-name').value.trim();if(!name)return;sessionStorage.setItem('rise-demo-name',name);sessionStorage.setItem('rise-demo-new-login','1');location.href='manager.html'});
+document.querySelector('#demo-login').addEventListener('submit',e=>{e.preventDefault();const name=document.querySelector('#staff-name').value.trim();if(!name)return;const match=/^lvl([1-4])$/i.exec(name),level=match?Number(match[1]):1;const labels={1:'Менежер',2:'Ахлах менежер',3:'Салбарын захирал',4:'Ерөнхий захирал'};sessionStorage.setItem('rise-demo-name',match?labels[level]:name);sessionStorage.setItem('rise-demo-new-login','1');sessionStorage.setItem('rise-demo-level',String(level));location.href=({1:'manager.html',2:'senior-manager.html',3:'branch-director.html',4:'general-director.html'})[level]});
 const scene=document.querySelector('.character-scene');
 const password=document.querySelector('#staff-password');
 const visibility=document.querySelector('#password-toggle');

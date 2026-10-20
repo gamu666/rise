@@ -1,0 +1,18 @@
+// UI-only leave drafts. Server-side staff identity, branch scope and approvals are not connected.
+(()=>{
+ const panel=document.querySelector('#attendance-popover');if(!panel)return;
+ const level=Number(window.RISE_CONFIG?.staffLevel??1);if(![1,2,3].includes(level))return;
+ const head=panel.querySelector('.attendance-head'),tabs=document.createElement('div'),attendance=document.createElement('div'),leave=document.createElement('section');
+ tabs.className='attendance-mode-tabs';tabs.setAttribute('role','group');tabs.setAttribute('aria-label','Цаг бүртгэлийн хэсэг');tabs.innerHTML='<button type="button" data-mode="attendance" aria-pressed="true">Цаг бүртгэл</button><button type="button" data-mode="leave" aria-pressed="false">Чөлөөний хүсэлт</button>';
+ attendance.id='attendance-main-view';attendance.className='attendance-main-view';[...panel.children].filter(e=>e!==head).forEach(e=>attendance.append(e));
+ leave.id='attendance-leave-view';leave.className='attendance-leave-view';leave.hidden=true;
+ leave.innerHTML='<div class="leave-intro"><span class="leave-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4M16 3v4M4 11h16m-8 3v4m-2-2h4"/></svg></span><div><h3>Чөлөө хүсэх</h3><p>Хугацаа болон шалтгаанаа оруулна уу.</p></div></div><form class="leave-form"><div class="leave-date-fields"><label>Эхлэх огноо<input type="date" name="start" required></label><label>Дуусах огноо<input type="date" name="end" required></label></div><label>Шалтгаан<textarea name="reason" required maxlength="500" rows="3" placeholder="Чөлөө хүсэх шалтгаанаа бичнэ үү…"></textarea></label><div class="leave-duration"><span>Хүссэн хугацаа</span><strong>— өдөр</strong></div><p class="leave-feedback" role="status"></p><button class="leave-save" type="submit">Ноорог хадгалах</button></form><div class="leave-draft" hidden><div><strong>Миний хүсэлт</strong><span class="leave-draft-status">Ноорог · Илгээгдээгүй</span></div><p></p><small></small></div>';
+ panel.append(tabs,attendance,leave);
+ tabs.querySelectorAll('button').forEach(b=>b.onclick=()=>{const isLeave=b.dataset.mode==='leave';attendance.hidden=isLeave;leave.hidden=!isLeave;tabs.querySelectorAll('button').forEach(t=>t.setAttribute('aria-pressed',String(t===b)));});
+ const form=leave.querySelector('form'),start=form.elements.start,end=form.elements.end,reason=form.elements.reason,feedback=leave.querySelector('.leave-feedback');
+ const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Ulaanbaatar',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()),date=Object.fromEntries(parts.map(p=>[p.type,p.value]));start.min=end.min=`${date.year}-${date.month}-${date.day}`;
+ function duration(){end.min=start.value||start.min;end.setCustomValidity(end.value&&start.value&&end.value<start.value?'Дуусах огноо эхлэх огнооноос өмнө байж болохгүй.':'');const days=start.value&&end.value&&end.value>=start.value?Math.round((Date.parse(end.value+'T00:00:00Z')-Date.parse(start.value+'T00:00:00Z'))/86400000)+1:0;leave.querySelector('.leave-duration strong').textContent=days?days+' өдөр':'— өдөр';return days;}
+ start.onchange=end.onchange=duration;
+ form.onsubmit=e=>{e.preventDefault();if(!duration()||!form.reportValidity())return;if(!reason.value.trim()){reason.setCustomValidity('Шалтгаанаа бичнэ үү.');reason.reportValidity();return;}const draft=leave.querySelector('.leave-draft');draft.hidden=false;draft.querySelector('p').textContent=start.value+' — '+end.value+' · '+duration()+' өдөр';draft.querySelector('small').textContent=reason.value.trim();feedback.textContent='Ноорог энэ цонхонд хадгалагдлаа. Илгээгдээгүй.';};
+ reason.oninput=()=>reason.setCustomValidity('');
+})();

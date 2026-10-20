@@ -172,3 +172,61 @@
 .student-payment-dialog dl>div{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-top:1px solid #0000000b;font-size:14px}
 .student-payment-dialog dt{color:#737980}
 .student-payment-dialog dd{font-weight:550}
+
+/* Match the chat's equal columns and open conversation-list treatment. */
+@media(min-width:761px){
+ #hub-students.student-workspace.student-cards-layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;column-gap:26px!important;padding-left:48px!important;padding-right:48px!important}
+ #hub-students.student-cards-layout .students-toolbar{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;padding:0 0 14px!important;margin:0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+ #hub-students.student-cards-layout .students-list-heading,#hub-students.student-cards-layout .students-query{grid-column:1/-1}
+ #hub-students.student-cards-layout .students-list-heading{margin:0 0 7px;align-items:center}
+ #hub-students.student-cards-layout .students-list-heading h2{font-size:20px;font-weight:600}
+ #hub-students.student-cards-layout .students-query{height:46px!important;border:1px solid #ffffff70!important;border-radius:13px!important;background:#ffffff90!important;padding:0 13px!important;box-shadow:none!important}
+ #hub-students.student-cards-layout .students-query input{font-size:14px!important}
+ #hub-students.student-cards-layout .students-filter-trigger{min-width:0;height:32px!important;font-size:11px!important;background:#ffffff65!important;border:0!important;padding:0 8px!important;border-radius:8px!important}
+ #hub-students.student-cards-layout .students-filter-trigger>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #hub-students.student-cards-layout .students-clear{grid-column:1/-1;justify-self:end;font-size:11px;height:23px}
+ #hub-students.student-cards-layout .students-roster{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:3px 7px 12px 0!important;gap:10px!important}
+ #hub-students.student-cards-layout .students-card{min-height:64px!important;height:64px!important;padding:10px 14px!important;grid-template-columns:36px minmax(0,1fr) auto!important;grid-template-rows:1fr!important;gap:10px!important;align-items:center;background:#fffffff0!important;border:0!important;border-radius:16px!important;box-shadow:none!important}
+ #hub-students.student-cards-layout .students-card[aria-pressed=true]{background:#171719!important;color:#fff!important}
+ #hub-students.student-cards-layout .students-card .students-avatar{width:36px!important;height:36px!important;grid-row:1!important}
+ #hub-students.student-cards-layout .students-card-info{min-width:0}
+ #hub-students.student-cards-layout .students-card-name{font-size:14px!important;line-height:19px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #hub-students.student-cards-layout .students-card .students-progress{height:3px!important;margin-top:7px!important}
+ #hub-students.student-cards-layout .students-tags{grid-column:3!important;grid-row:1!important;display:flex;flex-direction:column;align-items:flex-end;gap:3px;max-width:100px}
+ #hub-students.student-cards-layout .students-tags>span{font-size:9px!important;line-height:16px!important;padding:0 5px!important;background:#00000005!important;color:#71747a!important;border:0!important;border-radius:5px}
+ #hub-students.student-cards-layout .students-card[aria-pressed=true] .students-tags>span{background:#ffffff12!important;color:#ffffffb3!important}
+}
+/* Payment card: a deep emerald surface with a clear visual hierarchy. */
+#hub-students.student-cards-layout .students-payment{position:relative;background:radial-gradient(ellipse at 100% 0,#326454 0,transparent 65%),linear-gradient(145deg,#172d29,#162320)!important;color:#effaf5!important;border:1px solid #ffffff3d!important;box-shadow:inset 0 1px 0 #ffffff16,0 10px 24px #183a2314!important;padding:20px!important}
+.students-payment .student-card-heading>span:first-child{color:#f0faf4;font-size:13px;line-height:20px}
+.students-payment .student-card-heading svg{color:#94cbb3}
+.students-payment .student-mini-label{color:#a7d8bf;background:#ffffff0e;padding:4px 7px;border-radius:7px}
+.students-payment .student-payment-chart{flex-direction:column;flex-wrap:nowrap;gap:10px;justify-content:center;padding:14px 0}
+.students-payment .student-payment-chart>svg{width:105px;max-width:none;flex:none;filter:drop-shadow(0 3px 10px #7ef1ae12)}
+.students-payment .student-ring-track{stroke:#ffffff14}
+.students-payment .student-ring-value{stroke:#9de5bc;stroke-width:7}
+.students-payment .student-payment-chart text{fill:#f0fff6;font-size:24px;font-weight:450}
+.students-payment .student-payment-chart text.student-ring-caption{fill:#8eb8a5;font-size:8px;font-weight:400;letter-spacing:.6px}
+.students-payment .student-payment-values{display:grid;grid-template-columns:1fr 1fr;width:100%;flex:0;gap:4px 10px;align-content:start;text-align:center}
+.students-payment .student-payment-values>span{grid-column:1/-1;font-size:11px;color:#a1baaf}
+.students-payment .student-payment-values>strong{grid-column:1/-1;font-size:25px;font-weight:500;color:#f0fff7;letter-spacing:-.6px;margin-bottom:8px}
+.students-payment .student-payment-values>div{padding:8px 7px;background:#ffffff07;border:1px solid #ffffff0b;border-radius:9px;font-size:11px;color:#a5bdb2;text-align:left;grid-template-columns:5px 1fr}
+.students-payment .student-payment-values b{color:#d5f4e2;font-size:12px;font-weight:500}
+.students-payment .student-payment-values i{background:#9de5bc}
+.students-payment .student-payment-values i.remaining{background:#81938a}
+.students-payment .student-payment-footer{border-top-color:#ffffff16;gap:8px;padding-top:9px;flex-wrap:wrap}
+.students-payment .student-payment-footer>span{color:#95b4a4}
+.students-payment .student-history-button{color:#d5efdf!important;margin-left:auto}
+@container(max-height:340px){
+ .students-payment .student-payment-chart{flex-direction:row;padding:9px 0}
+ .students-payment .student-payment-chart>svg{width:82px}
+ .students-payment .student-payment-values{display:flex;flex-direction:column;flex:1;gap:3px;text-align:left}
+ .students-payment .student-payment-values>strong{font-size:21px;margin-bottom:3px}
+ .students-payment .student-payment-values>div{padding:3px 6px}
+}
+
+.students-payment .student-payment-chart{flex-direction:row;gap:12px}
+.students-payment .student-payment-chart>svg{width:90px}
+.students-payment .student-payment-values{display:flex;flex-direction:column;flex:1;gap:4px;text-align:left;min-width:0}
+.students-payment .student-payment-values>strong{font-size:22px;margin-bottom:5px}
+.students-payment .student-payment-values>div{padding:5px 7px}

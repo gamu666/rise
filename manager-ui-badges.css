@@ -1,0 +1,4 @@
+/* Shared unread counters, including the sidebar's distinct hub-unread element. */
+:is(.hub-unread,.hub-badge,.category-unread,.notification-center-total,.notif-count){box-sizing:border-box!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;align-self:center;flex:0 0 auto!important;width:auto;min-width:18px!important;height:18px!important;min-height:18px!important;padding:0 5px!important;border-radius:999px!important;font:600 11px/18px Arial,sans-serif!important;letter-spacing:0!important;text-indent:0!important;text-align:center!important;font-variant-numeric:tabular-nums;vertical-align:middle;white-space:nowrap}
+:is(.hub-unread,.hub-badge,.category-unread,.notification-center-total,.notif-count)[hidden]{display:none!important}
+.figma-menu .hub-unread{margin-left:auto!important;background:#f35d69;color:#fff;position:static!important;transform:none!important}

@@ -1,0 +1,19 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),path=require('node:path');
+class Node{
+ constructor(tag='div'){this.tagName=tag;this.children=[];this.attrs={};this.style={};this.dataset={};this.value='';this.hidden=false;this.textContent='';this.isConnected=true;this.classList={add:()=>{},remove:()=>{}};this.selectors={};}
+ append(...nodes){nodes.forEach(n=>{n.parent=this;this.children.push(n)});}replaceChildren(...nodes){this.children=[];this.append(...nodes);}setAttribute(k,v){this.attrs[k]=v;}getAttribute(k){return this.attrs[k];}querySelector(s){return this.selectors[s]||null;}querySelectorAll(){return [];}after(n){this.parent?.append(n);}addEventListener(){}showModal(){}close(){}remove(){}
+}
+const team=new Node(),directory=new Node(),search=new Node('input'),heading=new Node('header'),description=new Node('p'),count=new Node('strong'),rank=new Node(),body=new Node('body');
+team.append(heading);Object.assign(team.selectors,{'.role-member-directory':directory,'.role-directory-search input':search,'.role-team-heading':heading,'.role-team-heading p':description,'.role-team-heading>strong':count});
+const student=(id,amount,date)=>({id,registered:date.replaceAll('-','.'),payments:[{amount,recordedAt:date+'T10:00:00+08:00'}]});
+const members=[{id:'a',name:'A',initial:'A',rank:1,branch:'Салбар 1',students:[student('s1',100,'2026-10-20')]},{id:'b',name:'B',initial:'B',rank:2,branch:'Салбар 1',students:[student('s2',200,'2026-10-14')]},{id:'c',name:'C',initial:'C',rank:1,branch:'Салбар 2',students:[student('s3',400,'2026-10-19')]}];
+class Clock extends Date{constructor(...args){super(...(args.length?args:['2026-10-20T10:00:00+08:00']));}}
+let opened=null,workspace=null;const ctx={window:{RISE_CONFIG:{staffLevel:4},RISE_ROLE_MEMBERS:members,RISE_ROLE_SHOW_GOAL:id=>opened=id},document:{createElement:t=>new Node(t),querySelector:s=>({'#hub-team':team,'#hub-ranking':rank}[s]||null),body},Date:Clock,Intl,addEventListener(){},removeEventListener(){},workspaceSelect:k=>workspace=k,renderRanking:null};
+vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../manager-director-views.js'),'utf8'),ctx);
+assert.equal(directory.children.length,3);assert.equal(count.textContent,'2 салбар');directory.children[0].onclick();assert.equal(directory.children.length,3);const back=team.children.find(n=>n.className==='director-back');back.onclick();directory.children[1].onclick();assert.equal(directory.children.length,2);assert.equal(directory.children[0].children[1].children[0].textContent,'B');assert.equal(count.textContent,'2 менежер');assert.equal(description.textContent,'Салбар 1 · Менежерүүд');back.onclick();assert.equal(count.textContent,'2 салбар');
+ctx.renderRanking();assert.equal(rank.children[2].children.length,2);let grid=rank.children[2];assert.equal(grid.children[0].children[2].textContent,'Салбар 2');assert.match(grid.children[0].children[4].textContent,/400/);
+let tools=rank.children[1];assert.equal(tools.children[0].children.length,2);assert.equal(tools.children[1].children.length,3);tools.children[1].children[0].onclick();assert.match(rank.children[2].children[0].children[4].textContent,/100/);rank.children[1].children[1].children[1].onclick();assert.match(rank.children[2].children[0].children[4].textContent,/400/);
+rank.children[1].children[0].children[1].onclick();assert.equal(rank.children[2].children.length,3);rank.children[2].children[0].children.at(-1).onclick();assert.equal(opened,'c');
+rank.children[1].children[0].children[0].onclick();rank.children[2].children[0].children.at(-1).onclick();assert.equal(workspace,'team');assert.equal(description.textContent,'Салбар 2 · Менежерүүд');assert.equal(directory.children.length,1);
+console.log('PASS: branch directory drill-down/back, branch and manager ranking, day/week/month calculations, goal drill-down');
+

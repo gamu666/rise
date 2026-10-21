@@ -1,0 +1,22 @@
+.tasks-column{position:relative;perspective:1200px}
+.tasks-column>h2{display:flex!important;align-items:center;gap:6px!important;font-size:18px!important;white-space:nowrap}
+.tasks-column>h2 .task-monocle{position:static!important;width:24px!important;height:24px!important;flex:none;object-fit:contain}
+.tasks-column>h2>#add-self-task,.tasks-column>h2>.role-sent-toggle{display:none!important}
+.tasks-column>h2>.task-history-toggle{position:static!important;margin-left:auto;width:auto!important;height:30px!important;border:1px solid #ffffffb0!important;border-radius:10px!important;background:#ffffffb8!important;color:#34363b!important;padding:0 10px!important;font-size:12px!important;font-weight:500!important;line-height:28px!important;flex:none;box-shadow:none!important}
+.task-history-back[hidden]{display:none!important}
+.task-history-open>:not(.task-history-back){visibility:hidden;pointer-events:none}
+.task-history-back{position:absolute;inset:0;z-index:12;padding:22px 18px;background:linear-gradient(140deg,#f9f9faee,#e4e5e8f2);border:1px solid #fff;border-radius:28px;color:#24262a;overflow:auto;animation:task-panel-turn .38s ease both;backface-visibility:hidden;transform-origin:center}
+.task-history-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:18px}
+.task-history-back .task-history-heading h2{font-size:18px!important;line-height:24px!important;font-weight:600!important;margin:0!important;padding:0!important;background:none!important;border:0!important}
+.task-history-return{padding:6px 8px;border-radius:9px;background:#fff;color:#4c5058;font-size:12px;white-space:nowrap}
+.task-history-tabs{display:flex;gap:3px;padding:4px;margin:0 0 10px;background:#dcdfe4;border-radius:12px;width:100%}
+.task-history-tabs button{flex:1;min-width:0;min-height:34px;padding:7px 5px;border:0;border-radius:9px;color:#545b65;background:transparent;font-size:12px;line-height:17px;font-weight:500}
+.task-history-tabs button[aria-pressed=true]{background:#fff;color:#191c21;box-shadow:0 2px 6px #0000000c}
+.task-history-list{display:grid;gap:12px;margin-top:18px}
+.task-history-record{background:#fffffff2;border:1px solid #fff;border-radius:17px;padding:15px;color:#292c32;box-shadow:0 4px 14px #00000006;min-width:0}
+.task-history-record h3{font-size:15px;line-height:22px;margin:7px 0 11px;font-weight:600;overflow-wrap:anywhere}
+.task-history-direction{font-size:11px;color:#515963;background:#edf0f3;border-radius:6px;padding:3px 7px}
+.task-history-people{display:grid;grid-template-columns:42px 1fr;gap:4px 8px;margin:0 0 12px;font-size:12px;line-height:18px}.task-history-people dt{color:#737882}.task-history-people dd{margin:0;font-weight:550;overflow-wrap:anywhere}
+.task-history-record p{font-size:13px;line-height:20px;margin:8px 0;white-space:pre-wrap;overflow-wrap:anywhere}.task-history-record small{display:block;font-size:11px;line-height:18px;color:#717781}.task-history-note{padding-top:8px;border-top:1px solid #e5e7eb}.task-history-empty{font-size:13px;line-height:21px;color:#626873;padding:14px 2px}
+@keyframes task-panel-turn{from{opacity:0;transform:rotateY(-90deg)}to{opacity:1;transform:rotateY(0)}}
+@media(prefers-reduced-motion:reduce){.task-history-back{animation:none}}

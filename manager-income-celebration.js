@@ -9,6 +9,7 @@
  function stop(){clearTimeout(timer);layer?.remove();layer=null;card.classList.remove('income-celebrating','income-celebrating-still');}
  function celebrate(rows){
   stop();if(document.hidden)return;
+  try{window.RISE_INCOME_CHIME?.();}catch{} // Audio failure must never block the receipt UI.
   const total=rows.reduce((n,r)=>n+Number(r.amount),0);status.textContent=(rows.length>1?rows.length+' шинэ орлого':'Шинэ орлого')+' · +'+new Intl.NumberFormat('mn-MN').format(total)+'₮';
   if(motion.matches){card.classList.add('income-celebrating-still');timer=setTimeout(stop,1800);return;}
   layer=document.createElement('div');layer.className='income-celebration';layer.setAttribute('aria-hidden','true');

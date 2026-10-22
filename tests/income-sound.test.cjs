@@ -1,0 +1,9 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const source=fs.readFileSync(require('node:path').join(__dirname,'../manager-income-sound.js'),'utf8');
+let contexts=[],notes=[],events={},uiWrites=0;
+const parameter=()=>({value:0,setValueAtTime(){},exponentialRampToValueAtTime(){}});
+class Gain{constructor(){this.gain=parameter();}connect(){}disconnect(){}}
+class Audio{constructor(){this.currentTime=0;this.state='running';this.destination={};contexts.push(this);}createGain(){return new Gain();}createOscillator(){const n={frequency:parameter(),connect(){},disconnect(){},start(at){this.startAt=at;},stop(at){this.stopAt=at;}};notes.push(n);return n;}resume(){this.state='running';return Promise.resolve();}}
+const window={AudioContext:Audio},document={hidden:false,querySelector:()=>({}),createElement:()=>uiWrites++,addEventListener:(key,fn)=>events[key]=fn};vm.runInNewContext(source,{window,document});
+assert.equal(contexts.length,0);assert.equal(window.RISE_INCOME_CHIME(),false,'no unsolicited audio');events.pointerdown({isTrusted:false});assert.equal(contexts.length,0);events.pointerdown({isTrusted:true});assert.equal(contexts.length,1);assert.equal(notes.length,0,'silent unlock');assert.equal(window.RISE_INCOME_CHIME(),true);assert.equal(notes.length,8);assert.deepEqual(notes.filter((_,i)=>i%2===0).map(n=>n.frequency.value),[523.25,659.25,783.99,1046.5]);assert(notes.every(n=>n.stopAt>n.startAt&&n.stopAt<1.4));assert.equal(window.RISE_INCOME_CHIME(),false,'no overlapping repeated chimes');contexts[0].currentTime=2;document.hidden=true;assert.equal(window.RISE_INCOME_CHIME(),false);document.hidden=false;assert.equal(window.RISE_INCOME_CHIME(),true);assert.equal(uiWrites,0,'no on/off control or other UI created');
+assert(source.includes('master.gain.value=.18'));console.log('PASS: silent load/unlock, 4-note bounded chime, moderate master gain, repeat guard, hidden page and no added controls');

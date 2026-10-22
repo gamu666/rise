@@ -1,0 +1,9 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),M=require('../student-model.js');
+const fixture={lessons:[{id:'own',courseId:'excavator-a',status:'ready'},{id:'draft',courseId:'excavator-a',status:'draft'},{id:'foreign',courseId:'loader-b',status:'ready'}]};
+assert.deepEqual(M.visibleLessons(fixture).map(l=>l.id),['own']);
+assert(!M.completion({},'2026-10-22'));assert(!M.completion({total:850000,paid:550000,ends:'2026.10.01'},'2026-10-22'));assert(!M.completion({total:850000,paid:850000,ends:'2026.11.01'},'2026-10-22'));assert(M.completion({total:850000,paid:850000,ends:'2026.10.22'},'2026-10-22'));assert(!M.completion({total:null,paid:0,ends:'2026.10.22'},'2026-10-22'));assert(!M.completion({total:1,paid:-1,ends:'2026.10.22'},'2026-10-22'));
+assert.deepEqual(M.progress(M.visibleLessons(fixture),{own:{complete:true},foreign:{complete:true}},'excavator-a'),{done:1,total:1,percent:100});assert.equal(M.progress([],{},'excavator-a').percent,0);
+const source=fs.readFileSync(require('node:path').join(__dirname,'../staff.js'),'utf8').split(/\r?\n/)[1];
+for(const [name,target,level]of [['student','student.html','student'],['lvl0','teacher.html','0'],['lvl1','manager.html','1'],['lvl4','general-director.html','4']]){let handler;const saved={},location={};vm.runInNewContext(source,{document:{querySelector:s=>s==='#demo-login'?{addEventListener:(t,h)=>handler=h}:{value:name}},sessionStorage:{setItem:(k,v)=>saved[k]=v},location});handler({preventDefault(){}});assert.equal(location.href,target);assert.equal(saved['rise-demo-level'],level);}
+let redirect;vm.runInNewContext(fs.readFileSync(require('node:path').join(__dirname,'../student.js'),'utf8'),{sessionStorage:{getItem:()=> '0'},location:{replace:x=>redirect=x}});assert.equal(redirect,'staff.html');
+console.log('PASS: student routing, other-role routes, page guard, own ready lessons only, progress, no unpaid/early/unknown graduation');

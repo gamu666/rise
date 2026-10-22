@@ -2,7 +2,7 @@
 (()=>{
  const level=Number(window.RISE_CONFIG?.staffLevel||1);if(level<3)return;
  const make=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;};
- const roleName=n=>({1:'Менежер',2:'Ахлах менежер',3:'Салбарын захирал'})[n]||'Ажилтан';
+ const roleName=n=>({0:'Багш',1:'Менежер',2:'Ахлах менежер',3:'Салбарын захирал'})[n]||'Ажилтан';
  const labels={pending:'Хүлээгдэж байна',approved:'Зөвшөөрсөн',rejected:'Татгалзсан'};
  const statusMessage=make('p','director-feedback');statusMessage.setAttribute('role','status');
  function decide(record,status,refresh){
@@ -34,3 +34,4 @@
  window.RISE_TEAM_RANK_OPEN=row=>{if(row.branchRow){workspaceSelect('team');openBranch(row.branch);}else window.RISE_ROLE_SHOW_GOAL(row.id);return true;};
  const selectDirectorSection=workspaceSelect;workspaceSelect=function(key){selectDirectorSection(key);if(key==='students'){window.RISE_DIRECTOR_STUDENT_SUMMARY?.();const summary=document.querySelector('.notch-summary');if(summary)summary.textContent='Сурагчдын мэдээллийг хамтдаа хяная.';}};selectHub=workspaceSelect;
 })();
+

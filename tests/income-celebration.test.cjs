@@ -1,0 +1,15 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const source=fs.readFileSync(require('node:path').join(__dirname,'../manager-income-celebration.js'),'utf8');
+class Node{constructor(){this.children=[];this.attrs={};this.style={setProperty(){}};this.classes=new Set();this.classList={add:(...v)=>v.forEach(k=>this.classes.add(k)),remove:(...v)=>v.forEach(k=>this.classes.delete(k))};}append(n){n.parent=this;this.children.push(n);}after(n){this.status=n;}setAttribute(k,v){this.attrs[k]=v;}remove(){this.parent.children=this.parent.children.filter(n=>n!==this);}}
+const receipt=(id,extra={})=>({id,amount:40000,recordedAt:'2026-10-22T01:00:00Z',...extra});
+function setup(initial=[],reduced=false){let rows=initial;const card=new Node(),events={},micro=[],timers=[],motion={matches:reduced,addEventListener(){}};const document={hidden:false,querySelector:()=>card,createElement:()=>new Node(),addEventListener:(name,fn)=>events[name]=fn};vm.runInNewContext(source,{document,localStorage:{getItem:()=>JSON.stringify(rows)},matchMedia:()=>motion,Intl,Date,Number,Set,Math,queueMicrotask:fn=>micro.push(fn),setTimeout:fn=>{timers.push(fn);return timers.length;},clearTimeout(){},addEventListener:(name,fn)=>events[name]=fn});return {card,document,timers,events,update(next,type='rise-data-change'){rows=next;events[type]({key:'rise-income-receipts',detail:{key:'rise-income-receipts'}});while(micro.length)micro.shift()();}};}
+const t=setup([receipt('old')]);assert.equal(t.card.children.length,0,'no animation for existing receipts');
+t.update([receipt('old'),receipt('new')]);assert(t.card.classes.has('income-celebrating'));assert.equal(t.card.children[0].children.length,16);assert.match(t.card.status.textContent,/40/);assert.equal(t.card.children[0].attrs['aria-hidden'],'true');t.timers.at(-1)();assert.equal(t.card.children.length,0);
+t.update([receipt('old'),receipt('new')]);assert.equal(t.card.children.length,0,'duplicate event is silent');
+t.update([receipt('new',{amount:50000})]);assert.equal(t.card.children.length,0,'edit is not new income');
+t.update([receipt('void',{voided:true}),receipt('zero',{amount:0}),receipt('bad',{amount:Infinity}),receipt('invalid',{recordedAt:'bad'})]);assert.equal(t.card.children.length,0);
+t.update([receipt('void')]);assert.equal(t.card.children.length,0,'reversal is not replayed');
+t.update([receipt('storage')],'storage');assert(t.card.classes.has('income-celebrating'),'another tab triggers');t.timers.at(-1)();t.document.hidden=true;t.update([receipt('hidden')]);assert.equal(t.card.children.length,0);
+const quiet=setup([],true);quiet.update([receipt('one'),receipt('one')]);assert(quiet.card.classes.has('income-celebrating-still'));assert.equal(quiet.card.children.length,0,'reduced motion has no sparks');assert(!quiet.card.status.textContent.includes('2 шинэ'),'duplicate IDs counted once');
+const reload=setup([receipt('one')]);assert.equal(reload.card.children.length,0,'reload does not replay');
+console.log('PASS: new receipt celebration, silent baseline/reload/edit/void, idempotency, cross-tab, reduced motion, hidden page and cleanup');

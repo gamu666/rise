@@ -28,5 +28,6 @@
   });
  },true);
  window.addEventListener('storage',e=>{if(e.key===key){try{const data=JSON.parse(e.newValue||'[]');receipts=Array.isArray(data)?data:[];render()}catch{}}});
+ window.addEventListener('rise-data-change',e=>{if(e.detail?.key===key){const data=loadLocal(key,[]);receipts=Array.isArray(data)?data:[];render();}});
  render();
 })();

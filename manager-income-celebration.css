@@ -1,0 +1,19 @@
+/* Local celebration overlay: no layout changes, audio, blocked clicks or full-screen flashes. */
+.income-celebration{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;border-radius:inherit;contain:paint}
+.income-celebration-sheen{position:absolute;inset:-65% -100%;background:linear-gradient(110deg,transparent 40%,#c9ffe617 46%,#fff9 50%,#c5ffdf20 54%,transparent 60%);transform:translateX(-40%);animation:income-sheen 1.65s ease-out both}
+.income-firework{position:absolute;left:var(--burst-x);top:var(--burst-y);width:0;height:0}
+.income-firework:before{content:'';position:absolute;inset:-12px;border:1px solid #00c875;border-radius:50%;opacity:0;animation:income-firework-ring 1.5s var(--burst-delay) ease-out both}
+.income-firework-spark{position:absolute;left:0;top:0;width:4px;height:7px;border-radius:3px;background:var(--spark-color);box-shadow:0 0 4px var(--spark-color);opacity:0;animation:income-firework-burst 2s var(--burst-delay) cubic-bezier(.12,.65,.24,1) both}
+.income-confetti{position:absolute;left:var(--confetti-left);top:-10px;width:5px;height:8px;border-radius:1px;background:var(--spark-color);opacity:0;animation:income-confetti-fall 1.95s var(--confetti-delay) cubic-bezier(.2,.5,.4,1) both}
+.recent-income.income-celebrating{animation:income-success-glow 2.7s ease-out both}
+.recent-income.income-celebrating .income-amount{color:#008c47;animation:income-amount-celebrate 1.2s ease-out both;transform-origin:right center}
+.recent-income.income-celebrating .income-spark>span:last-child{filter:drop-shadow(0 0 3px #00c87580)}
+.recent-income.income-celebrating-still{box-shadow:0 0 0 2px #00c87550,0 4px 20px #00c87518}
+.income-celebration-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;pointer-events:none}
+@keyframes income-firework-burst{0%{opacity:0;transform:translate(0,0) rotate(var(--spark-rotation)) scale(.3)}12%{opacity:1}65%{opacity:.85}100%{opacity:0;transform:translate(var(--spark-x),var(--spark-y)) rotate(var(--spark-rotation)) scale(.25)}}
+@keyframes income-firework-ring{0%{opacity:0;transform:scale(.2)}15%{opacity:.65}100%{opacity:0;transform:scale(3.8)}}
+@keyframes income-sheen{0%{transform:translateX(-40%);opacity:0}15%{opacity:.6}100%{transform:translateX(40%);opacity:0}}
+@keyframes income-confetti-fall{0%{opacity:0;transform:translate(0,0) rotate(0)}12%{opacity:.9}75%{opacity:.75}100%{opacity:0;transform:translate(var(--confetti-drift),180px) rotate(280deg)}}
+@keyframes income-success-glow{0%{box-shadow:0 0 0 0 #00cf7040}22%{box-shadow:0 0 0 2px #00cf7055,0 0 25px #00cf702b}100%{box-shadow:0 3px 14px #00000005}}
+@keyframes income-amount-celebrate{0%{transform:scale(1)}25%{transform:scale(1.09)}65%,100%{transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.income-celebration{display:none!important}.recent-income.income-celebrating,.recent-income.income-celebrating .income-amount{animation:none!important}}

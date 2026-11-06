@@ -1,0 +1,9 @@
+/* Independent edge rails and a bounded center. Wider screens add the two gutters. */
+body .os-shell,body.teacher-page .teacher-shell{border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body .os-shell:before,body .os-shell:after{display:none!important}
+@media(min-width:761px){
+ body .os-shell,body.teacher-page .teacher-shell{width:calc(100vw / var(--dashboard-scale,1));left:0;top:0;right:auto;margin:0;height:var(--dashboard-height,100dvh)}
+ body .main-column>.work-hub{width:min(1120px,100%);max-width:1120px;margin-inline:auto}
+ body.teacher-page .teacher-main>#teacher-content{width:100%;max-width:1072px;margin-inline:auto}
+}
+@media(max-width:760px){body .os-shell,body.teacher-page .teacher-shell{margin:0;left:0;top:0;width:100%}body.teacher-page{padding:0}}

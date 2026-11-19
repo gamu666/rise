@@ -4,7 +4,7 @@
 #hub-students .students-query{height:40px;padding:0 12px;border-radius:13px;background:#ffffffb8;border:.5px solid #d1d1d680;box-shadow:inset 0 1px 8px -2px #0084ff42,0 1px 2px #00000004}
 #hub-students .students-query:focus-within{outline:2px solid #007aff35;outline-offset:2px}
 #hub-students .students-query svg{width:20px;height:20px;stroke:#48484a}
-#hub-students .students-query input{font-size:12.5px;line-height:20px;letter-spacing:-.15px}
+#hub-students .students-query input{font-size:13px;line-height:20px;letter-spacing:-.15px}
 #hub-students .students-query input::placeholder{color:#8e8e93}
 .students-filter-trigger{height:40px;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:6px;padding:0 10px;border:.5px solid #d1d1d680;border-radius:13px;background:linear-gradient(180deg,#ffffffd9,#f5f5f7b8);box-shadow:inset 0 .5px 0 #fff,0 1px 3px #00000008;color:#48484a;font:400 12px/20px -apple-system,BlinkMacSystemFont,'Segoe UI',FigmaInter,sans-serif;cursor:pointer;transition:background 160ms,border-color 160ms,box-shadow 160ms}
 .students-filter-trigger>span{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -12,18 +12,18 @@
 .students-filter-trigger:hover{background:#fffffff0;border-color:#b9bbc180;box-shadow:inset 0 .5px 0 #fff,0 2px 6px #0000000a}
 .students-filter-trigger:is([aria-expanded=true],:focus-visible){outline:2px solid #007aff35;outline-offset:2px;border-color:#007aff60;background:#fff}
 .students-filter-trigger.has-value{color:#007aff}
-#hub-students .students-clear{justify-content:center;gap:6px;white-space:nowrap;flex-wrap:nowrap;font:500 11.5px/20px FigmaInter,sans-serif;color:#636366;padding:0 3px;cursor:pointer}
+#hub-students .students-clear{justify-content:center;gap:6px;white-space:nowrap;flex-wrap:nowrap;font:500 12px/20px FigmaInter,sans-serif;color:#636366;padding:0 3px;cursor:pointer}
 #hub-students .students-clear span{white-space:nowrap}
 #hub-students .students-clear:hover{color:#007aff}
 #hub-students .students-roster{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:128px;height:clamp(330px,calc(var(--dashboard-height,100dvh) - 360px),590px);gap:12px;padding-top:9px;scroll-padding-top:9px}
 #hub-students .students-card{height:128px;padding:14px 15px 12px;grid-template-columns:52px minmax(0,1fr);grid-template-rows:62px 20px;column-gap:12px;row-gap:10px;border-radius:14px}
-#hub-students .students-card .students-avatar{width:52px;height:52px;font-size:19px}
+#hub-students .students-card .students-avatar{width:52px;height:52px;font-size:20px}
 #hub-students .students-card-info{padding-top:1px}
 #hub-students .students-card-name{font:400 14px/20px FigmaInter,sans-serif;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;color:#1c1c1e}
 #hub-students .students-card-name strong{font-weight:700}
 #hub-students .students-card .students-progress{margin-top:7px;height:8px;border-radius:4px}
 #hub-students .students-tags{gap:7px;overflow:visible;align-self:end}
-#hub-students .students-tags>span{font-size:10px;line-height:18px;padding:0 7px;border-radius:10px;background:#fff;box-shadow:0 1px 3px #00000020;max-width:100%;white-space:nowrap}
+#hub-students .students-tags>span{font-size:11px;line-height:18px;padding:0 7px;border-radius:10px;background:#fff;box-shadow:0 1px 3px #00000020;max-width:100%;white-space:nowrap}
 #hub-students .students-profile h1{height:auto;min-height:30px;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;font-size:16px;line-height:22px}
 .students-filter-popover{position:fixed;z-index:5000;box-sizing:border-box;padding:6px;border:1px solid #ffffffdb;border-radius:22px;background:#f7f7f9e8;backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);box-shadow:0 12px 40px #1c1c1e26,0 2px 8px #1c1c1e12,inset 0 .5px 0 #fff;overflow:auto;overscroll-behavior:contain;color:#1c1c1e;animation:students-menu-in 180ms cubic-bezier(.2,.8,.2,1)}
 .students-filter-popover[hidden]{display:none!important}
@@ -40,7 +40,7 @@
 .students-filter-trigger svg{width:10px;height:10px}
 #hub-students .students-card{padding-left:12px;padding-right:12px;column-gap:10px;height:auto;min-height:128px;grid-template-rows:minmax(62px,auto) minmax(20px,auto)}
 #hub-students .students-roster{grid-auto-rows:minmax(128px,auto)}
-#hub-students .students-card-name{font-size:13.5px;letter-spacing:-.2px}
+#hub-students .students-card-name{font-size:14px;letter-spacing:-.2px}
 #hub-students .students-tags{flex-wrap:wrap;row-gap:4px}
 @keyframes students-menu-in{from{opacity:0;transform:translateY(-3px) scale(.97)}to{opacity:1;transform:none}}
 @container(max-width:710px){
@@ -71,16 +71,16 @@
 @media(min-width:761px){
  #hub-students .students-toolbar{height:31px;margin-bottom:15px;grid-template-columns:minmax(170px,234fr) repeat(3,minmax(90px,112fr)) max-content}
  #hub-students :is(.students-query,.students-filter-trigger){height:31px;border-radius:10px}
- #hub-students .students-query input,#hub-students .students-filter-trigger{font-size:10px}
- #hub-students .students-clear{font-size:9px;gap:4px}
+ #hub-students .students-query input,#hub-students .students-filter-trigger{font-size:11px}
+ #hub-students .students-clear{font-size:11px;gap:4px}
  #hub-students .students-roster{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:97px;gap:11px;padding-top:7px;scroll-padding-top:7px}
  #hub-students .students-card{height:97px;min-height:97px;padding:14px 13px;grid-template-columns:40px minmax(0,1fr);grid-template-rows:40px 15px;column-gap:9px;row-gap:13px;border-radius:10px}
  #hub-students .students-card .students-avatar{width:40px;height:40px;font-size:15px}
  #hub-students .students-card-info{padding-top:0}
- #hub-students .students-card-name{font-size:10px;line-height:20px;letter-spacing:0}
+ #hub-students .students-card-name{font-size:11px;line-height:20px;letter-spacing:0}
  #hub-students .students-card .students-progress{height:7px;margin-top:7px}
  #hub-students .students-tags{gap:7px;flex-wrap:nowrap}
- #hub-students .students-tags>span{font-size:8px;line-height:15px;padding:0 5px;border-radius:8.5px}
+ #hub-students .students-tags>span{font-size:11px;line-height:15px;padding:0 5px;border-radius:8.5px}
  #hub-students .students-profile h1{font-size:14px;line-height:20px}
 }
 

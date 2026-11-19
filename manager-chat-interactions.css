@@ -5,7 +5,7 @@
 #hub-chat .message-react-trigger svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
 #hub-chat .message-reaction-picker{position:absolute;bottom:calc(100% + 7px);left:0;display:flex;align-items:center;gap:3px;padding:7px;background:#fff;border:1px solid #e6e6eb;border-radius:28px;box-shadow:0 6px 22px #0000001f;z-index:6;width:max-content}
 #hub-chat .outgoing .message-reaction-picker{left:auto;right:0}
-#hub-chat .message-reaction-picker button{display:grid;place-items:center;width:32px;height:32px;min-height:32px;padding:3px;border:0;border-radius:50%;background:transparent;font-size:23px;cursor:pointer;transition:transform .16s}
+#hub-chat .message-reaction-picker button{display:grid;place-items:center;width:32px;height:32px;min-height:32px;padding:3px;border:0;border-radius:50%;background:transparent;font-size:24px;cursor:pointer;transition:transform .16s}
 #hub-chat .message-reaction-picker button:hover{transform:scale(1.18);background:#f2f2f6}
 #hub-chat .message-reaction-picker button[aria-pressed=true]{background:#ddecff}
 #hub-chat .message-reaction-badge{position:relative;display:grid;place-items:center;align-self:flex-end;min-width:31px;height:27px;padding:1px 5px;margin-top:-5px;margin-right:7px;border:2px solid #fff;border-radius:18px;background:#f1f1f5;box-shadow:0 1px 4px #0000000d;cursor:pointer;z-index:1}

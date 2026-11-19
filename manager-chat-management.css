@@ -4,7 +4,7 @@
 .chat-thread-more svg{width:20px;height:20px;fill:currentColor;stroke:none}
 .work-hub[data-section=chat] .chat-thread-row:hover>.chat-thread-more,.work-hub[data-section=chat] .chat-thread-row:focus-within>.chat-thread-more{opacity:1;pointer-events:auto}
 
-.chat-pin-label{display:block;font-size:10px;line-height:14px;color:#85858d;font-weight:400}
+.chat-pin-label{display:block;font-size:11px;line-height:14px;color:#85858d;font-weight:400}
 .chat-thread[aria-pressed=true] .chat-pin-label{color:#ffffffa6}
 .chat-thread-menu{position:fixed;width:210px;padding:7px;background:#fffffff7;color:#171719;border:1px solid #fff;border-radius:15px;box-shadow:0 8px 30px #00000025;backdrop-filter:blur(20px);z-index:1000}
 .chat-thread-menu button{display:block;width:100%;padding:11px 12px;border:0;border-radius:10px;background:transparent;color:#171719;text-align:left;font-size:14px;line-height:20px;scale:1!important}
@@ -17,8 +17,8 @@
 .chat-manage-dialog{width:min(440px,calc(100% - 32px));max-height:82vh;padding:22px;border:1px solid #fff;border-radius:25px;background:#fff;color:#171719;box-shadow:0 20px 70px #00000030;font-family:ReferenceInter,'Segoe UI',sans-serif}
 .chat-manage-dialog::backdrop{background:#00000033;backdrop-filter:blur(8px)}
 .chat-manage-dialog>header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
-.chat-manage-dialog h2{font-size:21px;line-height:28px;font-weight:650;margin:0}
-.chat-manage-dialog .chat-manage-close{display:grid;place-items:center;border:0;width:26px;height:26px;border-radius:50%;padding:0;background:#ff3b30;color:#fff;font:21px/1 Arial,sans-serif;flex:none}
+.chat-manage-dialog h2{font-size:22px;line-height:28px;font-weight:650;margin:0}
+.chat-manage-dialog .chat-manage-close{display:grid;place-items:center;border:0;width:26px;height:26px;border-radius:50%;padding:0;background:#ff3b30;color:#fff;font:22px/1 Arial,sans-serif;flex:none}
 .chat-manage-body{display:flex;flex-direction:column;gap:15px}
 .chat-manage-dialog p{font-size:15px;line-height:23px;color:#171719;margin:0}
 .chat-manage-dialog .chat-manage-note{font-size:13px;line-height:20px;color:#777780}
@@ -66,7 +66,7 @@
 .work-hub[data-section=chat] .chat-thread strong{font-size:14px;line-height:19px}
 .work-hub[data-section=chat] .chat-thread small{font-size:11px;line-height:16px;margin-top:2px}
 .work-hub[data-section=chat] .chat-thread-meta{gap:5px;min-width:39px;max-width:68px}
-.work-hub[data-section=chat] .chat-thread-meta>time{font-size:9px;line-height:13px}
+.work-hub[data-section=chat] .chat-thread-meta>time{font-size:11px;line-height:13px}
 .work-hub[data-section=chat] .chat-unseen-circle{width:12px;height:12px}
 .work-hub[data-section=chat] .chat-thread-meta .chat-seen-avatar{width:15px;height:15px;min-width:15px}
 .work-hub[data-section=chat] .chat-thread-row+.chat-thread-section-title{margin-top:15px}

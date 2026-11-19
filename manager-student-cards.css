@@ -16,8 +16,8 @@
 #hub-students.student-cards-layout #student-detail{border:1px solid #ffffff80!important;box-shadow:inset 0 1px 0 #ffffff70,0 8px 28px #25212c08!important;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:#28262d!important;border-radius:24px!important;min-width:0;height:auto}
 #hub-students.student-cards-layout .students-profile{grid-column:1/-1;display:block;position:relative;isolation:isolate;min-height:330px;padding:32px 28px 116px!important;overflow:hidden;background:linear-gradient(120deg,#ece6edb3,#dbc9b27a 65%,#c8b4a370)!important}
 .student-hero-copy{position:relative;z-index:2;width:58%;pointer-events:none}
-.student-eyebrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:9px;line-height:16px;letter-spacing:.1em;color:#625961}
-.student-eyebrow>span{letter-spacing:.02em;font-size:9px;opacity:.7}
+.student-eyebrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:11px;line-height:16px;letter-spacing:.1em;color:#625961}
+.student-eyebrow>span{letter-spacing:.02em;font-size:11px;opacity:.7}
 #hub-students.student-cards-layout .students-profile h1{display:flex;flex-direction:column;grid-column:auto;height:auto;min-height:0;margin:20px 0 20px;white-space:normal;overflow:visible;color:#2d2830;letter-spacing:-1.2px;font-size:clamp(23px,5cqw,42px)!important;line-height:1.15!important;font-weight:400;overflow-wrap:anywhere}
 #hub-students.student-cards-layout .students-profile h1>span{font-size:.68em;letter-spacing:-.5px;font-weight:450;margin-bottom:5px}
 #hub-students.student-cards-layout .students-profile h1 strong{font-weight:650}
@@ -33,16 +33,16 @@
 .student-course-item:last-child{border:0}
 .student-course-item>svg{width:19px;height:19px;color:#746174}
 .student-course-name{font-size:clamp(13px,2.4cqw,18px);font-weight:600;line-height:22px;white-space:nowrap}
-.student-course-percent{font-size:10px;opacity:.7}
+.student-course-percent{font-size:11px;opacity:.7}
 .student-course-track{height:3px;background:#ffffff65;border-radius:3px;overflow:hidden;grid-column:1/-1;margin-top:6px}
 .student-course-track i{display:block;height:100%;border-radius:inherit;background:#8c6b91}
-.student-course-dates{grid-column:1/-1;font-size:9px;line-height:15px;color:#736775}
+.student-course-dates{grid-column:1/-1;font-size:11px;line-height:15px;color:#736775}
 .student-course-item[aria-pressed=true] .student-course-name{color:#3b293e}
 #hub-students.student-cards-layout .students-payment{padding:18px!important;min-height:242px;background:#ffffff38!important;display:flex;flex-direction:column}
 .student-card-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0!important;min-height:20px}
 .student-card-heading>span:first-child{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;line-height:18px;color:#433b48}
 .student-card-heading svg{width:17px;height:17px;flex:none;color:#85728b}
-.student-mini-label{font-size:9px;color:#837589;white-space:nowrap}
+.student-mini-label{font-size:11px;color:#837589;white-space:nowrap}
 .student-payment-chart{display:flex;align-items:center;gap:12px;flex:1;padding:16px 0}
 .student-payment-chart>svg{width:100px;height:auto!important;aspect-ratio:1;max-width:43%;flex:none;overflow:visible}
 .student-ring-track,.student-ring-value{fill:none;stroke-width:9;stroke:#ffffff70}
@@ -50,44 +50,44 @@
 .student-payment-chart text{fill:#4b3d55;font-size:20px;font-weight:650;font-family:inherit}
 .student-payment-chart text.student-ring-caption{fill:#8b7c94;font-size:6px;font-weight:500;letter-spacing:1px}
 .student-payment-values{display:flex;flex-direction:column;min-width:0;gap:5px;flex:1}
-.student-payment-values>span{font-size:9px;color:#897d8d}
+.student-payment-values>span{font-size:11px;color:#897d8d}
 .student-payment-values>strong{font-size:clamp(15px,2.9cqw,23px);font-weight:600;letter-spacing:-.6px;margin-bottom:7px;white-space:nowrap}
-.student-payment-values>div{display:grid;grid-template-columns:5px 1fr;align-items:center;gap:4px 5px;font-size:9px;color:#85778c}
+.student-payment-values>div{display:grid;grid-template-columns:5px 1fr;align-items:center;gap:4px 5px;font-size:11px;color:#85778c}
 .student-payment-values b{grid-column:2;font-size:11px;font-weight:550;color:#4c3f55;white-space:nowrap}
 .student-payment-values i{width:5px;height:5px;border-radius:50%;background:#8d759c}
 .student-payment-values i.remaining{background:#d4c9dc}
 .student-payment-footer{display:flex;align-items:center;justify-content:space-between;gap:6px;border-top:1px solid #ffffff70;padding-top:10px;margin-top:auto}
-.student-payment-footer>span{font-size:9px;line-height:14px;color:#8b7e93}
-.student-history-button{display:flex;align-items:center;gap:4px;font-size:9px!important;color:#665170;background:transparent!important;border:0;padding:4px 0!important;white-space:nowrap}
+.student-payment-footer>span{font-size:11px;line-height:14px;color:#8b7e93}
+.student-history-button{display:flex;align-items:center;gap:4px;font-size:11px!important;color:#665170;background:transparent!important;border:0;padding:4px 0!important;white-space:nowrap}
 .student-history-button svg{width:13px!important;height:13px!important}
 #hub-students.student-cards-layout #student-detail{padding:18px!important;background:#ffffff38!important;min-height:242px}
 .student-completion-body{display:flex;flex-direction:column;gap:12px;height:100%}
 .student-graduation-line{display:flex;gap:10px;align-items:center}
 .student-graduation-line>svg{width:34px;height:34px;padding:8px;border-radius:11px;background:#ffffff60;color:#85718c;flex:none;box-sizing:content-box}
 .student-graduation-line>div{min-width:0;flex:1}
-.student-graduation-line>div>span{font-size:9px;color:#8d7d95}
+.student-graduation-line>div>span{font-size:11px;color:#8d7d95}
 #hub-students.student-cards-layout #graduation-edit{display:flex;align-items:center;justify-content:flex-start;gap:8px;width:auto;padding:3px 0;border:0;background:none;color:#4c3c55}
-#hub-students.student-cards-layout #graduation-edit strong{font-size:19px;letter-spacing:-.6px;font-weight:550}
+#hub-students.student-cards-layout #graduation-edit strong{font-size:20px;letter-spacing:-.6px;font-weight:550}
 #hub-students.student-cards-layout #graduation-edit svg{width:13px;height:13px;opacity:.55}
-.student-learning-line{display:flex;flex-wrap:wrap;gap:6px;justify-content:space-between;font-size:9px;color:#85748f}
+.student-learning-line{display:flex;flex-wrap:wrap;gap:6px;justify-content:space-between;font-size:11px;color:#85748f}
 .student-learning-line b{font-weight:500}
 .student-learning-line>div{width:100%;height:3px;border-radius:3px;background:#ffffff75;overflow:hidden}
 .student-learning-line i{display:block;height:100%;background:#9d86a8}
-.student-certificate-line{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:9px;color:#897b91}
+.student-certificate-line{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;color:#897b91}
 #hub-students.student-cards-layout #certificate-payment-edit{display:flex;flex-direction:column;align-items:flex-end;padding:0;background:none;border:0;color:#57465f}
-#certificate-payment-edit small{font-size:9px;line-height:15px;color:#89768f}
+#certificate-payment-edit small{font-size:11px;line-height:15px;color:#89768f}
 .student-certificate-action{margin-top:auto;display:flex;flex-direction:column;gap:6px}
-#hub-students.student-cards-layout #certificate-order{display:flex;justify-content:center;align-items:center;width:100%;min-height:33px;padding:7px 10px;font-size:10px;background:#706076;color:#fff;border:1px solid #ffffff30;border-radius:11px;box-shadow:none}
+#hub-students.student-cards-layout #certificate-order{display:flex;justify-content:center;align-items:center;width:100%;min-height:33px;padding:7px 10px;font-size:11px;background:#706076;color:#fff;border:1px solid #ffffff30;border-radius:11px;box-shadow:none}
 #hub-students.student-cards-layout #certificate-order:disabled{background:#ffffff50;color:#948899;cursor:default}
-.student-certificate-action>small{font-size:8px;line-height:13px;text-align:center;color:#938598}
-@container(max-width:480px){.student-mini-label{display:none}.student-payment-chart{gap:5px}.student-payment-chart>svg{width:80px}.student-payment-values>strong{font-size:16px}.student-payment-values b{font-size:10px}.student-graduation-line>svg{display:none}.student-card-heading>span:first-child{font-size:11px}}
-@media(max-width:760px){#hub-students.student-cards-layout .students-panels{grid-column:1/-1;grid-template-columns:1fr!important}.student-hero-copy{width:60%}#hub-students.student-cards-layout .students-profile{min-height:310px;padding:26px 22px 110px!important}#hub-students.student-cards-layout .students-profile h1{font-size:32px!important}.student-payment-chart>svg{max-width:none;width:110px}.student-payment-values>strong{font-size:23px}#hub-students.student-cards-layout .students-payment,#hub-students.student-cards-layout #student-detail{min-height:220px}}
+.student-certificate-action>small{font-size:11px;line-height:13px;text-align:center;color:#938598}
+@container(max-width:480px){.student-mini-label{display:none}.student-payment-chart{gap:5px}.student-payment-chart>svg{width:80px}.student-payment-values>strong{font-size:16px}.student-payment-values b{font-size:11px}.student-graduation-line>svg{display:none}.student-card-heading>span:first-child{font-size:11px}}
+@media(max-width:760px){#hub-students.student-cards-layout .students-panels{grid-column:1/-1;grid-template-columns:1fr!important}.student-hero-copy{width:60%}#hub-students.student-cards-layout .students-profile{min-height:310px;padding:26px 22px 110px!important}#hub-students.student-cards-layout .students-profile h1{font-size:32px!important}.student-payment-chart>svg{max-width:none;width:110px}.student-payment-values>strong{font-size:24px}#hub-students.student-cards-layout .students-payment,#hub-students.student-cards-layout #student-detail{min-height:220px}}
 @media(prefers-reduced-transparency:reduce){#hub-students.student-cards-layout .students-profile,#hub-students.student-cards-layout .students-payment,#hub-students.student-cards-layout #student-detail,.student-course-glass{backdrop-filter:none;-webkit-backdrop-filter:none;background:#eee8ef!important}}
 
 /* Readable type hierarchy at the dashboard's actual display scale. */
 .student-eyebrow,.student-eyebrow>span{font-size:11px;line-height:17px;letter-spacing:.025em;color:#655966}
 #hub-students.student-cards-layout .students-profile h1{font-size:34px!important;font-weight:450;line-height:1.18!important;letter-spacing:-.7px}
-#hub-students.student-cards-layout .students-profile h1>span{font-size:23px;font-weight:450;letter-spacing:-.4px}
+#hub-students.student-cards-layout .students-profile h1>span{font-size:24px;font-weight:450;letter-spacing:-.4px}
 #hub-students.student-cards-layout .students-profile h1 strong{font-weight:600}
 .student-phone-pill{font-size:15px;font-weight:500}
 .student-course-name{font-size:17px;font-weight:550;line-height:24px}
@@ -106,7 +106,7 @@
 .student-payment-footer>span,.student-history-button{font-size:11px!important;line-height:17px;color:#65526e}
 .student-completion-body{gap:14px}
 .student-graduation-line>div>span{font-size:12px;line-height:18px;color:#6c5b77}
-#hub-students.student-cards-layout #graduation-edit strong{font-size:23px;font-weight:500}
+#hub-students.student-cards-layout #graduation-edit strong{font-size:24px;font-weight:500}
 .student-learning-line{font-size:12px;color:#675373;line-height:18px}
 .student-certificate-line{font-size:12px;line-height:18px;color:#695775}
 #hub-students.student-cards-layout #certificate-payment-edit strong{font-size:15px;font-weight:500}
@@ -128,7 +128,7 @@
  .student-certificate-line{flex-wrap:wrap;font-size:11px}
  .student-course-item{padding-inline:8px}
  .student-course-name{font-size:14px}
- .student-course-percent,.student-course-dates{font-size:10px}
+ .student-course-percent,.student-course-dates{font-size:11px}
 }
 
 /* Neutral glass follows the existing workspace palette. */
@@ -193,7 +193,7 @@
  #hub-students.student-cards-layout .students-card-name{font-size:14px!important;line-height:19px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  #hub-students.student-cards-layout .students-card .students-progress{height:3px!important;margin-top:7px!important}
  #hub-students.student-cards-layout .students-tags{grid-column:3!important;grid-row:1!important;display:flex;flex-direction:column;align-items:flex-end;gap:3px;max-width:100px}
- #hub-students.student-cards-layout .students-tags>span{font-size:9px!important;line-height:16px!important;padding:0 5px!important;background:#00000005!important;color:#71747a!important;border:0!important;border-radius:5px}
+ #hub-students.student-cards-layout .students-tags>span{font-size:11px!important;line-height:16px!important;padding:0 5px!important;background:#00000005!important;color:#71747a!important;border:0!important;border-radius:5px}
  #hub-students.student-cards-layout .students-card[aria-pressed=true] .students-tags>span{background:#ffffff12!important;color:#ffffffb3!important}
 }
 /* Payment card: a deep emerald surface with a clear visual hierarchy. */
@@ -209,7 +209,7 @@
 .students-payment .student-payment-chart text.student-ring-caption{fill:#8eb8a5;font-size:8px;font-weight:400;letter-spacing:.6px}
 .students-payment .student-payment-values{display:grid;grid-template-columns:1fr 1fr;width:100%;flex:0;gap:4px 10px;align-content:start;text-align:center}
 .students-payment .student-payment-values>span{grid-column:1/-1;font-size:11px;color:#a1baaf}
-.students-payment .student-payment-values>strong{grid-column:1/-1;font-size:25px;font-weight:500;color:#f0fff7;letter-spacing:-.6px;margin-bottom:8px}
+.students-payment .student-payment-values>strong{grid-column:1/-1;font-size:24px;font-weight:500;color:#f0fff7;letter-spacing:-.6px;margin-bottom:8px}
 .students-payment .student-payment-values>div{padding:8px 7px;background:#ffffff07;border:1px solid #ffffff0b;border-radius:9px;font-size:11px;color:#a5bdb2;text-align:left;grid-template-columns:5px 1fr}
 .students-payment .student-payment-values b{color:#d5f4e2;font-size:12px;font-weight:500}
 .students-payment .student-payment-values i{background:#9de5bc}
@@ -221,7 +221,7 @@
  .students-payment .student-payment-chart{flex-direction:row;padding:9px 0}
  .students-payment .student-payment-chart>svg{width:82px}
  .students-payment .student-payment-values{display:flex;flex-direction:column;flex:1;gap:3px;text-align:left}
- .students-payment .student-payment-values>strong{font-size:21px;margin-bottom:3px}
+ .students-payment .student-payment-values>strong{font-size:22px;margin-bottom:3px}
  .students-payment .student-payment-values>div{padding:3px 6px}
 }
 
@@ -240,7 +240,7 @@
 .student-course-percent{font-size:11px;color:#5d626b;opacity:1}
 .student-course-track{height:6px;margin:5px 0 2px;background:#e7e7eb!important;border-radius:5px}
 .student-course-track i{background:var(--course-color)!important;border-radius:5px 0 0 5px}
-.student-course-dates{font-size:10px!important;line-height:15px;color:#646a74}
+.student-course-dates{font-size:11px!important;line-height:15px;color:#646a74}
 .student-course-item[aria-pressed=true]{background:#ffffff40!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--course-color) 18%,transparent)}
 #hub-students.student-cards-layout .students-profile[data-course-count="3"],#hub-students.student-cards-layout .students-profile[data-course-count="4"]{padding-bottom:195px!important}
 .students-profile[data-course-count="3"] .student-hero-copy,.students-profile[data-course-count="4"] .student-hero-copy{width:58%}
@@ -250,7 +250,7 @@
 #hub-students.student-cards-layout .students-payment{background:linear-gradient(145deg,#fff9,#f8f5fae6)!important;border-color:#ffffffd9!important;box-shadow:inset 0 1px 0 #fff,0 8px 24px #23162c08!important;color:#302a35!important;padding:18px!important}
 .students-payment .student-card-heading>span:first-child{color:#413b47;font-size:13px;font-weight:550}
 .students-payment .student-card-heading svg{color:#80738a}
-.students-payment .student-mini-label{color:#81728b;background:#ece8f08c;font-size:10px}
+.students-payment .student-mini-label{color:#81728b;background:#ece8f08c;font-size:11px}
 .student-wallet{position:relative;isolation:isolate;flex:1;min-height:202px;margin:12px 0 10px;border:1px solid #eee9f0;border-radius:22px;background:#ffffff60;box-shadow:inset 0 2px 3px #fff,0 3px 10px #4b2b6905;overflow:hidden;padding:0 12px}
 .student-wallet-tab{position:absolute;left:13px;right:13px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;border-radius:16px 16px 5px 5px;padding:12px 13px;height:86px;box-shadow:inset 0 1px 1px #fff8,0 -1px 3px #6e426809;border:1px solid #00000006}
 .student-wallet-tab>span{display:flex;gap:6px;align-items:center;font-size:12px;line-height:18px;color:#35243c}
@@ -265,27 +265,27 @@
 .student-wallet-total{font-size:clamp(23px,4.5cqw,32px);line-height:1.15;letter-spacing:-.8px;font-weight:550;color:#241c2c;white-space:nowrap}
 .student-wallet-progress{height:4px;border-radius:5px;background:#e9e4ee;overflow:hidden;margin-top:2px}
 .student-wallet-progress i{display:block;height:100%;border-radius:5px;background:#a79ad7}
-.student-wallet-caption{font-size:10px;line-height:15px;color:#8d7f98}
+.student-wallet-caption{font-size:11px;line-height:15px;color:#8d7f98}
 .students-payment .student-payment-footer{border-top-color:#e1dbe780;flex-wrap:nowrap;padding-top:7px}
-.students-payment .student-payment-footer>span{font-size:10px!important;color:#83758f}
+.students-payment .student-payment-footer>span{font-size:11px!important;color:#83758f}
 .students-payment .student-history-button{color:#665770!important;font-size:11px!important}
 /* Deadline reference: segmented time rail and a clear remaining-days headline. */
 .student-completion-body{gap:12px}
 .student-deadline-summary{display:flex;align-items:center;gap:9px;margin-top:5px}
-.student-deadline-summary>strong{font-size:38px;line-height:42px;letter-spacing:-1.7px;color:#292d34;font-weight:550}
+.student-deadline-summary>strong{font-size:36px;line-height:42px;letter-spacing:-1.7px;color:#292d34;font-weight:550}
 .student-deadline-summary>div{display:flex;flex:1;flex-direction:column;gap:3px}
 .student-deadline-summary>div>span{font-size:12px;line-height:17px;color:#484f59}
-.student-deadline-summary small{font-size:10px;line-height:15px;color:#6e7683}
+.student-deadline-summary small{font-size:11px;line-height:15px;color:#6e7683}
 .student-deadline-date{margin-left:auto}
 #hub-students.student-cards-layout .student-deadline-date #graduation-edit{gap:3px;padding:4px 0;align-items:center}
 #hub-students.student-cards-layout .student-deadline-date #graduation-edit strong{font-size:12px;font-weight:500;letter-spacing:-.2px;color:#6a717c;white-space:nowrap}
 #hub-students.student-cards-layout .student-deadline-date #graduation-edit svg{width:12px;height:12px}
 .student-deadline-meter{height:25px;position:relative;margin-top:5px;background:repeating-linear-gradient(90deg,#d2d4da 0 3px,transparent 3px 8px);border-radius:5px;overflow:visible}
 .student-deadline-fill{height:100%;width:var(--deadline-progress);position:relative;min-width:0;max-width:100%;border-radius:5px;background:linear-gradient(90deg,#45c6de,#2e80fa 66%,#a39aff);box-shadow:inset 0 1px 2px #ffffff80}
-.student-deadline-fill>span{position:absolute;right:4px;top:5px;font-size:10px;line-height:15px;color:white;background:#ffffff24;border-radius:3px;padding:0 3px}
+.student-deadline-fill>span{position:absolute;right:4px;top:5px;font-size:11px;line-height:15px;color:white;background:#ffffff24;border-radius:3px;padding:0 3px}
 .student-deadline-pin{position:absolute;left:clamp(0px,var(--deadline-progress),calc(100% - 2px));top:-10px;width:3px;height:35px;border-radius:3px;background:#6091eb}
 .student-deadline-pin:before{content:'';position:absolute;top:0;left:-3px;width:9px;height:9px;border-radius:50%;background:#6091eb;box-shadow:0 0 0 3px #6091eb14}
-.student-deadline-range{display:flex;justify-content:space-between;gap:8px;font-size:10px;line-height:16px;color:#7a818b;margin-top:-5px}
+.student-deadline-range{display:flex;justify-content:space-between;gap:8px;font-size:11px;line-height:16px;color:#7a818b;margin-top:-5px}
 .student-completion-body[data-deadline="soon"] .student-deadline-summary small{color:#c67b2c}
 .student-completion-body[data-deadline="complete"] .student-deadline-summary small{color:#258464}
 .student-completion-body[data-deadline="complete"] .student-deadline-fill{background:linear-gradient(90deg,#4bb7ad,#75bd9b)}
@@ -296,7 +296,7 @@
  .student-wallet-tab>span{font-size:11px;gap:4px}
  .student-wallet-tab strong{font-size:12px}
  .student-wallet-pocket{padding:13px 12px 11px}
- .student-wallet-total{font-size:25px}
+ .student-wallet-total{font-size:24px}
  .student-deadline-summary{gap:6px;flex-wrap:wrap}
  .student-deadline-summary>strong{font-size:32px;line-height:36px}
  .student-deadline-date{width:100%;margin:0}
@@ -325,14 +325,14 @@
 .student-payment-history article{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 8px;padding:11px 0;border-bottom:1px solid #e6dfeb}
 .student-payment-history article>div{display:flex;flex-direction:column;gap:4px}
 .student-payment-history strong{font-size:14px;line-height:19px;color:#403249;font-weight:550}
-.student-payment-history article span,.student-payment-history time{font-size:10px;line-height:16px;color:#85748e}
-.student-payment-history article small{grid-column:1/-1;font-size:10px;line-height:15px;color:#9a8ba1}
+.student-payment-history article span,.student-payment-history time{font-size:11px;line-height:16px;color:#85748e}
+.student-payment-history article small{grid-column:1/-1;font-size:11px;line-height:15px;color:#9a8ba1}
 .student-history-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:12px;text-align:center;gap:10px;color:#9b8ba3}
 .student-history-empty svg{width:29px;height:29px;color:#aa9ab5}
 .student-history-empty strong{font-size:13px;font-weight:500;color:#81718c}
 .student-history-empty span{font-size:11px;line-height:18px}
 .student-history-total{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid #e0d8e7;padding-top:12px;flex:none}
-.student-history-total span{font-size:10px;color:#82728d}
+.student-history-total span{font-size:11px;color:#82728d}
 .student-history-total strong{font-size:14px;font-weight:550;color:#4b3a57}
 @media(prefers-reduced-motion:reduce){.student-wallet-front,.student-wallet-back{transition:none}}
 
@@ -348,8 +348,8 @@
 .student-certificate-status-box>span{display:flex;align-items:center;gap:6px;font-size:11px;line-height:17px;color:#727680}
 .student-certificate-status-box svg{width:15px;height:15px}
 .student-certificate-status-box>div{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px}
-.student-certificate-status-box strong{font-size:19px;line-height:23px;font-weight:550;color:#32363d}
-.student-cert-paid-state{font-size:10px;line-height:17px;padding:2px 7px;border-radius:6px;background:#00000006;color:#858892}
+.student-certificate-status-box strong{font-size:20px;line-height:23px;font-weight:550;color:#32363d}
+.student-cert-paid-state{font-size:11px;line-height:17px;padding:2px 7px;border-radius:6px;background:#00000006;color:#858892}
 .student-cert-paid-state.is-paid{background:#259f6b13;color:#25845b}
 #hub-students.student-cards-layout #certificate-order.student-certificate-choose{background:#292b30;color:#fff;min-height:36px;font-size:12px;margin:0}
 .student-certificate-action{margin-top:0}
@@ -362,10 +362,21 @@
 .student-certificate-option input{width:14px;height:14px;min-height:14px!important;accent-color:#8170b1;flex:none;margin:0}
 .student-certificate-option>span{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
 .student-certificate-option strong{font-size:12px;font-weight:550;line-height:17px;color:#41434b}
-.student-certificate-option small{font-size:10px;line-height:15px;color:#81828e}
+.student-certificate-option small{font-size:11px;line-height:15px;color:#81828e}
 .student-certificate-option b{font-size:12px;line-height:17px;font-weight:500;color:#5e586a;white-space:nowrap}
-.student-certificate-choice-status{font-size:10px;line-height:16px;color:#777581;min-height:16px;margin:0 0 8px}
+.student-certificate-choice-status{font-size:11px;line-height:16px;color:#777581;min-height:16px;margin:0 0 8px}
 .student-certificate-submit{background:#292b30;color:#fff;border:0;border-radius:11px;min-height:36px;padding:8px 12px;font-size:12px;font-weight:500;flex:none}
 .student-certificate-submit:disabled{background:#ffffff60;color:#898994;cursor:default}
 @media(max-width:760px){#hub-students.student-cards-layout #student-detail.student-completion-card{min-height:325px!important}}
 @media(prefers-reduced-motion:reduce){.student-certificate-front,.student-certificate-back{transition:none}}
+
+/* Type-scale pass 2026-11-19: in the narrow card the paid / remaining tabs put the label over the amount
+   (both no longer fit on one 92px line), the total uses Title 3 (20px) and the history action never clips. */
+@container(max-width:620px){
+ .student-wallet-tab{flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:1px;padding-top:7px}
+ .student-wallet-tab>span{line-height:14px}
+ .student-wallet-tab strong{line-height:15px}
+ .student-wallet-total{font-size:20px}
+}
+.student-payment-footer{flex-wrap:wrap!important;row-gap:2px}
+.student-history-button{flex:none}

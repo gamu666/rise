@@ -38,7 +38,7 @@
 .chat-list-filters{display:flex;align-items:center;gap:2px}
 .work-hub[data-section=chat] .chat-list-toolbar button{min-height:30px;border:0;border-radius:8px;padding:5px 8px;background:transparent;color:#242426;font-size:12px;white-space:nowrap;font-weight:600}
 .work-hub[data-section=chat] .chat-list-filters button[aria-pressed=true]{background:white;box-shadow:0 2px 5px #00000008}
-.work-hub[data-section=chat] .chat-list-toolbar .chat-list-more{font-size:23px;line-height:18px;padding:0 6px}
+.work-hub[data-section=chat] .chat-list-toolbar .chat-list-more{font-size:24px;line-height:18px;padding:0 6px}
 .work-hub[data-section=chat] .chat-list-toolbar .chat-new-conversation{margin-left:auto;color:#171719;padding-right:0}
 .chat-new-conversation>span{display:inline-grid;place-items:center;background:#171719;color:white;border-radius:4px;width:19px;height:19px;font-size:17px;margin-right:3px}
 .chat-list-actions,.chat-contact-picker{flex:none;padding:8px;background:white;border-radius:14px;margin-bottom:12px;box-shadow:0 5px 18px #00000010}
@@ -51,11 +51,11 @@
 .work-hub[data-section=chat] .chat-thread strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px;line-height:23px;font-weight:650}
 .work-hub[data-section=chat] .chat-thread small{display:block;font-size:13px;line-height:20px;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .chat-thread-meta{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:9px;min-width:45px;max-width:76px}
-.chat-thread-meta>time{font-size:10px;line-height:14px;color:#77777e;white-space:nowrap}
+.chat-thread-meta>time{font-size:11px;line-height:14px;color:#77777e;white-space:nowrap}
 .chat-thread[aria-pressed=true] .chat-thread-meta>time{color:#ffffffa6}
 .chat-unseen-circle{display:block;width:14px;height:14px;border:1.5px solid #9999a1;border-radius:50%;background:transparent;box-sizing:border-box}
 .chat-thread[aria-pressed=true] .chat-unseen-circle{border-color:#ffffffa6}
-.chat-thread-meta .chat-seen-avatar{width:17px;height:17px;min-width:17px;border-radius:50%;font-size:9px;overflow:hidden}
+.chat-thread-meta .chat-seen-avatar{width:17px;height:17px;min-width:17px;border-radius:50%;font-size:11px;overflow:hidden}
 
 /* Header identity, received bubble and composer share the same content rail. */
 #hub-chat .chat-header{padding-left:var(--message-inset);padding-right:calc(var(--message-inset) + var(--chat-scrollbar-gap,0px));gap:12px}

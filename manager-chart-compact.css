@@ -5,7 +5,7 @@
 .goals-design .goal-chart{flex:0 0 auto;width:calc(41px + var(--bar-count,7) * 34px + (var(--bar-count,7) - 1) * 22px);max-width:100%}
 .goals-design .goal-bars{justify-content:flex-start;gap:22px;padding-left:9px;width:max-content;min-width:calc(100% - 31px)}
 .goals-design .goal-bars button{width:34px;max-width:34px;flex:0 0 34px}
-.goals-design .goal-bar-value{font-size:9px}
+.goals-design .goal-bar-value{font-size:11px}
 .goals-design .goal-metrics{width:auto;flex:1;min-width:0;padding:9px;gap:8px;border-radius:21px}
 .goals-design .goal-metrics button,.goals-design .goal-metrics button:last-child,.goals-design .goal-metrics button[aria-pressed=true]{min-height:54px;grid-template-columns:22px minmax(0,1fr) minmax(72px,30%);gap:9px;padding:9px 10px;font-size:12px;line-height:16px}
 .goal-metric-mini{height:32px;min-width:0;border-radius:18px;background:#111213;color:#fff;display:flex;align-items:center;justify-content:center;padding:2px 6px}

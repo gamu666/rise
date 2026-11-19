@@ -2,6 +2,7 @@
 
 - Read the user's existing requirements and the affected source before editing. Preserve working flows and the approved visual design.
 - Every new or changed box must match related components in width, height, alignment, starting vertical position, spacing, typography and visual weight. Do not wait for the user to request alignment again.
+- Employee pages use three independent regions: left menu at the left screen edge, tasks at the right edge, and a bounded central workspace. Remove the shared outer white frame; on wide screens grow the two gaps between regions instead of stretching the workspace or centering all three in one fixed-width wrapper.
 - Goals and Students owner selectors must share one compact control style and starting height. Align each selector's right edge with its content card. Open dropdowns must match the trigger width; their rows, avatars and text must remain proportionate to the trigger.
 - When an owner dropdown opens, lightly blur the background while keeping the selector, search and names sharp. Check selection, search, outside click, Escape and navigation cleanup.
 - Do not display repeated labels such as “Жишээ өгөгдөл”, “Жишээ”, “demo”, internal LVL markers or redundant “Менежер” field labels. This is a presentation rule, not permission to claim fixture data or local-only actions are real server operations.

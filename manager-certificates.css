@@ -1,0 +1,51 @@
+/* Manager certificate requests: neutral glass dialog, dark readable text, red circular close. */
+#certificate-requests-toggle svg{width:21px;height:21px;flex:none}
+#certificate-requests-toggle{position:relative}
+#certificate-requests{width:min(600px,calc(100vw - 24px));max-width:min(600px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:22px;border:1px solid #ffffffc9;border-radius:25px;background:linear-gradient(145deg,#fffffff7,#f4f4f7ee);box-shadow:0 18px 65px #19192330;color:#1f2026;font-family:inherit;overflow:auto;box-sizing:border-box}
+#certificate-requests::backdrop{background:#1919232e;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#certificate-requests button{font:inherit;cursor:pointer}
+#certificate-requests :is(button,input,textarea):focus-visible{outline:3px solid #3677ff;outline-offset:2px}
+.cert-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cert-eyebrow{font-size:11px;letter-spacing:1.2px;color:#5f606b;font-weight:600}
+.cert-head h2{margin:4px 0 0;font-size:22px;font-weight:650;letter-spacing:-.4px}
+.cert-close{display:grid;place-items:center;width:36px;height:36px;border:0;border-radius:50%;background:#ff3b30;color:#fff;flex:none}
+.cert-close svg{width:18px;height:18px;stroke:currentColor;stroke-width:2.2;fill:none;stroke-linecap:round}
+.cert-tabs{display:flex;gap:4px;margin:16px 0;padding:4px;border-radius:14px;background:#e9e9ee}
+.cert-tabs button{flex:1;min-height:40px;border:0;border-radius:10px;background:none;color:#3b3c45;font-size:14px;font-weight:500}
+.cert-tabs [aria-pressed=true]{background:#fff;color:#16161a;font-weight:600;box-shadow:0 1px 3px #19192320}
+.cert-tabs span{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;margin-left:4px;border-radius:999px;background:#ff3b30;color:#fff;font-size:12px;font-weight:600}
+.cert-list{display:grid;gap:12px}
+.cert-card{padding:16px;border:1px solid #fff;border-radius:18px;background:#ffffffd9}
+.cert-card>header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.cert-card>header strong{display:block;font-size:16px}
+.cert-card>header span{font-size:13px;color:#5f606b}
+.cert-status{flex:none;padding:4px 10px;border-radius:999px;background:#ececf1;color:#33343c!important;font-weight:600}
+.cert-status.is-payment_review{background:#fff1dc;color:#8a4700!important}
+.cert-status.is-confirmed,.cert-status.is-printing{background:#e8efff;color:#1d4ed8!important}
+.cert-status.is-ready{background:#e3f6ec;color:#047857!important}
+.cert-items{list-style:none;margin:12px 0 0;padding:0}
+.cert-items li{display:flex;justify-content:space-between;gap:12px;padding:6px 0;font-size:14px;color:#33343c;border-bottom:1px solid #ececf1}
+.cert-items li.is-total{border-bottom:0;font-weight:600;color:#16161a}
+.cert-card dl{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin:12px 0}
+.cert-card dt{font-size:12px;color:#5f606b}
+.cert-card dd{margin:0;font-size:14px;color:#1f2026}
+.cert-pay{padding:10px 12px;border-radius:12px;background:#f3f4f7;font-size:14px;color:#33343c}
+.cert-confirm fieldset{margin:12px 0 0;padding:0;border:0;display:grid;gap:8px}
+.cert-confirm legend{font-size:13px;font-weight:600;color:#33343c;margin-bottom:4px;padding:0}
+.cert-confirm label{display:flex;align-items:center;gap:10px;min-height:40px;padding:0 12px;border-radius:12px;background:#fff;border:1px solid #e3e4ea;font-size:14px}
+.cert-confirm label.is-blocked{background:#fff3f2;border-color:#f6c9c4;color:#a32018}
+.cert-confirm input[type=checkbox]{width:18px;height:18px;accent-color:#16161a;margin:0}
+.cert-actions{display:flex;gap:8px;margin-top:12px}
+.cert-actions button,.cert-return button{min-height:44px;padding:0 16px;border-radius:12px;border:1px solid #d3d4dc;background:#fff;color:#1f2026;font-size:14px;font-weight:600}
+/* Same action colour as the other manager dialogs' submit buttons (manager-action-feedback.css). */
+.cert-actions .cert-primary{flex:1;background:var(--action-green,#00c853)!important;border-color:transparent!important;color:#fff!important}
+.cert-return{margin-top:10px;display:grid;gap:8px}
+.cert-return label{display:grid;gap:6px;font-size:13px;font-weight:600;color:#33343c}
+.cert-return textarea{min-height:70px;padding:10px 12px;border:1px solid #d3d4dc;border-radius:12px;font:inherit;font-size:14px;resize:vertical}
+.cert-return .cert-danger{background:#fff3f2;border-color:#f6c9c4;color:#a32018}
+.cert-error{margin:8px 0 0;color:#a32018;font-size:13px}
+.cert-error:empty{display:none}
+.cert-wait,.cert-empty{margin:10px 0 0;font-size:14px;color:#4a4b55}
+.cert-empty{padding:24px 0;text-align:center}
+.cert-foot{margin:14px 0 0;font-size:12px;color:#5f606b}
+@media(max-width:560px){.cert-card dl{grid-template-columns:1fr}.cert-actions{flex-direction:column}}

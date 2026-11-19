@@ -15,7 +15,7 @@ body{background:#f5f5f5;color:#242220;font-family:ReferenceInter,Arial,sans-seri
 .figma-menu button:hover{background:#ffffff65}
 .figma-menu .nav-label{font-size:14px;font-weight:500;line-height:20px;white-space:nowrap}
 .workspace-account{left:24px;right:23px;bottom:29px;gap:12px;padding:19px 13px 16px;border-radius:24px;border:.5px solid white;background:#d2d2d273;box-shadow:0 30px 37px #00000012}
-.profile-avatar{width:48px;height:48px}.profile strong{font-size:14px;line-height:20px}.profile small{font-size:9px;line-height:22px}.reference-logout{align-self:center;border:0;border-radius:23px;background:white;width:128px;height:46px;padding:0;text-align:center;box-shadow:0 3px 4px #001e4666;font-size:11px}
+.profile-avatar{width:48px;height:48px}.profile strong{font-size:14px;line-height:20px}.profile small{font-size:11px;line-height:22px}.reference-logout{align-self:center;border:0;border-radius:23px;background:white;width:128px;height:46px;padding:0;text-align:center;box-shadow:0 3px 4px #001e4666;font-size:11px}
 .brand-overview,.reference-utility,.reference-right-summary{display:none!important}
 .work-hub[data-section=profile]>.browser-stage{padding:0;height:100%;overflow:hidden}
 #hub-profile{height:100%;position:relative}
@@ -37,8 +37,8 @@ body{background:#f5f5f5;color:#242220;font-family:ReferenceInter,Arial,sans-seri
 .task-card{position:relative;flex:none;min-height:162px;border:0!important;border-radius:20px!important;padding:11px!important;margin:0!important;background-image:var(--task-image)!important;background-size:145% auto!important;background-position:50% 52%!important;background-color:#111!important;box-shadow:none!important;overflow:hidden;color:#fff!important;transform:none!important}
 .task-head{display:flex;align-items:center;gap:10px;position:relative;padding:0 0 9px!important;min-height:47px}
 .task-head .avatar,.task-head .check-symbol{width:38px;height:38px;flex:0 0 38px;border-radius:50%;overflow:hidden;background:#ffffffc0;color:#242220}
-.task-head h3{font-size:14px;line-height:20px;font-weight:500;color:white}.task-head small{font-size:10px;line-height:16px;color:#ffffffc9}
-.task-head time{font-size:9px;color:#ffffffb0;margin-left:auto;align-self:flex-start;max-width:50px}
+.task-head h3{font-size:14px;line-height:20px;font-weight:500;color:white}.task-head small{font-size:11px;line-height:16px;color:#ffffffc9}
+.task-head time{font-size:11px;color:#ffffffb0;margin-left:auto;align-self:flex-start;max-width:50px}
 .task-expand{position:static!important;width:24px!important;height:24px!important;flex:none;color:white!important;background:none!important}.task-expand svg{width:20px;height:20px;fill:currentColor;stroke:none}
 .task-card>p{display:block!important;-webkit-line-clamp:unset!important;white-space:normal!important;height:auto!important;min-height:94px;margin:0!important;padding:10px 16px!important;font-size:13px!important;line-height:20px!important;background:#ffffffbd!important;border-radius:16px!important;color:#242220!important;overflow:visible!important}
 .task-actions{position:static!important;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding-top:12px!important;width:100%;margin:0!important;transform:none!important;background:none!important}
@@ -46,11 +46,11 @@ body{background:#f5f5f5;color:#242220;font-family:ReferenceInter,Arial,sans-seri
 .task-actions button{width:28px!important;height:28px!important;min-width:28px!important;border-radius:50%!important;background:white!important;color:#242220!important;box-shadow:0 0 10px #ffffff80!important;display:grid;place-items:center}.task-actions svg{width:15px;height:15px}.task-state{color:white}
 @media(max-height:780px){.figma-menu{top:150px}.figma-menu button{height:46px;padding-block:11px}.framed-rail .brand{top:54px}.workspace-account{bottom:20px}.workspace-appearance{display:none}}
 @media(max-width:1100px){.workspace{grid-template-columns:232px minmax(0,1fr) 320px}.figma-menu{left:12px}.task-viewport{padding:20px 16px}.tasks-column{padding-inline:14px}.ai-welcome h1{font-size:28px;line-height:36px}.ai-welcome p{font-size:15px;line-height:24px}.ai-composer{width:calc(100% - 32px)}.workspace-account{left:12px;right:12px}}
-@media(max-width:760px){html,body{overflow:auto}.os-shell{height:auto;min-height:100dvh}.workspace{grid-template-columns:72px minmax(0,1fr);height:auto}.framed-rail{grid-row:1/3;min-height:100dvh}.framed-rail .brand{left:10px;top:24px;width:52px}.framed-rail .brand img{width:52px;height:auto}.figma-menu{left:8px;top:100px;width:56px}.figma-menu button{width:56px;padding:16px}.figma-menu .nav-label,.workspace-account{display:none}.main-column{height:65dvh}.task-viewport{grid-column:2;height:600px}.ai-welcome h1{font-size:24px}.ai-welcome p{font-size:14px}.ai-composer{bottom:42px}.ai-status{bottom:5px;font-size:10px}}
+@media(max-width:760px){html,body{overflow:auto}.os-shell{height:auto;min-height:100dvh}.workspace{grid-template-columns:72px minmax(0,1fr);height:auto}.framed-rail{grid-row:1/3;min-height:100dvh}.framed-rail .brand{left:10px;top:24px;width:52px}.framed-rail .brand img{width:52px;height:auto}.figma-menu{left:8px;top:100px;width:56px}.figma-menu button{width:56px;padding:16px}.figma-menu .nav-label,.workspace-account{display:none}.main-column{height:65dvh}.task-viewport{grid-column:2;height:600px}.ai-welcome h1{font-size:24px}.ai-welcome p{font-size:14px}.ai-composer{bottom:42px}.ai-status{bottom:5px;font-size:11px}}
 
 .tasks-column h2 .task-monocle{display:block!important;width:36px!important;height:32px!important}
 .task-stack{scrollbar-width:none}.task-stack::-webkit-scrollbar{display:none}
-.task-head>div{flex:1;min-width:0}.task-head h3{white-space:normal!important}.task-head time{position:static!important;order:4;font-size:9px!important;margin-left:0;width:44px;flex:none}.task-expand{margin-left:0!important;order:3}
+.task-head>div{flex:1;min-width:0}.task-head h3{white-space:normal!important}.task-head time{position:static!important;order:4;font-size:11px!important;margin-left:0;width:44px;flex:none}.task-expand{margin-left:0!important;order:3}
 .figma-menu .hub-badge{position:absolute;right:10px;top:18px;background:#242220;color:white;min-width:18px;height:18px;font-size:11px}
 
 /* Audited directly from node fills/effects/text runs, 2026-10-15. */
@@ -62,7 +62,7 @@ body{background:#f5f5f5;color:#242220;font-family:ReferenceInter,Arial,sans-seri
 .workspace-account{width:219px;height:150px;left:24px;right:auto;bottom:29px;padding:19px 13px;display:block;background:rgba(210,210,210,.45);border:0;box-shadow:inset 0 0 0 .5px white,0 64px 37px -32px rgba(0,0,0,.09)}
 .profile{height:48px;gap:13.652px;position:relative}
 .profile>svg{display:none!important}.profile>span:nth-child(2){align-self:flex-start;padding-top:2px;white-space:nowrap}
-.profile strong{font-size:14px;line-height:20px;font-weight:500;color:#242220}.profile small{font-size:9px;line-height:22px;font-weight:500;letter-spacing:.4px;text-transform:uppercase;color:rgba(36,34,32,.4)}
+.profile strong{font-size:14px;line-height:20px;font-weight:500;color:#242220}.profile small{font-size:11px;line-height:22px;font-weight:500;letter-spacing:.4px;text-transform:uppercase;color:rgba(36,34,32,.4)}
 .profile-online{position:absolute;left:33px;top:36px;width:12px;height:12px;border-radius:50%;background:#00ff6a;box-shadow:0 0 4px #00ff09}
 .logout-swipe{position:absolute;left:46px;top:88px;width:128px;height:46px;border:0;border-radius:23px;background:white;box-shadow:inset 0 0 0 1px white,0 4px 4px rgba(0,30,70,.53);--swipe-x:0px;--swipe-progress:0;user-select:none}
 .logout-copy{position:absolute;left:72px;top:14px;width:42px;text-align:left;opacity:calc(1 - var(--swipe-progress));pointer-events:none;background:linear-gradient(94.150164deg,#dbdbdb 7.3719%,#757575 42.407%);background-clip:text;-webkit-background-clip:text;color:transparent}
@@ -90,15 +90,15 @@ body{background:#f5f5f5;color:#242220;font-family:ReferenceInter,Arial,sans-seri
 .task-head>.avatar,.task-head>.check-symbol{position:absolute;left:13px;top:13px;width:37.876px;height:36.155px;background:transparent}
 .task-head>div{position:absolute;left:61px;top:11px;width:177px}
 .task-head h3{font-size:16px!important;line-height:24px!important;font-weight:500!important;color:#fff!important;white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis}
-.task-head small{font-size:10px!important;line-height:15px!important;font-weight:300;color:white!important}
-.task-head time{position:absolute!important;left:235px;right:auto;top:16px;max-width:none;width:57px;font-size:10px!important;line-height:15px!important;font-weight:700;color:#d4d4d4!important;white-space:nowrap;order:initial}
+.task-head small{font-size:11px!important;line-height:15px!important;font-weight:300;color:white!important}
+.task-head time{position:absolute!important;left:235px;right:auto;top:16px;max-width:none;width:57px;font-size:11px!important;line-height:15px!important;font-weight:700;color:#d4d4d4!important;white-space:nowrap;order:initial}
 .task-expand{position:absolute!important;right:8px;left:auto;top:33px!important;width:20px!important;height:20px!important;opacity:0;color:white!important}
 .task-card:hover .task-expand,.task-expand:focus-visible{opacity:1}
 .task-card>p{position:relative;isolation:isolate;width:calc(100% - 22px);min-height:94px;height:auto!important;margin:0 11px 10px!important;padding:10px 16px 9px!important;border-radius:15px!important;background:rgba(173,173,173,.38)!important;color:white!important;font-size:12px!important;line-height:18px!important;font-weight:500;backdrop-filter:url('#task-glass-refraction');-webkit-backdrop-filter:url('#task-glass-refraction');box-shadow:inset .6px .8px 1px #ffffffa1,inset -.6px -.8px 1px #ffffff29;overflow:hidden!important}
 .task-card[data-tone=green]>p{background:rgba(55,55,55,.57)!important}
 .task-card[data-tone=pink]>p{background:rgba(140,140,140,.39)!important;box-shadow:inset -.6px .8px 1px #ffffffa1,inset .6px -.8px 1px #ffffff29}
 .task-actions{padding:2px 11px 12px!important}
-.task-card .task-state{padding:0 11px 10px;font-size:10px;color:white}
+.task-card .task-state{padding:0 11px 10px;font-size:11px;color:white}
 @media(max-height:780px){.sidebar-rule-top{top:133px}.sidebar-rule-bottom{bottom:182.5px}}
 @media(max-width:1100px){.workspace-account{left:6px}.task-head time{left:auto;right:7px}.task-head>div{width:calc(100% - 118px)}}
 @media(max-width:760px){.sidebar-rule{width:72px}.sidebar-rule-top{top:80px}.sidebar-rule-bottom{display:none}.workspace-account{display:none}.task-card{min-width:0}}

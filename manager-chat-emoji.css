@@ -10,7 +10,7 @@
 #hub-chat .chat-composer .emoji-category[aria-pressed=true]{background:#e8e8ed!important}
 .emoji-results{font-size:12px;line-height:18px;color:#707077;min-height:18px}
 .emoji-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;overflow-y:auto;min-height:0;max-height:258px;scrollbar-width:thin;padding:2px}
-#hub-chat .chat-composer .emoji-item{width:100%;height:35px;min-height:35px;border-radius:8px;font-size:26px;line-height:1}
+#hub-chat .chat-composer .emoji-item{width:100%;height:35px;min-height:35px;border-radius:8px;font-size:24px;line-height:1}
 #hub-chat .chat-composer .emoji-item:hover{background:#f0f0f3!important}
 #hub-chat .chat-composer .emoji-more{width:100%;height:32px;min-height:32px;background:#f1f1f4!important;color:#171719;font-size:12px;border-radius:9px}
 #hub-chat .chat-composer .emoji-more[hidden]{display:none}

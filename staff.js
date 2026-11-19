@@ -1,8 +1,17 @@
 if(window.RISE_CONFIG.staffLoginUrl){const real=document.querySelector('#production-login');real.href=window.RISE_CONFIG.staffLoginUrl;real.hidden=false}
 document.querySelector('#demo-login').addEventListener('submit',e=>{e.preventDefault();const name=document.querySelector('#staff-name').value.trim();if(!name)return;if(/^student$/i.test(name)){sessionStorage.setItem('rise-demo-name','Сурагч');sessionStorage.setItem('rise-demo-level','student');sessionStorage.setItem('rise-demo-new-login','1');location.href='student.html';return;}const match=/^lvl([0-4])$/i.exec(name),level=match?Number(match[1]):1;const labels={0:'Багш',1:'Менежер',2:'Ахлах менежер',3:'Салбарын захирал',4:'Ерөнхий захирал'};sessionStorage.setItem('rise-demo-name',match?labels[level]:name);sessionStorage.setItem('rise-demo-new-login','1');sessionStorage.setItem('rise-demo-level',String(level));location.href=({0:'teacher.html',1:'manager.html',2:'senior-manager.html',3:'branch-director.html',4:'general-director.html'})[level]});
+// Student sign-in (preview): any code opens the single preview student profile; no credential is checked.
+document.querySelector('#student-login').addEventListener('submit',e=>{e.preventDefault();if(!document.querySelector('#student-id').value.trim())return;sessionStorage.setItem('rise-demo-name','Сурагч');sessionStorage.setItem('rise-demo-level','student');sessionStorage.setItem('rise-demo-new-login','1');location.href='student.html';});
+// Employee / student switch. #student in the address opens the student tab (e.g. links from the student pages).
+const main=document.querySelector('.login-main'),tabs=[...document.querySelectorAll('.login-switch [role=tab]')],forms={staff:document.querySelector('#demo-login'),student:document.querySelector('#student-login')};
+function setRole(role,focus){main.dataset.role=role;tabs.forEach(t=>{const on=t.dataset.role===role;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;});Object.entries(forms).forEach(([k,f])=>f.hidden=k!==role);document.querySelectorAll('[data-copy]').forEach(n=>n.hidden=n.dataset.copy!==role);password=forms[role].querySelector('input[type=password],input.is-revealed');if(scene)scene.classList.toggle('revealed',password.type==='text');document.title=(role==='student'?'Сурагчийн нэвтрэх':'Ажилтны нэвтрэх')+' — THE RISE';history.replaceState(null,'',role==='student'?'#student':location.pathname+location.search);if(focus)forms[role].querySelector('input').focus();if(typeof wake==='function')wake();}
+tabs.forEach((t,i)=>{t.addEventListener('click',()=>setRole(t.dataset.role,false));t.addEventListener('keydown',e=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;e.preventDefault();const n=tabs[(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length];setRole(n.dataset.role,false);n.focus();});});
+document.querySelectorAll('[data-quick]').forEach(b=>b.addEventListener('click',()=>{document.querySelector('#staff-name').value=b.dataset.quick;forms.staff.requestSubmit();}));
+// Large monitors: grow proportionally like the dashboards (1920×1080 base, max 2×).
+function fitScreen(){const s=innerWidth>1920&&innerHeight>1080?Math.min(2,innerWidth/1920,innerHeight/1080):1;document.documentElement.style.setProperty('--login-scale',String(s));}
+fitScreen();addEventListener('resize',()=>requestAnimationFrame(fitScreen),{passive:true});
 const scene=document.querySelector('.character-scene');
-const password=document.querySelector('#staff-password');
-const visibility=document.querySelector('#password-toggle');
+let password=document.querySelector('#staff-password');
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const cast=[...scene.querySelectorAll('.character')].map((el,i)=>({el,face:el.querySelector('.face'),eyes:[...el.querySelectorAll('.eye i')],i,x:0,y:0,lean:0,vx:0,vy:0,vl:0}));
 let pointer={x:innerWidth*.55,y:innerHeight*.45}, active=false, frame=0, last=0;
@@ -33,17 +42,20 @@ function animate(now){
 }
 document.addEventListener('pointermove',event=>{pointer={x:event.clientX,y:event.clientY};active=true;wake()});
 document.documentElement.addEventListener('pointerleave',()=>{active=false;wake()});
-for(const input of document.querySelectorAll('#demo-login input')){
- input.addEventListener('focus',()=>{scene.classList.add('attentive');if(input===password)scene.classList.add('typing');const r=input.getBoundingClientRect();pointer={x:r.left+r.width*.5,y:r.top+r.height*.5};active=true;wake()});
+for(const input of document.querySelectorAll('.login-form input')){
+ input.addEventListener('focus',()=>{scene.classList.add('attentive');if(input.closest('.password-field'))scene.classList.add('typing');const r=input.getBoundingClientRect();pointer={x:r.left+r.width*.5,y:r.top+r.height*.5};active=true;wake()});
  input.addEventListener('blur',()=>{scene.classList.remove('typing','attentive');wake()});
  input.addEventListener('input',()=>{scene.classList.remove('responding');void scene.offsetWidth;scene.classList.add('responding');wake()});
 }
-visibility.addEventListener('click',()=>{
- const revealed=password.type==='password';password.type=revealed?'text':'password';
- scene.classList.toggle('revealed',revealed);
- visibility.setAttribute('aria-pressed',String(revealed));
- visibility.setAttribute('aria-label',revealed?'Нууц үг нуух':'Нууц үг харуулах');wake();
-});
+// Each password field has its own show/hide button; the characters look away while a password is visible.
+for(const visibility of document.querySelectorAll('.password-toggle')){
+ visibility.addEventListener('click',()=>{
+  const field=visibility.previousElementSibling,revealed=field.type==='password';field.type=revealed?'text':'password';field.classList.toggle('is-revealed',revealed);password=field;
+  scene.classList.toggle('revealed',revealed);
+  visibility.setAttribute('aria-pressed',String(revealed));
+  visibility.setAttribute('aria-label',revealed?'Нууц үг нуух':'Нууц үг харуулах');wake();
+ });
+}
 // Independent blinks; suspend when the page is hidden or motion is reduced.
 let blinkTimer;
 function blink(){
@@ -53,3 +65,4 @@ function blink(){
 blinkTimer=setTimeout(blink,2600);
 document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(blinkTimer);cancelAnimationFrame(frame);frame=0}else{blinkTimer=setTimeout(blink,2600);wake()}});
 reducedMotion.addEventListener('change',wake);
+if(location.hash==='#student')setRole('student',false);

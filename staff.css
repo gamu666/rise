@@ -16,3 +16,57 @@
 @keyframes mouth-react{50%{scale:1.25 .7}}
 @media(max-width:767px){.login-main{grid-template-columns:1fr;min-height:0;max-width:440px;margin:14px auto}.login-brand{height:220px;padding:0}.character-scene{scale:.62;height:300px;margin:0;flex-shrink:0;transform-origin:center center}.login-card{padding:26px 30px 32px}.login-symbol{margin-bottom:14px}.login-card h2{font-size:25px}}
 @media(prefers-reduced-motion:reduce){.character.purple,.character.black,.character.orange,.character.yellow,.responding .mouth{animation:none}.character,.eye,.mouth{transition:none}.blinking .eye{scale:1}}
+
+/* 2026-11 login redesign: Employee / Student switch on one professional card. Character motion above stays unchanged. */
+.staff-page{--accent:#611bff;--accent-soft:#611bff1f;background:#f2f2f5;color:#17171c;font-family:RiseVar,Inter,system-ui,sans-serif}
+.staff-page:has(.login-main[data-role=student]){--accent:#2563eb;--accent-soft:#2563eb24}
+.staff-page>*{zoom:var(--login-scale,1)}
+.staff-header{width:calc(100% - 64px);max-width:1040px;margin:22px auto 0}
+.staff-public{font-size:13px;color:#4a4a55;padding:8px 14px;border-radius:999px;border:1px solid #dcdce3;background:#fff;transition:border-color .2s,color .2s}
+.staff-public:hover{border-color:#b9b9c4;color:#17171c}
+.login-main{max-width:1040px;min-height:min(620px,calc(100svh / var(--login-scale,1) - 140px));grid-template-columns:1.08fr 1fr;border-radius:22px;border:1px solid #e4e4ea;box-shadow:0 1px 2px #1414250a,0 24px 60px -24px #1414252e;margin:22px auto 32px}
+.login-brand{position:relative;background:#ebe8f0;transition:background .5s ease;gap:34px;padding:44px 32px}
+.login-main[data-role=student] .login-brand{background:#e6ecf7}
+.login-brand-copy{text-align:center;max-width:330px}
+.login-brand-copy strong{display:block;font-size:21px;font-weight:650;letter-spacing:-.4px;color:#1d1d24}
+.login-brand-copy span{display:block;margin-top:8px;font-size:14px;line-height:1.5;color:#5d5b67}
+.login-card{display:flex;flex-direction:column;justify-content:center;padding:44px 52px}
+.login-switch{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:12px;background:#f0f0f3;border:1px solid #e6e6eb;margin-bottom:30px}
+.login-switch button{display:flex;align-items:center;justify-content:center;gap:8px;height:40px;border:0;border-radius:9px;background:transparent;color:#62606b;font:inherit;font-size:14px;font-weight:550;cursor:pointer;transition:background .2s,color .2s,box-shadow .2s}
+.login-switch button:hover{color:#17171c}
+.login-switch button[aria-selected=true]{background:#fff;color:#17171c;box-shadow:0 1px 2px #14142514,0 2px 8px #1414250f}
+.login-switch button[aria-selected=true] svg{stroke:var(--accent)}
+.login-switch svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.login-switch button:focus-visible,.login-quick button:focus-visible,.login-submit:focus-visible,.staff-public:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.login-card h1{font-size:27px;line-height:1.2;font-weight:700;letter-spacing:-.6px;margin:0;color:#17171c}
+.login-lead{margin:8px 0 6px;font-size:14px;line-height:1.5;color:#66646f}
+.login-form{display:flex;flex-direction:column}
+.login-card .login-form label{display:block;margin:20px 0 7px;font-size:13px;font-weight:550;color:#3b3a44}
+.login-card .login-form input{height:46px;padding:0 14px;border:1px solid #d8d8df;border-radius:10px;background:#fff;color:#17171c;font:inherit;font-size:15px;transition:border-color .2s,box-shadow .2s}
+.login-card .login-form input::placeholder{color:#a3a1ab}
+.login-card .login-form input:hover{border-color:#bdbcc6}
+.login-card .login-form input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft);outline:none}
+.login-card .password-field input{padding-right:48px}
+.login-card .password-field button{top:6px;right:6px;width:34px;height:34px;color:#76747f}
+.login-card .password-field button:hover{background:#f2f2f5;color:#17171c}
+.login-card .password-field button[aria-pressed=true]{color:var(--accent)}
+.login-card .password-field svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.login-submit{display:flex;align-items:center;justify-content:center;width:100%;height:48px;margin-top:26px;border:0;border-radius:10px;background:#17171c;color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:background .2s,transform .1s}
+.login-submit:hover{background:#2c2c34}
+.login-submit:active{transform:translateY(1px)}
+.login-main[data-role=student] .login-submit{background:#2563eb}
+.login-main[data-role=student] .login-submit:hover{background:#1d4fd8}
+.login-submit.is-outline{background:#fff;color:#17171c;border:1px solid #d8d8df;margin-top:12px}
+.login-quick{border:0;padding:0;margin:26px 0 0;min-width:0}
+.login-quick legend{display:flex;align-items:center;gap:12px;width:100%;font-size:12px;color:#7a7884;margin-bottom:12px}
+.login-quick legend::before,.login-quick legend::after{content:"";flex:1;height:1px;background:#e5e5ea}
+.login-quick div{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.login-quick button{height:32px;padding:0 13px;border:1px solid #dcdce3;border-radius:999px;background:#fff;color:#3b3a44;font:inherit;font-size:13px;cursor:pointer;transition:border-color .2s,background .2s,color .2s}
+.login-quick button:hover{border-color:var(--accent);color:var(--accent);background:#faf8ff}
+.login-help{margin-top:16px;font-size:13px;line-height:1.5;color:#6c6a75;text-align:center}
+.login-note{display:flex;align-items:flex-start;gap:8px;margin-top:26px;padding-top:18px;border-top:1px solid #ececf0;font-size:12px;line-height:1.5;color:#7a7884}
+.login-note svg{flex:none;width:15px;height:15px;margin-top:1px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+@media(max-width:1100px){.login-card{padding:40px 40px}}
+@media(max-width:767px){.staff-header{width:calc(100% - 32px);margin-top:14px}.login-main{grid-template-columns:1fr;min-height:0;width:calc(100% - 32px);max-width:460px;margin:14px auto 24px;border-radius:18px}.login-brand{height:auto;padding:14px 16px 20px;gap:4px}.character-scene{scale:.5;height:300px;margin:-74px 0 -70px}.login-brand-copy strong{font-size:17px}.login-brand-copy span{font-size:13px;margin-top:4px}.login-card{padding:24px 22px 26px}.login-switch{margin-bottom:22px}.login-card h1{font-size:23px}.login-card .login-form input{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.login-brand,.login-switch button,.login-submit{transition:none}}
+.login-card>.login-lead{margin:8px 0 6px;font-size:14px;line-height:1.5;color:#66646f;text-align:left}.login-card>.login-note{text-align:left;font-size:12px}

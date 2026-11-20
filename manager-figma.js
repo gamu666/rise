@@ -23,7 +23,7 @@
  const account=document.querySelector('.workspace-account');
  const profileButton=account.querySelector('.profile');
  const role=profileButton.querySelector('small');role.textContent='Сургалтын Менежер';role.parentElement.prepend(role);
- if(!loadLocal('rise-profile-photo',null))profileButton.querySelector('img').src='assets/person.svg';
+ if(!loadLocal('rise-profile-photo',null))profileButton.querySelector('img').src='assets/figma/profile-avatar.png';
  const online=document.createElement('span');online.className='profile-online';online.setAttribute('aria-hidden','true');profileButton.append(online);
  document.querySelector('.profile-menu').append(account.querySelector('.workspace-appearance'));
  const swipe=document.createElement('div');swipe.className='logout-swipe';swipe.innerHTML='<span class="logout-copy" aria-hidden="true"><small>СИСТЕМЭЭС</small><strong>ГАРАХ</strong></span><div class="logout-thumb" role="slider" tabindex="0" aria-label="Системээс гарахын тулд баруун тийш чирнэ үү" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Баруун тийш чирж гарна"><img class="logout-knob" src="assets/figma/logout-knob.svg" alt=""><span class="logout-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span></div>';
@@ -51,7 +51,7 @@
  const stack=document.querySelector('.task-stack');
  // The first three demo records occupy the three slots shown in the source.
  ['call','test','poster'].forEach(id=>{const card=stack.querySelector('[data-task="'+id+'"]');if(card)stack.prepend(card)});
- const callAvatar=stack.querySelector('[data-task=call] .check-symbol');if(callAvatar){callAvatar.classList.add('avatar');callAvatar.innerHTML='<img src="assets/person.svg" alt="">'}
+ const callAvatar=stack.querySelector('[data-task=call] .check-symbol');if(callAvatar){callAvatar.classList.add('avatar');callAvatar.innerHTML='<img src="assets/figma/call-avatar.png" alt="">'}
  const backgrounds=['purple','green','pink','blue','orange'];const decorated=new WeakSet();
  const demoAges={poster:2*3600000,test:4*3600000,call:86400000};
  const demoEpoch=Number(sessionStorage.getItem('rise-task-demo-epoch'))||Date.now();sessionStorage.setItem('rise-task-demo-epoch',String(demoEpoch));

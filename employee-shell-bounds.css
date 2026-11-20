@@ -7,22 +7,3 @@ body .os-shell:before,body .os-shell:after{display:none!important}
  body.teacher-page .teacher-main>#teacher-content{width:100%;max-width:1072px;margin-inline:auto}
 }
 @media(max-width:760px){body .os-shell,body.teacher-page .teacher-shell{margin:0;left:0;top:0;width:100%}body.teacher-page{padding:0}}
-/* Narrow screens: teacher keeps the right task column like managers (beside on tablets, below on phones). */
-@media(max-width:1120px){
- body.teacher-page .teacher-tasks-heading{gap:8px}
- body.teacher-page .teacher-tasks-heading h2{font-size:16px;line-height:26px;white-space:nowrap}
- body.teacher-page .teacher-tasks-heading button{white-space:nowrap;flex:none}
-}
-@media(min-width:761px) and (max-width:1120px){
- body.teacher-page .teacher-shell{grid-template-columns:minmax(150px,190px) minmax(0,1fr) minmax(220px,280px)}
- body.teacher-page .teacher-right{display:flex;flex-direction:column;gap:14px;min-height:0;padding:12px 12px 12px 0;overflow:auto}
-}
-@media(max-width:760px){
- body.teacher-page{overflow:visible}
- body.teacher-page .teacher-rail{grid-row:1/span 2}
- body.teacher-page .teacher-right{display:flex;flex-direction:column;gap:14px;grid-column:2;min-height:0;height:auto;padding:0 12px 12px}
- body.teacher-page .teacher-brand{width:52px;left:6px}
- body.teacher-page .teacher-brand img{width:100%}
- body #hub-profile{height:calc(100dvh - 74px);min-height:520px}
- body #hub-profile>.ai-home{height:100%}
-}

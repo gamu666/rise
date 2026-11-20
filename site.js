@@ -1,4 +1,5 @@
-// THE RISE public site: global nav (mobile menu, sign-in menu), card scrollers, scroll reveal, registration form.
+// THE RISE public site: pill header (light/dark by the section under it, active link), sign-in menu, mobile menu,
+// course filter, scroll reveal, registration form.
 // The form has no server yet: a valid request is kept in this browser only (rise-web-leads-v1) and the visitor is
 // asked to confirm by phone or Messenger. Nothing is sent anywhere — do not claim delivery until a backend exists.
 (() => {
@@ -6,20 +7,41 @@
   if (/[?&]draft\b/.test(location.search)) document.body.classList.add('draft');
 
   const hdr = document.querySelector('[data-hdr]');
+  const themed = [...document.querySelectorAll('[data-theme]')];
+  const navLinks = [...document.querySelectorAll('.nav > a[href*="#"]')];
+  const targets = navLinks.map(a => document.getElementById(a.hash.slice(1))).filter(Boolean);
+  let ticking = false;
+  const sync = () => {
+    ticking = false;
+    if (!hdr) return;
+    // Header colours follow the section behind the pill: white on dark photos, ink on light pages.
+    const y = 32;
+    const dark = themed.some(s => { const r = s.getBoundingClientRect(); return r.top <= y && r.bottom > y; });
+    hdr.classList.toggle('light', !dark);
+    // Active section link (same rule as naimansar.com: the last section whose top passed 42% of the viewport).
+    const marker = Math.min(innerHeight * .42, 360);
+    let current = null;
+    targets.forEach(t => { if (t.getBoundingClientRect().top <= marker) current = t.id; });
+    navLinks.forEach(a => a.classList.toggle('is-active', a.hash.slice(1) === current));
+  };
+  const queue = () => { if (!ticking) { ticking = true; requestAnimationFrame(sync); } };
+  sync();
+  addEventListener('scroll', queue, { passive: true });
+  addEventListener('resize', queue);
 
-  // Mobile menu (full-screen list, as on apple.com).
+  // Mobile menu.
   const menu = document.querySelector('.menu'), links = document.querySelector('#site-menu');
   const setMenu = open => {
     if (!menu || !links || !hdr) return;
     hdr.classList.toggle('open', open);
-    document.documentElement.style.overflow = open ? 'hidden' : '';
     menu.setAttribute('aria-expanded', String(open));
     menu.setAttribute('aria-label', open ? 'Цэс хаах' : 'Цэс');
   };
   if (menu && links) {
     menu.addEventListener('click', () => setMenu(menu.getAttribute('aria-expanded') !== 'true'));
     links.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
-    matchMedia('(min-width: 834px)').addEventListener('change', e => { if (e.matches) setMenu(false); });
+    document.addEventListener('click', e => { if (hdr && !hdr.contains(e.target)) setMenu(false); });
+    matchMedia('(min-width: 981px)').addEventListener('change', e => { if (e.matches) setMenu(false); });
   }
 
   // Sign-in menu (student / staff).
@@ -50,33 +72,48 @@
     if (menu?.getAttribute('aria-expanded') === 'true') { setMenu(false); menu.focus(); }
   });
 
-  // Card scrollers: previous / next move by one card; buttons disable at either end.
-  document.querySelectorAll('[data-scroller]').forEach(box => {
-    const track = box.querySelector('.track'), pagers = box.querySelectorAll('.pager');
-    if (!track) return;
-    const step = () => { const card = track.querySelector('li'); return card ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 20) : track.clientWidth * .8; };
-    const sync = () => {
-      const max = track.scrollWidth - track.clientWidth - 2;
-      pagers.forEach(p => { p.disabled = p.dataset.dir === '-1' ? track.scrollLeft <= 2 : track.scrollLeft >= max; });
-      box.classList.toggle('static', max <= 0);
-    };
-    pagers.forEach(p => p.addEventListener('click', () => track.scrollBy({ left: step() * Number(p.dataset.dir), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })));
-    track.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
-    addEventListener('resize', sync);
-    sync();
-  });
+  // Course filter. The advice tile always stays; it spans both columns when it would otherwise sit alone.
+  const filters = document.querySelectorAll('[data-filter]');
+  const help = document.querySelector('#surgalt .tile-help');
+  const layoutHelp = () => {
+    if (!help) return;
+    const shown = document.querySelectorAll('#surgalt .tile[data-track]:not([hidden])').length;
+    help.classList.toggle('span2', shown % 2 === 0);
+  };
+  filters.forEach(b => b.addEventListener('click', () => {
+    const f = b.dataset.filter;
+    filters.forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    document.querySelectorAll('#surgalt .tile').forEach(t => { t.classList.remove('pre'); if (t.dataset.track) t.hidden = f !== 'all' && t.dataset.track !== f; });
+    layoutHelp();
+  }));
+  layoutHelp();
+
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Hero: while it scrolls away the photo drifts slower than the page and the copy lifts and fades (site.css reads --hp).
+  const hero = document.querySelector('.hero');
+  if (hero && !reduced) {
+    let frame = 0;
+    const drift = () => { frame = 0; const p = Math.min(1, Math.max(0, scrollY / (hero.offsetHeight || 1))); hero.style.setProperty('--hp', p.toFixed(4)); };
+    addEventListener('scroll', () => { if (!frame) frame = requestAnimationFrame(drift); }, { passive: true });
+    drift();
+  }
 
   // Reveal on scroll. Only elements that start below the fold are hidden first, so nothing visible ever blinks,
   // and without IntersectionObserver or with reduced motion everything simply stays visible.
+  // Blocks side by side in one row enter left to right (--d); a single column enters without delay.
   const reveal = [...document.querySelectorAll('[data-reveal]')];
-  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if ('IntersectionObserver' in window && !reduced) {
     const io = new IntersectionObserver(entries => entries.forEach(en => {
       if (!en.isIntersecting) return;
       en.target.classList.remove('pre');
       io.unobserve(en.target);
-    }), { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    }), { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
     reveal.forEach(el => {
       if (el.getBoundingClientRect().top < innerHeight) return;
+      const row = [...el.parentElement.children].filter(x => x.hasAttribute('data-reveal'));
+      const perRow = row.filter(x => x.offsetTop === row[0].offsetTop).length || 1;
+      el.style.setProperty('--d', (row.indexOf(el) % perRow) * 90 + 'ms');
       el.classList.add('pre');
       io.observe(el);
     });

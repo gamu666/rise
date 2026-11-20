@@ -8,7 +8,7 @@
  #hub-students .students-query input::placeholder{color:var(--student-secondary)}
  #hub-students .students-filter-trigger.has-value{color:var(--student-accent);background:#e7f1ffcc}
  #hub-students :is(.students-filter-trigger,.students-query):focus-within{outline:3px solid #007aff35;outline-offset:1px}
- #hub-students .students-clear{font-size:11px;color:var(--student-secondary);height:22px;justify-content:center}
+ #hub-students .students-clear{font-size:10px;color:var(--student-secondary);height:22px;justify-content:center}
  #hub-students .students-roster{padding:4px 16px 12px 0;margin:0;grid-auto-rows:minmax(94px,max-content);gap:5px;scrollbar-width:thin;scrollbar-color:#8e8e9366 transparent}
  #hub-students .students-card{height:auto;min-height:94px;padding:12px 10px;border:1px solid transparent;border-radius:12px;background:transparent;box-shadow:none;grid-template-columns:36px minmax(0,1fr);grid-template-rows:minmax(39px,auto) minmax(15px,auto);row-gap:9px;column-gap:8px;transition:background 150ms,border-color 150ms,box-shadow 150ms;transform:none}
  #hub-students .students-card:hover{background:#ffffffa6;border-color:#ffffffb3;box-shadow:0 2px 7px #00000005;transform:none}
@@ -18,13 +18,13 @@
  #hub-students .students-card-name{font-size:11px;line-height:16px;color:var(--student-label);letter-spacing:-.1px}
  #hub-students .students-card .students-progress{height:5px;margin-top:7px;background:#d1d1d64d}
  #hub-students .students-tags{flex-wrap:wrap;gap:4px}
- #hub-students .students-tags>span{font-size:11px;line-height:15px;padding:0 5px;background:#ffffff99;border:.5px solid #3c3c4312;box-shadow:none;color:var(--student-secondary)}
+ #hub-students .students-tags>span{font-size:8px;line-height:15px;padding:0 5px;background:#ffffff99;border:.5px solid #3c3c4312;box-shadow:none;color:var(--student-secondary)}
  #hub-students .students-panels{border-left:1px solid var(--student-divider);padding:0 0 16px 20px;gap:14px;scrollbar-width:thin;scrollbar-color:#8e8e9366 transparent}
  #hub-students .students-profile{display:grid;grid-template-columns:64px minmax(0,1fr);grid-template-rows:auto auto auto;column-gap:14px;row-gap:4px;text-align:left;min-height:128px;padding:20px;border-radius:18px;background:#ffffffeb;box-shadow:0 1px 4px #00000007}
  #hub-students .students-profile .large{grid-column:1;grid-row:1/4;width:64px;height:64px;margin:0;align-self:center;font-size:24px}
  #hub-students .students-profile h1{grid-column:2;margin:0;min-height:0;font-size:16px;line-height:22px;align-self:end;letter-spacing:-.3px}
  #hub-students .students-contact{grid-column:2;border:0;padding:0;text-align:left;font-size:12px;line-height:20px}
- #hub-students .students-profile-footer{grid-column:2;margin:0;font-size:11px;line-height:16px;flex-wrap:wrap;color:var(--student-secondary)}
+ #hub-students .students-profile-footer{grid-column:2;margin:0;font-size:10px;line-height:16px;flex-wrap:wrap;color:var(--student-secondary)}
  #hub-students .students-payment{min-height:218px;padding:18px 20px;border-radius:18px;background:#ffffffeb;box-shadow:0 1px 4px #00000007}
  #hub-students .students-payment header{margin-bottom:12px}
  #hub-students .students-payment h2{font-size:13px;line-height:18px;font-weight:600;letter-spacing:-.15px}
@@ -33,17 +33,17 @@
  #hub-students .students-payment dl>div{padding:9px 0;border-bottom:.5px solid var(--student-divider)}
  #hub-students .students-payment dl>div:last-child{border:0}
  #hub-students .students-payment dd{font-variant-numeric:tabular-nums}
- #hub-students .students-paid-state{font-size:11px;margin-top:8px;color:var(--student-accent)}
+ #hub-students .students-paid-state{font-size:10px;margin-top:8px;color:var(--student-accent)}
  #hub-students #student-detail{border-radius:18px;padding:18px 20px!important;background:#ffffffeb!important;box-shadow:0 1px 4px #00000007!important;font-size:12px}
  #hub-students #student-detail .detail-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
- #hub-students #student-detail .detail-label{font-size:11px;line-height:16px}
+ #hub-students #student-detail .detail-label{font-size:10px;line-height:16px}
  #hub-students #student-detail .detail-head h3{font-size:14px;line-height:22px;margin:2px 0}
  #hub-students #student-detail .detail-phone strong{font-size:12px}
  #hub-students #student-detail .detail-grid{gap:0;border-radius:12px;overflow:hidden;background:#f5f5f7}
  #hub-students #student-detail .detail-grid article{border:0!important;border-radius:0!important;border-bottom:.5px solid var(--student-divider)!important;background:transparent!important;box-shadow:none!important;padding:11px 12px!important;min-height:48px;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:8px}
  #hub-students #student-detail .detail-grid article:last-child{border-bottom:0!important}
  #hub-students #student-detail .detail-grid strong{font-size:12px!important;line-height:18px}
- #hub-students #student-detail .detail-grid span{font-size:11px;line-height:16px}
+ #hub-students #student-detail .detail-grid span{font-size:10px;line-height:16px}
  #hub-students #student-detail .detail-grid button{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:0;border:0;background:transparent;color:var(--student-label);cursor:pointer}
  #hub-students #student-detail select{max-width:100%;min-width:0;border:.5px solid #3c3c4326;border-radius:7px;background:#fff;color:var(--student-label);padding:5px 7px;font-size:11px}
  #hub-students #student-detail .detail-bottom{display:flex!important;flex-wrap:wrap;gap:12px;padding:14px 0 0!important;border:0!important;background:transparent!important;box-shadow:none!important}

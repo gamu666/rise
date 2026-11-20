@@ -22,7 +22,7 @@
 .team-member-copy{display:flex;flex-direction:column;min-width:0;flex:1;gap:3px}
 .team-member-copy>strong{font-size:14px;line-height:21px;font-weight:550;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .team-role{font-size:11px;line-height:17px;color:#9cabb9;font-weight:400}
-.team-self{font-size:11px;line-height:15px;padding:1px 4px;background:#ffffff18;color:#c6e7dc;border-radius:5px;margin-left:6px;vertical-align:middle;font-weight:400}
+.team-self{font-size:9px;line-height:15px;padding:1px 4px;background:#ffffff18;color:#c6e7dc;border-radius:5px;margin-left:6px;vertical-align:middle;font-weight:400}
 .team-list-stats{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:3px;font-size:11px;line-height:17px}
 .team-list-income{color:#e0eaf1;white-space:nowrap}
 .team-list-task{color:#8ea1ac;white-space:nowrap;border-left:1px solid #ffffff26;padding-left:7px}
@@ -41,7 +41,7 @@
 .place-1 .team-podium-portrait>.team-avatar{width:88px;height:88px}
 .team-winner-medal{position:absolute;left:50%;top:-15px;transform:translateX(-50%);display:grid;place-items:center;width:25px;height:28px;clip-path:polygon(50% 0,94% 25%,94% 75%,50% 100%,6% 75%,6% 25%);background:linear-gradient(145deg,#fff9cd,#e5b347);color:#fff;font-size:18px;filter:drop-shadow(0 2px 3px #0003)}
 .team-champion h3{font-size:clamp(12px,1.65cqw,20px);line-height:1.35;font-weight:550;letter-spacing:-.3px;text-align:center;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.team-champion .team-role{font-size:11px;line-height:15px;color:#b5c7f3}
+.team-champion .team-role{font-size:10px;line-height:15px;color:#b5c7f3}
 .team-score{display:inline-flex;align-items:center;justify-content:center;gap:5px;max-width:100%;padding:7px 9px;border-radius:24px;background:#a9a0e544;color:#f1f3ff;white-space:nowrap;margin-top:3px}
 .team-score strong{font-size:clamp(12px,1.5cqw,18px);line-height:22px;font-weight:550}
 .team-currency{color:#c19bf9;font-size:16px;line-height:20px}
@@ -57,7 +57,7 @@
 .team-profile-close{position:absolute;right:17px;top:17px;display:grid;place-items:center;width:25px;height:25px;min-height:25px;border:0;border-radius:50%;padding:0;background:#ff3b30;color:#fff;font:20px/1 Arial,sans-serif}
 .team-profile-identity{display:flex;align-items:center;gap:14px;margin-top:10px}
 .team-profile-identity>.team-avatar{width:65px;height:65px;min-width:65px}
-.team-profile-dialog h2{font-size:24px;line-height:30px;font-weight:650;margin:0}
+.team-profile-dialog h2{font-size:23px;line-height:30px;font-weight:650;margin:0}
 .team-profile-dialog p{font-size:13px;color:#8b8d95;margin:5px 0 0}
 .team-profile-dialog .team-profile-place{margin-top:22px;font-size:14px;color:#434955}
 .team-profile-dialog .team-card-metrics{margin-top:18px;padding:18px 14px;background:#f5f6f8;border-radius:14px}
@@ -69,7 +69,7 @@
 .team-progress-track i{height:100%;display:block;border-radius:inherit;background:#00c853}
 
 @container(max-width:850px){.team-leaderboard-layout{flex:none;grid-template-columns:minmax(0,1fr);gap:24px;margin-top:26px}.team-podium{grid-row:1;height:500px;min-height:0;max-width:620px;width:100%;margin:0 auto}.team-list-section{width:100%;max-width:620px;margin:0 auto}.team-rank-list{display:flex}.team-list-section{max-height:320px}.team-champion h3{font-size:18px}.team-score strong{font-size:16px}}
-@container(max-width:500px){#hub-ranking.team-champions{padding:22px 14px 26px}.team-rank-tabs button{padding:8px 13px;font-size:12px}.team-list-section{max-height:300px}.team-podium{height:430px;border-radius:23px}.team-top-three{padding:30px 12px 0}.team-champion{--step-height:115px}.team-champion.place-1{--step-height:165px}.team-champion.place-3{--step-height:88px}.team-podium-portrait>.team-avatar{width:58px;height:58px}.place-1 .team-podium-portrait>.team-avatar{width:65px;height:65px}.team-champion h3{font-size:12px}.team-champion .team-role{font-size:11px}.team-score{padding:5px 6px;gap:3px}.team-score strong{font-size:11px}.team-currency{font-size:12px}.team-podium-step{font-size:50px}.team-champion .team-profile-button{gap:5px;padding-bottom:33px}}
+@container(max-width:500px){#hub-ranking.team-champions{padding:22px 14px 26px}.team-rank-tabs button{padding:8px 13px;font-size:12px}.team-list-section{max-height:300px}.team-podium{height:430px;border-radius:23px}.team-top-three{padding:30px 12px 0}.team-champion{--step-height:115px}.team-champion.place-1{--step-height:165px}.team-champion.place-3{--step-height:88px}.team-podium-portrait>.team-avatar{width:58px;height:58px}.place-1 .team-podium-portrait>.team-avatar{width:65px;height:65px}.team-champion h3{font-size:12px}.team-champion .team-role{font-size:9px}.team-score{padding:5px 6px;gap:3px}.team-score strong{font-size:11px}.team-currency{font-size:12px}.team-podium-step{font-size:50px}.team-champion .team-profile-button{gap:5px;padding-bottom:33px}}
 @media(max-width:760px){:root .main-column>.work-hub[data-section=ranking]{padding:70px 12px 16px!important;height:100%!important}.work-hub[data-section=ranking]>.browser-stage{min-height:600px;border-radius:22px}}
 @media(prefers-reduced-motion:reduce){.team-rank-row{transition:none}}
 

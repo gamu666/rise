@@ -8,10 +8,10 @@
 @media(prefers-reduced-motion:reduce){.home-registration-card{transition:none}.home-registration-card:hover{transform:none}}
 .ai-home .home-quick-actions{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);width:min(546px,calc(100% - 64px));display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .ai-home .home-quick-actions .home-registration-card{position:relative;inset:auto;width:100%;max-width:none;height:132px;padding:14px;gap:6px;border-radius:16px}
-.home-registration-card strong{font-size:13px;line-height:18px}.home-registration-description{font-size:11px;line-height:15px}.home-registration-card[aria-pressed=true]{border-color:#bfb6d6;background:linear-gradient(130deg,#fff,#e6e0f2c9)}
+.home-registration-card strong{font-size:13px;line-height:18px}.home-registration-description{font-size:10px;line-height:15px}.home-registration-card[aria-pressed=true]{border-color:#bfb6d6;background:linear-gradient(130deg,#fff,#e6e0f2c9)}
 .ai-home.registration-started .ai-welcome h1{font-size:clamp(20px,2vw,30px)}.ai-home.registration-started .ai-welcome p{font-size:14px}
 @media(max-height:760px){.ai-home .home-quick-actions{bottom:18px}.ai-home .home-quick-actions .home-registration-card{height:122px}}
-@media(max-width:760px){.ai-home .home-quick-actions{width:calc(100% - 32px);gap:8px}.ai-home .home-quick-actions .home-registration-card{padding:10px;height:126px}.home-registration-card strong{font-size:11px;line-height:15px}.home-registration-description{font-size:11px;line-height:13px}.home-registration-arrow{width:15px;height:15px}.home-registration-icon{width:25px;height:25px}}
+@media(max-width:760px){.ai-home .home-quick-actions{width:calc(100% - 32px);gap:8px}.ai-home .home-quick-actions .home-registration-card{padding:10px;height:126px}.home-registration-card strong{font-size:11px;line-height:15px}.home-registration-description{font-size:9px;line-height:13px}.home-registration-arrow{width:15px;height:15px}.home-registration-icon{width:25px;height:25px}}
 @media(max-width:760px){.ai-home.has-registration-card{min-height:520px}.ai-home .home-quick-actions .home-registration-card{height:156px}.ai-home.has-registration-card .ai-composer{bottom:196px}.ai-home.has-registration-card .ai-status{bottom:172px}}
 /* Quick actions sit above the composer at every screen size. */
 .ai-home.has-registration-card .ai-composer{bottom:36px}

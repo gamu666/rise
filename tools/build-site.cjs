@@ -7,7 +7,7 @@
 const fs = require('fs'), path = require('path');
 const root = path.join(__dirname, '..');
 const C = require(path.join(root, 'site-src', 'content.cjs'));
-const VERSION = 'site12';
+const VERSION = 'site13';
 
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const money = n => new Intl.NumberFormat('en-US').format(n) + '₮';
@@ -150,11 +150,17 @@ function form(rel, selected) {
  <label>Утасны дугаар<input name="phone" type="tel" inputmode="numeric" autocomplete="tel" required pattern="[0-9]{8}" maxlength="8" placeholder="8 оронтой дугаар"></label>
  <div class="two"><label>Сургалт<select name="course" required>${selected ? '' : '<option value="" selected disabled>Сонгоно уу</option>'}${opts}</select></label>
  <label>Цаг<select name="time"><option>Өдөр</option><option>Орой</option><option>Амралтын өдөр</option></select></label></div>
+ <label class="hp" aria-hidden="true">Вэб хуудас<input name="website" tabindex="-1" autocomplete="off"></label>
  <p class="err" role="alert" hidden></p>
  <button class="btn" type="submit">Хүсэлт илгээх</button>
  <div class="done" hidden tabindex="-1">
-  <strong>${icon('check')}Мэдээлэл тань бэлэн боллоо</strong>
-  <p>Онлайн хүсэлт хараахан менежерт шууд очдоггүй. Доорх аль нэгээр нь илгээж баталгаажуулна уу.</p>
+  <strong>${icon('check')}Хүсэлт тань хүлээн авлаа</strong>
+  <p>Манай менежер тантай удахгүй холбогдоно. Яаралтай бол шууд залгаарай.</p>
+  <div class="actions start"><a class="btn" href="tel:${C.org.tel}">${icon('phone')}Залгах</a><a class="btn outline" href="${C.org.messenger}" target="_blank" rel="noopener">${icon('msg')}Messenger</a></div>
+ </div>
+ <div class="done fail" hidden tabindex="-1">
+  <strong>Хүсэлт илгээгдсэнгүй</strong>
+  <p>Холболт тасарсан байж магадгүй. Дахин илгээх эсвэл доорх аль нэгээр холбогдоорой.</p>
   <div class="actions start"><a class="btn" href="tel:${C.org.tel}">${icon('phone')}Залгах</a><a class="btn outline" href="${C.org.messenger}" target="_blank" rel="noopener">${icon('msg')}Messenger</a></div>
  </div>
  <p class="fine">Аль хэдийн суралцаж байгаа бол <a href="${rel}staff.html#student">сурагчийн самбартаа нэвтэрнэ үү</a>.</p>

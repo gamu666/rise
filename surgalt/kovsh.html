@@ -12,8 +12,8 @@
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="../assets/favicon.svg">
 <link rel="preload" as="image" href="../assets/photos/course-wheel-loader-800.jpg" imagesrcset="../assets/photos/course-wheel-loader-800.jpg 800w, ../assets/photos/course-wheel-loader-1600.jpg 1600w" imagesizes="100vw" fetchpriority="high">
-<link rel="stylesheet" href="../site.css?v=site12">
-<script defer src="../site.js?v=site12"></script>
+<link rel="stylesheet" href="../site.css?v=site13">
+<script defer src="../site.js?v=site13"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalOrganization","name":"THE RISE мэргэжил сургалтын төв","telephone":"7772 1170","address":"Peace Tower, 15 давхар, 1501 тоот, Улаанбаатар","sameAs":["https://www.facebook.com/EDURISE.MN","https://www.instagram.com/the.rise.official"]}</script>
 </head>
 <body class="course heavy">
@@ -85,11 +85,17 @@
  <label>Утасны дугаар<input name="phone" type="tel" inputmode="numeric" autocomplete="tel" required pattern="[0-9]{8}" maxlength="8" placeholder="8 оронтой дугаар"></label>
  <div class="two"><label>Сургалт<select name="course" required><optgroup label="Хүнд машин механизм"><option value="ekskavator">Экскаватор оператор</option><option value="damp">Дамп оператор</option><option value="kovsh" selected>Ковш оператор</option></optgroup><optgroup label="Гоо сайхан"><option value="manikyur">Маникюр</option><option value="sormuus">Сормуус</option></optgroup></select></label>
  <label>Цаг<select name="time"><option>Өдөр</option><option>Орой</option><option>Амралтын өдөр</option></select></label></div>
+ <label class="hp" aria-hidden="true">Вэб хуудас<input name="website" tabindex="-1" autocomplete="off"></label>
  <p class="err" role="alert" hidden></p>
  <button class="btn" type="submit">Хүсэлт илгээх</button>
  <div class="done" hidden tabindex="-1">
-  <strong><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Мэдээлэл тань бэлэн боллоо</strong>
-  <p>Онлайн хүсэлт хараахан менежерт шууд очдоггүй. Доорх аль нэгээр нь илгээж баталгаажуулна уу.</p>
+  <strong><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Хүсэлт тань хүлээн авлаа</strong>
+  <p>Манай менежер тантай удахгүй холбогдоно. Яаралтай бол шууд залгаарай.</p>
+  <div class="actions start"><a class="btn" href="tel:77721170"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Залгах</a><a class="btn outline" href="https://m.me/EDURISE.MN" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>Messenger</a></div>
+ </div>
+ <div class="done fail" hidden tabindex="-1">
+  <strong>Хүсэлт илгээгдсэнгүй</strong>
+  <p>Холболт тасарсан байж магадгүй. Дахин илгээх эсвэл доорх аль нэгээр холбогдоорой.</p>
   <div class="actions start"><a class="btn" href="tel:77721170"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Залгах</a><a class="btn outline" href="https://m.me/EDURISE.MN" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>Messenger</a></div>
  </div>
  <p class="fine">Аль хэдийн суралцаж байгаа бол <a href="../staff.html#student">сурагчийн самбартаа нэвтэрнэ үү</a>.</p>

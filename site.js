@@ -1,7 +1,8 @@
 // THE RISE public site: pill header (light/dark by the section under it, active link), sign-in menu, mobile menu,
 // course filter, scroll reveal, registration form.
-// The form has no server yet: a valid request is kept in this browser only (rise-web-leads-v1) and the visitor is
-// asked to confirm by phone or Messenger. Nothing is sent anywhere — do not claim delivery until a backend exists.
+// The form posts to Supabase public.submit_web_lead — the only call the publishable (public) key may make — and the
+// request lands in the staff CRM (Харилцагч) as an unassigned lead. "Хүлээн авлаа" shows only after the server answers
+// true; any failure shows phone / Messenger instead, so delivery is never claimed without confirmation.
 (() => {
   // ?draft shows which values are still samples (class="s"); visitors never see the marker.
   if (/[?&]draft\b/.test(location.search)) document.body.classList.add('draft');
@@ -126,12 +127,20 @@
   }
 
   // Registration form.
+  const LEAD_URL = 'https://lwgxvtkhetkelmihaynt.supabase.co/rest/v1/rpc/submit_web_lead';
+  const LEAD_KEY = 'sb_publishable_S6UNtZDweK06zFymdMexYQ_s59ljSXH';
   const form = document.querySelector('#lead-form');
   if (!form) return;
-  const err = form.querySelector('.err'), done = form.querySelector('.done');
-  form.addEventListener('submit', e => {
+  // A page cached from before site13 has a single .done block (it asks the visitor to call) and no bot-trap field;
+  // that block then serves as the failure notice too, so old HTML with this script never throws or over-claims.
+  const err = form.querySelector('.err'), done = form.querySelector('.done:not(.fail)'), fail = form.querySelector('.done.fail') || done;
+  const send = form.querySelector('button[type=submit]'), label = send.textContent;
+  let sending = false;
+  form.addEventListener('submit', async e => {
     e.preventDefault();
+    if (sending) return;
     const name = form.elements.name, phone = form.elements.phone, course = form.elements.course;
+    fail.hidden = true;
     phone.value = phone.value.replace(/\D/g, '');
     const problems = [];
     [name, phone, course].forEach(f => f.removeAttribute('aria-invalid'));
@@ -140,9 +149,22 @@
     if (!course.value) { problems.push('Сургалтаа сонгоно уу.'); course.setAttribute('aria-invalid', 'true'); }
     err.hidden = !problems.length; err.textContent = problems.join(' ');
     if (problems.length) { form.querySelector('[aria-invalid=true]')?.focus(); return; }
-    const lead = { id: 'web-' + Date.now(), name: name.value.trim(), phone: phone.value, course: course.value, time: form.elements.time.value, createdAt: new Date().toISOString(), source: location.pathname };
-    try { const list = JSON.parse(localStorage.getItem('rise-web-leads-v1') || '[]'); list.push(lead); localStorage.setItem('rise-web-leads-v1', JSON.stringify(list.slice(-200))); } catch { /* storage blocked: still show contact options */ }
-    form.querySelector('button[type=submit]').hidden = true;
-    done.hidden = false; done.focus();
+    // A filled bot-trap field means a script, not a person: send nothing and claim nothing.
+    if (form.elements.website?.value) { fail.hidden = false; return; }
+    sending = true; send.disabled = true; send.textContent = 'Илгээж байна…';
+    let ok = false;
+    try {
+      const stop = new AbortController(), timer = setTimeout(() => stop.abort(), 15000);
+      const res = await fetch(LEAD_URL, {
+        method: 'POST', signal: stop.signal,
+        headers: { apikey: LEAD_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ p_name: name.value.trim(), p_phone: phone.value, p_course: course.selectedOptions[0]?.textContent.trim() || '', p_time: form.elements.time.value })
+      });
+      clearTimeout(timer);
+      ok = res.ok && (await res.json()) === true;
+    } catch { ok = false; }
+    sending = false; send.disabled = false; send.textContent = label;
+    if (ok) { send.hidden = true; done.hidden = false; done.focus(); }
+    else { fail.hidden = false; fail.focus(); }
   });
 })();

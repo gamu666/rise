@@ -239,6 +239,9 @@ body.draft .s{text-decoration:underline dotted 2px;text-underline-offset:4px}
 .two{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:12px}
 .err{padding:10px 12px;border-radius:10px;background:var(--bg);color:var(--ink);font-size:14px;font-weight:600}
 .leadform>.btn{width:100%;min-height:48px;margin-top:6px;font-size:15px}
+.leadform>.btn:disabled{opacity:.6;cursor:progress}
+/* bot trap: off screen and out of the tab order; people never see or fill it */
+.leadform .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .done{display:grid;gap:10px;padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--bg)}
 .done strong{display:flex;align-items:center;gap:8px;font-size:15px}
 .done p{color:var(--muted);font-size:14px}

@@ -1,0 +1,106 @@
+/* Харилцагч (CRM) page: the same glass page, header, toolbar, pills and rows as Файлууд (manager-file-library.css);
+   the classes .library-* are reused on purpose so both pages stay identical. Only CRM-specific parts are defined here. */
+.crm-home{height:100%;min-height:0;box-sizing:border-box;padding:30px;display:flex;flex-direction:column;gap:18px;color:#292830;overflow:hidden;background:#ffffffb8;border:1px solid #ffffffed;border-radius:26px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.crm-home[hidden]{display:none!important}
+.crm-home .library-upload{font-family:inherit;font-size:12px;font-weight:500;line-height:1.4}
+.crm-home button:focus-visible,.crm-home select:focus-visible,.crm-home .library-search:focus-within{outline:2px solid #8f88a0;outline-offset:3px}
+.crm-views button{font-weight:600}
+.crm-home .library-categories button{white-space:nowrap}
+.crm-empty{gap:10px}
+
+/* lead rows */
+.crm-results{gap:8px}
+.crm-row{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border:1px solid #ffffffda;border-radius:15px;background:#ffffffa6;color:inherit;font:inherit;text-align:left;cursor:pointer;flex:none;transition:background-color .2s,transform .2s}
+.crm-row:hover{background:#fffffff2;transform:translateY(-1px)}
+.crm-avatar{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#ece9f1;color:#4f4a58;font-size:12px;font-weight:600;letter-spacing:.3px;flex:none}
+.crm-avatar.s-new{background:#242429;color:#fff}
+.crm-avatar.s-enrolled{background:#e2f1ea;color:#2f6b55}
+.crm-avatar.s-lost{background:#f5e7e7;color:#8f4040}
+.crm-avatar.small{width:30px;height:30px;border-radius:10px;font-size:11px}
+.crm-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.crm-copy strong{font-size:13px;font-weight:600;color:#29272f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crm-copy>span{font-size:11px;color:#77717f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crm-owner{max-width:170px;padding:5px 8px;border-radius:8px;background:#f2eff6;color:#4f4a58;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:none}
+.crm-owner.free{background:#242429;color:#fff}
+.crm-status{padding:5px 8px;border-radius:8px;background:#efedf3;color:#4f4a58;font-size:11px;font-weight:600;white-space:nowrap;flex:none}
+.crm-status.s-new{background:#fff1d2;color:#6f4b00}
+.crm-status.s-contacted{background:#eaf0f8;color:#34496b}
+.crm-status.s-interested{background:#e5f2f6;color:#285669}
+.crm-status.s-enrolled{background:#e2f1ea;color:#2f6b55}
+.crm-status.s-lost{background:#f5e7e7;color:#8f4040}
+
+/* add / edit dialog — inherits the dashboard's shared dialog, label, input and save button styles */
+dialog.crm-dialog{width:min(520px,calc(100vw - 32px));max-width:min(520px,calc(100vw - 32px))}
+.crm-dialog h2{margin-bottom:4px;padding-right:36px;overflow-wrap:anywhere}
+.crm-dialog-meta{margin:0 0 4px;color:#77717f;font-size:12px;line-height:1.5}
+/* row gap follows the form's own gap, so stacked fields keep one rhythm when the two columns fold on phones */
+.crm-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:inherit;column-gap:12px}
+/* selects take the dashboard's shared field box (manager-measured.css: input, select, textarea); only the height is
+   pinned to the inputs' line box, because Chrome ignores line-height on a select */
+.crm-dialog select{width:100%;min-height:calc(1.6em + 20px)}
+.crm-dialog textarea{resize:vertical;min-height:84px}
+.crm-error{margin:0;padding:10px 12px;border-radius:10px;background:#f5e7e7;color:#8f4040;font-size:12px;line-height:1.5}
+.crm-actions{display:flex;flex-wrap:wrap;gap:8px}
+.crm-actions:empty{display:none}
+/* same box and type as the dashboard's .save-button (manager-measured.css), outlined instead of filled */
+.crm-secondary{flex:1;display:inline-flex;align-items:center;justify-content:center;padding:8px 13px;border:1px solid #d9d6df;border-radius:10px;background:#fff;color:#29272f;font:inherit;font-size:10px;line-height:16px;font-weight:600;text-decoration:none;cursor:pointer}
+.crm-secondary:hover{border-color:#29272f}
+.crm-secondary.danger{color:#8f4040;border-color:#efcfcf}
+.crm-dialog .save-button:disabled,.crm-secondary:disabled{opacity:.55;cursor:progress}
+
+/* statistics */
+.crm-stats-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.crm-stats-bar select{background:#ffffffaa;border:1px solid #fff;border-radius:12px;padding:9px;font-size:11px;color:#4f4a58}
+.crm-stats{gap:12px}
+.crm-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;flex:none}
+.crm-kpi{display:flex;flex-direction:column;gap:6px;min-height:104px;padding:14px;border:1px solid #ffffffda;border-radius:15px;background:#ffffffa6}
+.crm-kpi span{color:#77717f;font-size:11px}
+.crm-kpi strong{color:#29272f;font-size:22px;font-weight:600;letter-spacing:-.4px;line-height:1.15}
+.crm-kpi small{margin-top:auto;color:#77717f;font-size:10px;line-height:1.4}
+.crm-card{padding:16px;border:1px solid #ffffffda;border-radius:15px;background:#ffffffa6;flex:none}
+.crm-card .crm-kpis{margin-bottom:6px}
+.crm-card .crm-kpi{background:#f7f6f9}
+.crm-card-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 10px;margin-bottom:10px}
+.crm-card-head h3{color:#29272f;font-size:13px;font-weight:600;white-space:nowrap}
+.crm-card-head span{color:#77717f;font-size:10px}
+.crm-legend{display:flex;flex-wrap:wrap;gap:4px 12px}
+.crm-legend span{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.crm-legend i{display:inline-block;width:8px;height:8px;border-radius:2px;background:#2b2931}
+.crm-legend i.e,.crm-bars i.e{background:#3f9a72}
+.crm-bars{display:flex;align-items:flex-end;gap:3px;height:120px}
+.crm-bars>div{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;gap:2px}
+.crm-bars i{display:block;min-height:2px;border-radius:3px 3px 0 0;background:#2b2931}
+.crm-bars-x{display:flex;gap:3px;margin-top:5px;color:#8a8494;font-size:9px}
+.crm-bars-x span{flex:1;min-width:0;text-align:center}
+.crm-two-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;flex:none}
+.crm-hbar{display:grid;grid-template-columns:96px minmax(0,1fr) 54px;align-items:center;gap:8px;padding:5px 0;color:#3e3a46;font-size:11px}
+.crm-track{height:8px;overflow:hidden;border-radius:99px;background:#efedf3}
+.crm-track i{display:block;height:100%;border-radius:99px;background:#2b2931}
+.crm-hbar b{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+/* narrow cards scroll the table sideways instead of letting the income column run past the card edge */
+.crm-table-wrap{overflow-x:auto;overscroll-behavior-x:contain}
+.crm-table{width:100%;border-collapse:collapse;font-size:11px}
+.crm-table :is(th,td):not(:first-child){white-space:nowrap}
+.crm-table th{padding:6px 4px;border-bottom:1px solid #ece9f1;color:#77717f;font-weight:600;text-align:left}
+.crm-table td{padding:8px 4px;border-bottom:1px solid #f1eef5;color:#3e3a46}
+.crm-table tr:last-child td{border-bottom:0}
+.crm-table :is(th,td):not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
+.crm-rank,.crm-post{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid #f1eef5}
+.crm-rank:first-of-type,.crm-post:first-of-type{border-top:0}
+.crm-rank>b{width:18px;color:#77717f;font-size:11px;text-align:center;flex:none}
+.crm-rank-num{display:flex;flex-direction:column;align-items:flex-end;gap:2px;color:#77717f;font-size:10px;flex:none}
+.crm-rank-num strong{color:#29272f;font-size:12px}
+.crm-post a,.crm-link{color:#29272f;font-size:11px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.crm-none{margin-bottom:8px;color:#77717f;font-size:12px;line-height:1.6}
+
+@media (max-width:760px){
+ .crm-home{padding:18px;gap:14px;min-height:420px}
+ /* the add button drops under the title instead of running past the card edge */
+ .crm-home .library-header{flex-wrap:wrap;gap:12px}
+ .crm-home .library-upload{white-space:nowrap}
+ .crm-owner{display:none}
+ .crm-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .crm-two-cards{grid-template-columns:minmax(0,1fr)}
+ .crm-two{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){.crm-row{transition:none}.crm-row:hover{transform:none}}

@@ -46,7 +46,9 @@ const js = fs.readFileSync(path.join(root, 'site.js'), 'utf8');
 // and the event (no cookie, no visitor id).
 assert.ok(home.includes('data-page="home">'), 'home page names itself for the website counter');
 assert.equal((js.match(/fetch\(/g) || []).length, 1, 'one network helper');
-assert.ok(!/XMLHttpRequest|sendBeacon|localStorage|document\.cookie/.test(js), 'no other channel, no cookie, no browser-only copy');
+assert.ok(!/XMLHttpRequest|sendBeacon|document\.cookie|localStorage\.setItem/.test(js), 'no other channel, no cookie, no browser-only copy');
+assert.ok(/localStorage\.getItem\('rise-notrack'\)/.test(js) && /if \(!quiet\) rpc\('track_web'/.test(js), 'staff devices are not counted');
+assert.ok(/localStorage\.setItem\('rise-notrack','1'\)/.test(fs.readFileSync(path.join(root, 'staff.js'), 'utf8')), 'staff sign-in marks the device');
 assert.ok(/const API = 'https:\/\/[a-z]+\.supabase\.co\/rest\/v1\/rpc\/';/.test(js), 'calls Supabase functions');
 assert.deepEqual([...new Set([...js.matchAll(/rpc\('(\w+)'/g)].map(m => m[1]))].sort(), ['submit_web_lead', 'track_web'], 'only the two public functions');
 assert.ok(/rpc\('track_web', \{ p_event: event, p_page: page \}\)/.test(js), 'counter sends only page and event');

@@ -13,8 +13,9 @@ create or replace function public.qa_uid(login_name text) returns uuid language 
 grant execute on function public.qa_act(text), public.qa_uid(text) to authenticated, anon;
 
 do $$
-declare t uuid; c uuid; n int; j jsonb; m1 uuid := public.qa_uid('s1.menejer1'); b1 uuid := public.qa_uid('s1.bagsh1');
+declare t uuid; c uuid; u uuid; n int; n0 int; j jsonb; m1 uuid := public.qa_uid('s1.menejer1'); b1 uuid := public.qa_uid('s1.bagsh1');
   a1 uuid := public.qa_uid('s1.ahlah'); a2 uuid := public.qa_uid('s2.ahlah'); z uuid := public.qa_uid('zahiral'); m21 uuid := public.qa_uid('s2.menejer1');
+  m12 uuid := public.qa_uid('s1.menejer2'); ub date := (now() at time zone 'Asia/Ulaanbaatar')::date;
 begin
   -- senior manager → own-branch manager: allowed, and the task appears in their direct chat
   perform public.qa_act('s1.ahlah');
@@ -86,13 +87,44 @@ begin
   update public.leads set status = 'enrolled', amount = 250000 where id = t;
   begin perform public.crm_stats(current_date - 7, current_date, null); insert into qa values (default, 'manager stats blocked', false, 'allowed');
   exception when others then insert into qa values (default, 'manager stats blocked', true, sqlerrm); end;
+
+  -- CRM history: every note is kept with its author, the lead shows the latest one, status changes are logged,
+  -- people cannot write status entries themselves, and nothing in the history can be edited or deleted
+  insert into public.lead_events (lead_id, kind, body) values (t, 'note', '  QA: эхний тэмдэглэл ');
+  insert into public.lead_events (lead_id, kind, body, author_id) values (t, 'note', 'QA: хоёр дахь тэмдэглэл', z) returning author_id into u;
+  insert into qa values (default, 'note author is the signed-in person', u = m1, u::text);
+  select count(*) into n from public.lead_events where lead_id = t and kind = 'note' and author_id = m1;
+  insert into qa values (default, 'both notes kept', n = 2, n::text);
+  select count(*) into n from public.lead_events where lead_id = t and body = 'QA: эхний тэмдэглэл';
+  insert into qa values (default, 'note text trimmed', n = 1, n::text);
+  select count(*) into n from public.leads where id = t and note = 'QA: хоёр дахь тэмдэглэл';
+  insert into qa values (default, 'lead shows the latest note', n = 1, n::text);
+  select count(*) into n from public.lead_events where lead_id = t and kind = 'status' and from_value = 'new' and to_value = 'enrolled' and author_id = m1;
+  insert into qa values (default, 'status change logged with author', n = 1, n::text);
+  begin insert into public.lead_events (lead_id, kind, from_value, to_value) values (t, 'status', 'new', 'lost'); insert into qa values (default, 'fake status entry blocked', false, 'inserted');
+  exception when others then insert into qa values (default, 'fake status entry blocked', true, sqlerrm); end;
+  begin update public.lead_events set body = 'edited' where lead_id = t; get diagnostics n = row_count; insert into qa values (default, 'history cannot be edited', n = 0, n::text);
+  exception when others then insert into qa values (default, 'history cannot be edited', true, sqlerrm); end;
+  begin delete from public.lead_events where lead_id = t; get diagnostics n = row_count; insert into qa values (default, 'history cannot be deleted', n = 0, n::text);
+  exception when others then insert into qa values (default, 'history cannot be deleted', true, sqlerrm); end;
+
   perform public.qa_act('s2.ahlah'); select count(*) into n from public.leads where id = t;
   insert into qa values (default, 'other branch cannot see lead', n = 0, n::text);
+  select count(*) into n from public.lead_events where lead_id = t;
+  insert into qa values (default, 'other branch cannot see history', n = 0, n::text);
+  begin insert into public.lead_events (lead_id, kind, body) values (t, 'note', 'QA intrude'); insert into qa values (default, 'other branch cannot add a note', false, 'inserted');
+  exception when others then insert into qa values (default, 'other branch cannot add a note', true, sqlerrm); end;
   j := public.crm_stats(current_date - 7, current_date, 1::smallint);
   insert into qa values (default, 'branch-2 senior sees only branch 2', (j->>'branch')::int = 2 and (j->'totals'->>'enrolled')::int = 0, j->>'branch');
   perform public.qa_act('zahiral'); j := public.crm_stats(current_date - 7, current_date, null);
   insert into qa values (default, 'GD stats include enrolment', (j->'totals'->>'enrolled')::int = 1 and (j->'totals'->>'revenue')::int = 250000, j->'totals'::text);
   insert into qa values (default, 'GD stats by_branch present', jsonb_array_length(j->'by_branch') = 3, null);
+
+  -- reassignment by the branch's senior manager is logged as an owner change
+  perform public.qa_act('s1.ahlah');
+  update public.leads set owner_id = m12 where id = t;
+  select count(*) into n from public.lead_events where lead_id = t and kind = 'owner' and from_value = m1::text and to_value = m12::text and author_id = a1;
+  insert into qa values (default, 'owner change logged', n = 1, n::text);
 
   -- accounts: only the general director
   perform public.qa_act('s1.zahiral');
@@ -112,6 +144,31 @@ begin
   exception when others then insert into qa values (default, 'anon web lead accepted', false, sqlerrm); end;
   begin perform 1 from public.leads limit 1; insert into qa values (default, 'anon cannot read leads', false, 'read');
   exception when others then insert into qa values (default, 'anon cannot read leads', true, sqlerrm); end;
+  reset role;
+
+  -- website counters: anonymous +1 per call, junk ignored without an error, unreadable from the public key,
+  -- and the general director's statistics carry them together with web requests by course
+  select coalesce(sum(w.n), 0) into n0 from public.web_daily w where w.day = ub and w.page = 'damp' and w.event = 'view';
+  perform set_config('role', 'anon', true);
+  perform public.track_web('view', 'damp'); perform public.track_web('view', 'damp'); perform public.track_web('register', 'damp');
+  begin perform public.track_web('hack', 'damp'); perform public.track_web('view', 'Bad Page!'); perform public.track_web(null, null);
+    insert into qa values (default, 'junk web events ignored', true, null);
+  exception when others then insert into qa values (default, 'junk web events ignored', false, sqlerrm); end;
+  begin perform 1 from public.web_daily limit 1; insert into qa values (default, 'anon cannot read web counters', false, 'read');
+  exception when others then insert into qa values (default, 'anon cannot read web counters', true, sqlerrm); end;
+  begin perform 1 from public.lead_events limit 1; insert into qa values (default, 'anon cannot read history', false, 'read');
+  exception when others then insert into qa values (default, 'anon cannot read history', true, sqlerrm); end;
+  reset role;
+  select coalesce(sum(w.n), 0) into n from public.web_daily w where w.day = ub and w.page = 'damp' and w.event = 'view';
+  insert into qa values (default, 'two page views counted', n = n0 + 2, n0 || ' -> ' || n);
+  perform public.qa_act('zahiral'); j := public.crm_stats(ub, ub, null);
+  insert into qa values (default, 'GD stats include website',
+    exists (select 1 from jsonb_array_elements(j->'web'->'pages') x where x->>'page' = 'damp' and (x->>'view')::int >= 2 and (x->>'register')::int >= 1)
+    and exists (select 1 from jsonb_array_elements(j->'web'->'leads') x where x->>'course' = 'Дамп оператор' and (x->>'leads')::int >= 1),
+    left((j->'web')::text, 90));
+  perform public.qa_act('s1.menejer1');
+  begin perform public.crm_stats(ub, ub, null); insert into qa values (default, 'manager cannot read website stats', false, 'allowed');
+  exception when others then insert into qa values (default, 'manager cannot read website stats', true, sqlerrm); end;
   reset role;
 
   -- sign-in records are well-formed (NULL token columns break GoTrue sign-in)

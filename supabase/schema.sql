@@ -619,6 +619,83 @@ drop policy if exists leads_delete on public.leads;
 create policy leads_delete on public.leads for delete to authenticated
   using ((select private.me_level()) >= 2 and private.can_see_branch(branch_id));
 
+-- ───────────────────────────────────────── lead history: staff notes plus automatic status / owner changes
+-- Notes are append-only (nobody edits or deletes them), so a new note never overwrites an earlier one; leads.note
+-- mirrors the latest note for list search. Status and owner changes are written by a trigger, never by the browser.
+create table if not exists public.lead_events (
+  id uuid primary key default gen_random_uuid(),
+  lead_id uuid not null references public.leads (id) on delete cascade,
+  created_at timestamptz not null default now(),
+  author_id uuid references public.profiles (id) on delete set null,
+  kind text not null check (kind in ('note', 'status', 'owner')),
+  body text check (body is null or char_length(btrim(body)) between 1 and 2000),
+  from_value text,
+  to_value text
+);
+create index if not exists lead_events_lead_idx on public.lead_events (lead_id, created_at desc);
+
+-- A signed-in request always gets its own id as the author and the server time; a migration run without a
+-- session (SQL editor) keeps the values it gives.
+create or replace function private.lead_events_before_insert() returns trigger
+language plpgsql security definer set search_path = '' as $$
+begin
+  if auth.uid() is not null then
+    new.created_at := now();
+    if new.kind = 'note' then new.author_id := auth.uid(); end if;
+  end if;
+  if new.kind = 'note' then new.body := btrim(new.body); new.from_value := null; new.to_value := null; end if;
+  return new;
+end $$;
+
+create or replace function private.lead_events_after_insert() returns trigger
+language plpgsql security definer set search_path = '' as $$
+begin
+  if new.kind = 'note' then
+    update public.leads set note = new.body where id = new.lead_id and note is distinct from new.body;
+  end if;
+  return null;
+end $$;
+
+drop trigger if exists lead_events_before_insert on public.lead_events;
+create trigger lead_events_before_insert before insert on public.lead_events
+  for each row execute function private.lead_events_before_insert();
+drop trigger if exists lead_events_after_insert on public.lead_events;
+create trigger lead_events_after_insert after insert on public.lead_events
+  for each row execute function private.lead_events_after_insert();
+
+create or replace function private.leads_after_update() returns trigger
+language plpgsql security definer set search_path = '' as $$
+begin
+  if new.status is distinct from old.status then
+    insert into public.lead_events (lead_id, author_id, kind, from_value, to_value)
+    values (new.id, auth.uid(), 'status', old.status, new.status);
+  end if;
+  if new.owner_id is distinct from old.owner_id then
+    insert into public.lead_events (lead_id, author_id, kind, from_value, to_value)
+    values (new.id, auth.uid(), 'owner', old.owner_id::text, new.owner_id::text);
+  end if;
+  return null;
+end $$;
+
+drop trigger if exists leads_after_update on public.leads;
+create trigger leads_after_update after update on public.leads
+  for each row execute function private.leads_after_update();
+
+alter table public.lead_events enable row level security;
+
+-- Whoever can see the lead sees its history; staff add notes only to leads they can see.
+drop policy if exists lead_events_read on public.lead_events;
+create policy lead_events_read on public.lead_events for select to authenticated
+  using (exists (select 1 from public.leads l where l.id = lead_events.lead_id));
+
+drop policy if exists lead_events_insert on public.lead_events;
+create policy lead_events_insert on public.lead_events for insert to authenticated
+  with check (kind = 'note' and (select private.me_level()) >= 1
+              and exists (select 1 from public.leads l where l.id = lead_events.lead_id));
+
+revoke all on public.lead_events from anon;
+revoke update, delete, truncate on public.lead_events from authenticated;
+
 -- Public website registration form (no sign-in). Validates and rate-limits per phone number.
 create or replace function public.submit_web_lead(p_name text, p_phone text, p_course text, p_time text default null)
 returns boolean language plpgsql security definer set search_path = '' as $$
@@ -633,6 +710,36 @@ begin
   insert into public.leads (name, phone, course, source, preferred_time)
   values (left(btrim(p_name), 120), v_phone, left(nullif(btrim(coalesce(p_course, '')), ''), 80), 'web', left(p_time, 40));
   return true;
+end $$;
+
+-- ───────────────────────────────────────── website interest counters (public site → CRM statistics)
+-- Anonymous daily totals per page (home or a course slug) and event. No visitor id, IP address or cookie is stored:
+-- each call only adds 1 to "this page, this event, today".
+create table if not exists public.web_daily (
+  day date not null,
+  page text not null check (page ~ '^[a-z0-9-]{1,40}$'),
+  event text not null check (event in ('view', 'register', 'call', 'messenger')),
+  n integer not null default 0 check (n >= 0),
+  primary key (day, page, event)
+);
+alter table public.web_daily enable row level security;  -- no policies: only track_web and crm_stats use it
+revoke all on public.web_daily from anon, authenticated;
+
+create or replace function public.track_web(p_event text, p_page text)
+returns void language plpgsql security definer set search_path = '' as $$
+declare d date := (now() at time zone 'Asia/Ulaanbaatar')::date;
+begin
+  if p_event is null or p_event not in ('view', 'register', 'call', 'messenger')
+     or p_page is null or p_page !~ '^[a-z0-9-]{1,40}$' then
+    return;  -- junk is ignored quietly
+  end if;
+  -- at most 40 different pages a day, so made-up page names cannot grow the table without limit
+  if not exists (select 1 from public.web_daily w where w.day = d and w.page = p_page)
+     and (select count(distinct w.page) from public.web_daily w where w.day = d) >= 40 then
+    return;
+  end if;
+  insert into public.web_daily as w (day, page, event, n) values (d, p_page, p_event, 1)
+  on conflict (day, page, event) do update set n = w.n + 1;
 end $$;
 
 -- ───────────────────────────────────────── Facebook page statistics (filled by the fb-sync Edge Function)
@@ -753,7 +860,20 @@ begin
       'top_posts', coalesce((select jsonb_agg(row_to_json(t)::jsonb) from (
                      select id, created_at, left(message, 160) message, permalink, reactions, comments, shares
                        from public.fb_posts where created_at >= t0 and created_at < t1
-                      order by reactions + comments * 2 + shares * 3 desc limit 5) t), '[]'::jsonb))
+                      order by reactions + comments * 2 + shares * 3 desc limit 5) t), '[]'::jsonb)),
+    -- website: one site serves every branch, so these totals are company-wide (counts only, no records)
+    'web', jsonb_build_object(
+      'pages', coalesce((select jsonb_agg(jsonb_build_object('page', page, 'view', v, 'register', r, 'call', c, 'messenger', m)
+                                          order by v desc, page)
+          from (select w.page,
+                       coalesce(sum(w.n) filter (where w.event = 'view'), 0) v,
+                       coalesce(sum(w.n) filter (where w.event = 'register'), 0) r,
+                       coalesce(sum(w.n) filter (where w.event = 'call'), 0) c,
+                       coalesce(sum(w.n) filter (where w.event = 'messenger'), 0) m
+                  from public.web_daily w where w.day between p_from and p_to group by w.page) s), '[]'::jsonb),
+      'leads', coalesce((select jsonb_agg(jsonb_build_object('course', course, 'leads', leads, 'enrolled', enr) order by leads desc)
+          from (select coalesce(l.course, '—') course, count(*) leads, count(*) filter (where l.status = 'enrolled') enr
+                  from public.leads l where l.source = 'web' and l.created_at >= t0 and l.created_at < t1 group by 1) s), '[]'::jsonb))
   ) into result;
   return result;
 end $$;
@@ -763,6 +883,7 @@ revoke all on all tables in schema public from anon;
 revoke execute on all functions in schema public from public, anon;
 grant execute on all functions in schema public to authenticated;
 grant execute on function public.submit_web_lead(text, text, text, text) to anon;
+grant execute on function public.track_web(text, text) to anon;
 revoke execute on all functions in schema private from public, anon;
 grant execute on function private.me_level(), private.me_branch(), private.me_hidden(), private.is_gd(),
   private.can_assign(uuid), private.can_see_branch(smallint), private.is_member(uuid) to authenticated;

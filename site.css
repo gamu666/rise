@@ -255,7 +255,7 @@ body.draft .s{text-decoration:underline dotted 2px;text-underline-offset:4px}
 /* Registration without a request step (owner request 2026-11-21): own manager or branch → course → own weekly
    schedule → name and phone. Radio and checkbox inputs sit hidden inside their labels; the label shows the state. */
 .acct{gap:18px}
-.acct-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0 0 4px;padding:0;list-style:none}
+.acct-steps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin:0 0 4px;padding:0;list-style:none}
 .acct-steps li{display:grid;gap:7px;color:var(--muted2);font-size:12px;font-weight:600;white-space:nowrap}
 .acct-steps li::before{content:"";display:block;height:4px;border-radius:99px;background:#e8e8ed}
 .acct-steps li:is(.on,.past){color:var(--ink)}
@@ -303,19 +303,38 @@ body.draft .s{text-decoration:underline dotted 2px;text-underline-offset:4px}
 .acct-sum strong{color:var(--ink);font-weight:600}
 .acct-link{justify-self:center;padding:4px;border:0;background:none;color:var(--muted);font-size:13px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .acct-link:hover{color:var(--ink)}
-.acct-summary{display:grid;gap:8px;padding:14px 16px;border-radius:14px;background:var(--bg)}
-.acct-summary div{display:grid;grid-template-columns:76px minmax(0,1fr);gap:12px;font-size:13px;line-height:1.45}
-.acct-summary dt{color:var(--muted)}
-.acct-summary dd{font-weight:500}
+/* e-Mongolia and the online contract: what will be taken is spelled out; until the services are connected their
+   buttons are disabled and marked "Удахгүй", and a note says what happens meanwhile */
+.acct-gives{display:grid;gap:10px;padding:14px 16px;border-radius:14px;background:var(--bg);list-style:none}
+.acct-gives li{display:flex;align-items:flex-start;gap:10px;font-size:14px;font-weight:600;line-height:1.4}
+.acct-gives li::before{content:"";flex:none;width:6px;height:6px;margin-top:7px;border-radius:50%;background:var(--ink)}
+.acct-gives small{display:block;margin-top:2px;color:var(--muted);font-size:12px;font-weight:400}
+.acct-fine{margin-top:-6px;color:var(--muted);font-size:13px;line-height:1.5}
+/* the label may wrap: on a phone "e-Mongolia-аар баталгаажуулах" + "Удахгүй" is wider than the form */
+.acct .acct-provider{flex-wrap:wrap;width:100%;min-height:48px;padding:10px 16px;gap:6px 10px;font-size:15px;line-height:1.3;white-space:normal;text-align:center}
+.acct-provider .mark{display:grid;place-items:center;flex:none;width:24px;height:24px;border-radius:7px;background:#fff;color:var(--ink);font-size:11px;font-weight:700}
+.acct-provider.outline .mark{background:var(--ink);color:#fff}
+.acct .acct-provider:disabled{border-color:#d2d2d7;background:#f5f5f7;color:var(--muted);cursor:not-allowed;scale:1}
+.acct .acct-provider:disabled .mark{background:#d2d2d7;color:#fff}
+.acct-soon{margin-left:2px;padding:3px 8px;border-radius:999px;background:var(--ink);color:#fff;font-size:11px;font-weight:600}
+.acct-contract{display:grid;gap:12px;padding:16px 18px;border:1px solid #d2d2d7;border-radius:16px}
+.acct-contract strong{font-size:15px;font-weight:600}
+.acct-contract dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 16px;font-size:13px;line-height:1.45}
+.acct-contract dt{color:var(--muted)}
+.acct-contract dd{font-weight:500;text-align:right}
+/* one under the other: side by side, the label and its "Удахгүй" mark do not fit the 600px form */
+.acct-sign{display:grid;gap:10px}
 .acct-row{display:flex;gap:10px}
 .acct-row .btn{flex:1;min-height:48px;font-size:15px}
 .acct-row .btn:disabled{opacity:.6;cursor:progress}
 .acct-next{display:grid;gap:8px;list-style:none}
 .acct-next li{display:flex;align-items:flex-start;gap:10px;color:var(--ink);font-size:14px;line-height:1.45}
 .acct-next li::before{content:"";flex:none;width:18px;height:18px;margin-top:1px;border-radius:50%;background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 12.5 4 4 8-9'/%3E%3C/svg%3E") center/12px no-repeat}
+.acct-next li.wait{color:var(--muted)}
+.acct-next li.wait::before{box-sizing:border-box;border:1.5px solid #c7c7cc;background:none}
 @media (max-width:560px){
  .acct-courses{grid-template-columns:minmax(0,1fr)}
- /* four labels do not fit on a phone: every bar stays, only the current step is named */
+ /* six labels do not fit on a phone: every bar stays, only the current step is named */
  .acct-steps li{font-size:0}
  .acct-steps li.on{font-size:11px}
  .acct-row{flex-direction:column-reverse}

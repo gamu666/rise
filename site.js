@@ -192,9 +192,12 @@
   }
 
   // Registration without a request step (owner request 2026-11-21): own manager (or a branch) → course → own weekly
-  // schedule → name and phone. The lists come from Supabase web_registration_options (display name, position and branch
-  // only); register_web puts the lead straight into the chosen manager's CRM list, or unassigned into the chosen
-  // branch. "Бүртгэгдлээ" shows only after the server answered true; otherwise phone / Messenger are offered.
+  // schedule → e-Mongolia verification → training contract signed with e-Mongolia / GSign. The lists come from Supabase
+  // web_registration_options (display name, position and branch only); register_web puts the lead straight into the
+  // chosen manager's CRM list, or unassigned into the chosen branch. e-Mongolia and GSign are not connected yet: their
+  // buttons stay disabled ("Удахгүй") beside "Алгасах", and the visitor types a name and phone instead — nothing
+  // imitates a verification or a signature. "Бүртгэгдлээ" shows only after the server answered true; otherwise phone /
+  // Messenger are offered.
   function registration(form) {
     const $ = s => form.querySelector(s), $$ = s => [...form.querySelectorAll(s)];
     const steps = $$('.acct-step'), marks = $$('.acct-steps li'), done = $('.done:not(.fail)'), fail = $('.done.fail');
@@ -296,12 +299,13 @@
       S.at = n;
       steps.forEach(s => { s.hidden = Number(s.dataset.step) !== n; });
       marks.forEach((m, i) => { m.classList.toggle('on', i + 1 === n); m.classList.toggle('past', i + 1 < n); });
-      if (n === 4) {
+      if (n === 6) {
         const mine = has() === 'yes';
-        $('[data-sum-who]').textContent = mine ? 'Менежер' : 'Салбар';
-        $('[data-sum-manager]').textContent = mine ? managerText() : branchName(branch());
-        $('[data-sum-course]').textContent = course().dataset.name;
-        $('[data-sum-plan]').textContent = planText();
+        $('[data-c-name]').textContent = form.elements.name.value.trim();
+        $('[data-c-course]').textContent = course().dataset.name;
+        $('[data-c-plan]').textContent = planText();
+        $('[data-c-who]').textContent = mine ? 'Хариуцах менежер' : 'Салбар';
+        $('[data-c-manager]').textContent = mine ? managerText() : branchName(branch());
       }
       const h = steps[n - 1].querySelector('h3'); h.tabIndex = -1; h.focus({ preventScroll: true });
       const top = form.getBoundingClientRect().top;
@@ -319,7 +323,21 @@
         if (!S.plan.size) return say('Дор хаяж нэг өдөр сонгоно уу.');
         return [...S.plan.values()].every(p => mins(p.to) > mins(p.from)) ? say('') : say('Дуусах цаг эхлэх цагаас хойш байх ёстой.');
       }
+      // Step 4 (e-Mongolia) can only be skipped for now; step 5 asks for the name and phone number instead.
+      if (S.at === 5) return contactOk();
       return true;
+    }
+    // Until e-Mongolia is connected the visitor types the name and phone number that verification will supply later.
+    function contactOk() {
+      const name = form.elements.name, phone = form.elements.phone;
+      phone.value = phone.value.replace(/\D/g, '');
+      [name, phone].forEach(f => f.removeAttribute('aria-invalid'));
+      const problems = [];
+      if (name.value.trim().length < 2) { problems.push('Нэрээ бичнэ үү.'); name.setAttribute('aria-invalid', 'true'); }
+      if (!/^[0-9]{8}$/.test(phone.value)) { problems.push('Утасны дугаар 8 оронтой байна.'); phone.setAttribute('aria-invalid', 'true'); }
+      say(problems.join(' '));
+      if (problems.length) form.querySelector('[aria-invalid=true]')?.focus();
+      return !problems.length;
     }
     form.addEventListener('click', e => {
       if (e.target.closest('[data-retry]')) { load(); status(); }
@@ -334,16 +352,12 @@
     let sending = false;
     form.addEventListener('submit', async e => {
       e.preventDefault();
-      if (S.at !== 4 || sending) return;
+      if (sending) return;
+      // Enter in the name or phone field moves on to the contract step; only the contract step ("Алгасаад бүртгүүлэх") sends.
+      if (S.at === 5) { if (check()) show(6); return; }
+      if (S.at !== 6) return;
       const name = form.elements.name, phone = form.elements.phone;
       fail.hidden = true;
-      phone.value = phone.value.replace(/\D/g, '');
-      [name, phone].forEach(f => f.removeAttribute('aria-invalid'));
-      const problems = [];
-      if (name.value.trim().length < 2) { problems.push('Нэрээ бичнэ үү.'); name.setAttribute('aria-invalid', 'true'); }
-      if (!/^[0-9]{8}$/.test(phone.value)) { problems.push('Утасны дугаар 8 оронтой байна.'); phone.setAttribute('aria-invalid', 'true'); }
-      say(problems.join(' '));
-      if (problems.length) { form.querySelector('[aria-invalid=true]')?.focus(); return; }
       // A filled bot-trap field means a script, not a person: send nothing and claim nothing.
       if (form.elements.website?.value) { fail.hidden = false; return; }
       sending = true; send.disabled = true; send.textContent = 'Илгээж байна…';

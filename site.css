@@ -334,6 +334,8 @@ body.draft .s{text-decoration:underline dotted 2px;text-underline-offset:4px}
 .acct-next li.wait::before{box-sizing:border-box;border:1.5px solid #c7c7cc;background:none}
 @media (max-width:560px){
  .acct-courses{grid-template-columns:minmax(0,1fr)}
+ /* the small letter mark would wrap onto a line of its own: the label and "Удахгүй" are enough */
+ .acct-provider .mark{display:none}
  /* six labels do not fit on a phone: every bar stays, only the current step is named */
  .acct-steps li{font-size:0}
  .acct-steps li.on{font-size:11px}

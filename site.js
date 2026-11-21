@@ -192,7 +192,7 @@
   }
 
   // Registration without a request step (owner request 2026-11-21): own manager (or a branch) → course → own weekly
-  // schedule → e-Mongolia verification → training contract signed with e-Mongolia / GSign. The lists come from Supabase
+  // schedule → account data from e-Mongolia → contact → training contract signed with GSign. The lists come from Supabase
   // web_registration_options (display name, position and branch only); register_web puts the lead straight into the
   // chosen manager's CRM list, or unassigned into the chosen branch. e-Mongolia and GSign are not connected yet: their
   // buttons stay disabled ("Удахгүй") beside "Алгасах", and the visitor types a name and phone instead — nothing

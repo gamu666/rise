@@ -144,19 +144,19 @@ function helpTile() {
 }
 
 // Registration without a request step (owner request 2026-11-21): the visitor answers whether a manager already
-// looks after them and picks that manager (or a branch), picks the course, builds their own weekly schedule, verifies
-// through e-Mongolia and signs the training contract online with e-Mongolia or GSign. site.js fills the manager and
-// branch lists from Supabase (web_registration_options) and sends the result to register_web, which puts the lead
-// straight into the chosen manager's CRM list. e-Mongolia and GSign are not connected yet: their steps explain exactly
-// which data will be taken and how the contract is signed, their buttons stay disabled with "Удахгүй" next to an
-// "Алгасах" choice (owner request), and the visitor gives a name and phone number — nothing on the page imitates a
-// verification or a signature.
+// looks after them and picks that manager (or a branch), picks the course, builds their own weekly schedule, takes the
+// account data from e-Mongolia (name, register number and photo without typing errors) and signs the training contract
+// with GSign — two separate services (owner, 2026-11-22). site.js fills the manager and branch lists from Supabase
+// (web_registration_options) and sends the result to register_web, which puts the lead straight into the chosen
+// manager's CRM list. e-Mongolia and GSign are not connected yet: their steps explain exactly which data will be taken
+// and how the contract is signed, their buttons stay disabled with "Удахгүй" next to an "Алгасах" choice (owner
+// request), and the visitor gives a name and phone number — nothing on the page imitates e-Mongolia or a signature.
 function form(rel, selected) {
   const courses = C.tracks.map(t => C.courses.filter(c => c.track === t.id).map(c => `<label class="acct-course"><input type="radio" name="course" value="${c.slug}" data-name="${esc(c.name)}"${c.slug === selected ? ' checked' : ''}><strong>${esc(c.name)}</strong><span>${esc(t.full)}</span></label>`).join('')).join('');
   const contact = `<div class="actions start"><a class="btn" href="tel:${C.org.tel}">${icon('phone')}Залгах</a><a class="btn outline" href="${C.org.messenger}" target="_blank" rel="noopener">${icon('msg')}Messenger</a></div>`;
   const soon = (mark, label, cls = '') => `<button class="btn${cls} acct-provider" type="button" disabled aria-disabled="true"><span class="mark" aria-hidden="true">${mark}</span>${label}<span class="acct-soon">Удахгүй</span></button>`;
   return `<form class="leadform acct" id="lead-form" novalidate data-reveal>
- <ol class="acct-steps" aria-hidden="true"><li class="on">Менежер</li><li>Сургалт</li><li>Хуваарь</li><li>Баталгаа</li><li>Холбоо</li><li>Гэрээ</li></ol>
+ <ol class="acct-steps" aria-hidden="true"><li class="on">Менежер</li><li>Сургалт</li><li>Хуваарь</li><li>e-Mongolia</li><li>Холбоо</li><li>Гэрээ</li></ol>
  <div class="acct-step" data-step="1">
   <h3>Таныг хариуцсан менежер байгаа юу?</h3>
   <p>Танд зөвлөсөн менежер байвал шууд сонгоорой. Байхгүй бол салбараа сонгоход тэр салбарын менежер хариуцна.</p>
@@ -191,11 +191,11 @@ function form(rel, selected) {
   <div class="acct-row"><button class="btn outline" type="button" data-back>Буцах</button><button class="btn" type="button" data-next>Үргэлжлүүлэх</button></div>
  </div>
  <div class="acct-step" data-step="4" hidden>
-  <h3>Иргэний мэдээллээ баталгаажуулах</h3>
-  <p>Бүртгэл e-Mongolia-аар баталгаажна. Бид таны e-Mongolia-аас зөвхөн дараах 3 мэдээллийг авна:</p>
+  <h3>e-Mongolia-аас мэдээллээ авах</h3>
+  <p>Данс нээхэд овог, нэр, регистрийн дугаараа гараар бичихгүй. e-Mongolia-аас шууд авснаар алдаагүй бүртгэгдэнэ. Бид зөвхөн дараах 3 мэдээллийг авна:</p>
   <ul class="acct-gives"><li><span>Регистрийн дугаар</span></li><li><span>Овог, нэр</span></li><li><span>Иргэний бүртгэлийн зураг<small>Таны дансны зураг болж, сурагчийн үнэмлэх, сертификатад хэвлэгдэнэ</small></span></li></ul>
-  <p class="acct-fine">Үүнээс өөр мэдээлэл авахгүй. 18 нас хүрээгүй бол эцэг, эх эсвэл асран хамгаалагч нь өөрийн e-Mongolia-аар баталгаажуулж, гэрээнд гарын үсэг зурна.</p>
-  ${soon('e', 'e-Mongolia-аар баталгаажуулах')}
+  <p class="acct-fine">Үүнээс өөр мэдээлэл авахгүй. 18 нас хүрээгүй бол эцэг, эх эсвэл асран хамгаалагч нь өөрийн e-Mongolia-аар нэвтэрч, гэрээнд GSign-аар гарын үсэг зурна.</p>
+  ${soon('e', 'e-Mongolia-аар нэвтрэх')}
   <p class="err" role="alert" hidden></p>
   <div class="acct-row"><button class="btn outline" type="button" data-back>Буцах</button><button class="btn" type="button" data-next>Алгасах</button></div>
  </div>
@@ -210,9 +210,9 @@ function form(rel, selected) {
  </div>
  <div class="acct-step" data-step="6" hidden>
   <h3>Сургалтын гэрээ</h3>
-  <p>Гэрээгээ e-Mongolia эсвэл GSign-ийн цахим гарын үсгээр онлайнаар байгуулна. Салбар дээр ирэх шаардлагагүй.</p>
+  <p>Гэрээгээ GSign цахим гарын үсгээр онлайнаар байгуулна. Салбар дээр ирэх шаардлагагүй.</p>
   <article class="acct-contract"><strong>Гэрээний гол мэдээлэл</strong><dl><dt>Суралцагч</dt><dd data-c-name></dd><dt>Сургалт</dt><dd data-c-course></dd><dt>Хуваарь</dt><dd data-c-plan></dd><dt data-c-who>Хариуцах менежер</dt><dd data-c-manager></dd><dt>Төлбөр</dt><dd>Гэрээний хавсралтаар</dd></dl></article>
-  <div class="acct-sign">${soon('e', 'e-Mongolia-аар зурах')}${soon('G', 'GSign-аар зурах', ' outline')}</div>
+  <div class="acct-sign">${soon('G', 'GSign-аар гарын үсэг зурах')}</div>
   <p class="acct-fine">Алгасвал менежер тантай холбогдож гэрээг байгуулна.</p>
   <p class="err" role="alert" hidden></p>
   <div class="acct-row"><button class="btn outline" type="button" data-back>Буцах</button><button class="btn" type="submit">Алгасаад бүртгүүлэх</button></div>
@@ -220,7 +220,7 @@ function form(rel, selected) {
  <div class="done" hidden tabindex="-1">
   <strong>${icon('check')}Бүртгэгдлээ</strong>
   <p data-done-text></p>
-  <ul class="acct-next"><li data-done-manager></li><li data-done-course></li><li data-done-plan></li><li class="wait">e-Mongolia баталгаажуулалт — алгассан</li><li class="wait">Сургалтын гэрээ — менежер тантай байгуулна</li></ul>
+  <ul class="acct-next"><li data-done-manager></li><li data-done-course></li><li data-done-plan></li><li class="wait">e-Mongolia-аас мэдээлэл авах — алгассан</li><li class="wait">GSign гэрээ — менежер тантай байгуулна</li></ul>
   ${contact}
  </div>
  <div class="done fail" hidden tabindex="-1">

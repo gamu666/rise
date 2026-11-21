@@ -1,0 +1,129 @@
+/* Staff dashboards, 2026-11-21 (owner request): plain background without the dune photo, a left menu that shows
+   icons only and opens with its names while the pointer is over it, and Зурвас (employee-side-chat.js) in the right
+   column instead of the dark task column. Loaded last on manager, senior-manager, branch-director, general-director
+   and teacher pages, so it only overrides; the older layers stay untouched. */
+:root{--rail-closed:88px;--rail-open:254px;--side-col:384px}
+
+/* plain background */
+html body,html body.teacher-page{background:#ebecef!important;background-image:none!important}
+html[data-theme=dark] body,html[data-theme=dark] body.teacher-page{background:#121315!important}
+body .students-bg{display:none!important}
+
+/* the old task column is replaced by the chat panel */
+body .task-viewport>#tasks,body.teacher-page .teacher-right>.teacher-priorities{display:none!important}
+
+@media (min-width:761px){
+ /* the panel is always in view on wide screens, so the menu no longer needs its own Зурвас item;
+    on phones the item stays as a shortcut that scrolls to the panel (employee-side-chat.js) */
+ body .figma-menu [data-hub=chat],body .hub-nav>[data-hub=chat],body.teacher-page .teacher-nav [data-view=messages]{display:none!important}
+
+ /* narrow rail column; the centre takes the room (its own max-width still bounds it) */
+ body main.workspace,body.teacher-page .teacher-shell{grid-template-columns:calc(var(--rail-closed) + 12px) minmax(0,1fr) var(--side-col)!important}
+
+ /* rail: icons only, opens over the page on hover or keyboard focus */
+ body nav.framed-rail,body.teacher-page .teacher-rail{width:var(--rail-closed)!important;position:relative;z-index:60;overflow:hidden;transition:width .24s cubic-bezier(.2,.8,.2,1),box-shadow .24s}
+ body nav.framed-rail:is(:hover,:focus-within),body.teacher-page .teacher-rail:is(:hover,:focus-within){width:var(--rail-open)!important;box-shadow:0 22px 60px rgba(17,18,20,.16)!important}
+
+ /* brand: the symbol alone while closed */
+ body nav.framed-rail .brand,body.teacher-page .teacher-brand{transition:margin .24s}
+ body nav.framed-rail .brand img,body.teacher-page .teacher-brand img{transition:width .24s}
+ body nav.framed-rail:not(:hover):not(:focus-within) .brand,body.teacher-page .teacher-rail:not(:hover):not(:focus-within) .teacher-brand{margin-left:calc((var(--rail-closed) - 32px) / 2)!important;margin-right:0!important;left:auto!important;width:32px!important;overflow:hidden}
+ body nav.framed-rail:not(:hover):not(:focus-within) .brand img,body.teacher-page .teacher-rail:not(:hover):not(:focus-within) .teacher-brand img{width:32px!important;max-width:none;height:var(--brand-h,35px)!important;object-fit:cover;object-position:left center}
+
+ /* menu buttons: a centred icon while closed, the full row with its name while open */
+ body nav.framed-rail .figma-menu button,body.teacher-page .teacher-nav button{position:relative;transition:width .24s cubic-bezier(.2,.8,.2,1),padding .24s}
+ body nav.framed-rail .nav-label,body.teacher-page .teacher-nav button>span:not([class*=badge]):not([class*=unread]):not([class*=count]){transition:opacity .16s .06s;white-space:nowrap}
+ body nav.framed-rail:not(:hover):not(:focus-within) .figma-menu{width:auto!important;align-items:flex-start}
+ body nav.framed-rail:not(:hover):not(:focus-within) .figma-menu button,body.teacher-page .teacher-rail:not(:hover):not(:focus-within) .teacher-nav button{width:52px!important;min-width:0!important;padding-left:17px!important;padding-right:0!important;gap:0!important;overflow:hidden}
+ body nav.framed-rail:not(:hover):not(:focus-within) .nav-label,body.teacher-page .teacher-rail:not(:hover):not(:focus-within) .teacher-nav button>span:not([class*=badge]):not([class*=unread]):not([class*=count]){opacity:0;width:0;overflow:hidden}
+ /* unread counts sit on the icon's corner while closed */
+ body nav.framed-rail:not(:hover):not(:focus-within) .figma-menu .hub-unread,body.teacher-page .teacher-rail:not(:hover):not(:focus-within) .teacher-nav :is([class*=badge],[class*=unread],[class*=count]){position:absolute!important;top:5px;left:31px;right:auto;margin:0!important;min-width:16px;height:16px;padding:0 4px;font-size:9px;line-height:16px}
+
+ /* account: the photo alone while closed; name and the sign-out slider come back when open */
+ body nav.framed-rail .workspace-account,body.teacher-page .teacher-account{transition:width .24s cubic-bezier(.2,.8,.2,1)}
+ body nav.framed-rail:not(:hover):not(:focus-within) .workspace-account,body.teacher-page .teacher-rail:not(:hover):not(:focus-within) .teacher-account{width:60px!important;height:auto!important;min-height:0!important;padding:8px 0!important;overflow:hidden}
+ body nav.framed-rail:not(:hover):not(:focus-within) .workspace-account :is(.logout-swipe,.profile>span:not(.avatar):not(.profile-online),.profile>svg),
+ body.teacher-page .teacher-rail:not(:hover):not(:focus-within) .teacher-account>:not(:first-child){display:none!important}
+ body nav.framed-rail:not(:hover):not(:focus-within) .workspace-account .profile{justify-content:center;padding:0!important;width:100%}
+ body.teacher-page .teacher-rail:not(:hover):not(:focus-within) .teacher-profile-toggle>span{display:none!important}
+ body.teacher-page .teacher-rail:not(:hover):not(:focus-within) .teacher-profile-toggle{justify-content:center;padding:0!important;width:100%;gap:0!important}
+}
+
+/* ───── Зурвас panel (employee-side-chat.js): same glass card as Сүүлийн орлого ───── */
+.side-chat{display:flex;flex-direction:column;min-height:0;flex:1 1 auto;box-sizing:border-box;border:1px solid #fff;border-radius:26px;background:rgba(255,255,255,.93);box-shadow:0 3px 14px rgba(0,0,0,.02);color:#18191a;overflow:hidden;font-family:inherit}
+.side-chat[hidden]{display:none!important}
+.side-chat .side-chat-head{display:flex;align-items:center;justify-content:flex-start;gap:8px;margin:0;padding:15px 17px 10px}
+.side-chat .side-chat-head h2{margin:0;flex:1;font-size:14px;font-weight:700;line-height:1.3;letter-spacing:-.01em;color:#18191a}
+.side-chat-total{min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#f35d69;color:#fff;font-size:10px;font-weight:700;line-height:18px;text-align:center}
+.side-chat-icon{display:grid;place-items:center;width:30px;height:30px;padding:0;border:0;border-radius:10px;background:#f1f1f4;color:#18191a;cursor:pointer;flex:none}
+.side-chat-icon:hover{background:#e6e6ea}
+.side-chat-icon svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.side-chat :is(button,input,textarea):focus-visible{outline:2px solid #8f88a0;outline-offset:2px}
+.side-chat-search{display:flex;align-items:center;gap:8px;margin:0 17px 8px;padding:0 12px;height:36px;border-radius:12px;background:#f1f1f4}
+.side-chat-search svg{width:14px;height:14px;flex:none;fill:none;stroke:#77717f;stroke-width:2;stroke-linecap:round}
+.side-chat-search input{flex:1;min-width:0;border:0;background:none;outline:0;padding:0;font:inherit;font-size:12px;color:#18191a}
+.side-chat-list{flex:1;min-height:0;overflow-y:auto;padding:0 9px 10px;overscroll-behavior:contain}
+.side-chat-row{display:flex;align-items:center;gap:10px;width:100%;padding:8px;border:0;border-radius:14px;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.side-chat-row:hover{background:#f4f4f6}
+.side-chat-row.on{background:#ececf0}
+.side-chat-av{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#e9e7ef;color:#4f4a58;font-size:12px;font-weight:700;flex:none;overflow:hidden}
+.side-chat-av.ch{border-radius:12px;background:#18191a;color:#fff}
+.side-chat-av.ch svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.side-chat-av.s{width:28px;height:28px;font-size:10px}
+.side-chat-copy{flex:1;min-width:0;display:grid;gap:2px}
+.side-chat-copy strong{font-size:13px;font-weight:600;line-height:1.35;color:#18191a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.side-chat-copy small{font-size:11px;line-height:1.35;color:#77717f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.side-chat-row.unread .side-chat-copy small{color:#18191a;font-weight:600}
+.side-chat-meta{display:grid;justify-items:end;gap:4px;flex:none}
+.side-chat-meta time{font-size:10px;color:#8a8494}
+.side-chat-badge{min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#f35d69;color:#fff;font-size:10px;font-weight:700;line-height:18px;text-align:center}
+.side-chat-empty{padding:18px 17px;color:#77717f;font-size:12px;line-height:1.6;text-align:center}
+.side-chat-empty button{margin-top:10px}
+.side-chat-thread{display:flex;flex-direction:column;flex:1;min-height:0}
+.side-chat-thread[hidden]{display:none}
+.side-chat-thread-head{display:flex;align-items:center;gap:9px;padding:12px 14px 10px;border-bottom:1px solid #f0eff3}
+.side-chat-thread-head .side-chat-copy strong{font-size:13px}
+.side-chat-thread-who{display:flex;align-items:center;gap:9px;flex:1;min-width:0}
+.side-chat-msgs{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:3px;padding:12px 14px;overscroll-behavior:contain}
+.side-chat-day{align-self:center;margin:8px 0 4px;padding:3px 9px;border-radius:999px;background:#f1f1f4;color:#77717f;font-size:10px}
+.side-chat-sys{align-self:center;margin:4px 0;color:#8a8494;font-size:10px;text-align:center}
+.side-chat-msg{display:grid;justify-items:start;max-width:84%;gap:2px}
+.side-chat-msg.mine{align-self:flex-end;justify-items:end}
+.side-chat-msg .who{margin:6px 0 1px 4px;color:#77717f;font-size:10px;font-weight:600}
+.side-chat-msg p{margin:0;padding:8px 11px;border-radius:16px 16px 16px 6px;background:#f1f1f4;color:#18191a;font-size:12.5px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere}
+.side-chat-msg.mine p{border-radius:16px 16px 6px 16px;background:#18191a;color:#fff}
+.side-chat-msg.task p{border:1px solid #e3e1e8;background:#fff}
+.side-chat-msg.task p b{display:block;margin-bottom:2px;color:#77717f;font-size:9px;letter-spacing:.06em}
+.side-chat-msg time{padding:0 4px;color:#9a95a3;font-size:9.5px}
+.side-chat-older{align-self:center;margin-bottom:6px;padding:5px 10px;border:1px solid #e3e1e8;border-radius:999px;background:#fff;color:#4f4a58;font:inherit;font-size:11px;cursor:pointer}
+.side-chat-compose{display:flex;align-items:flex-end;gap:8px;padding:10px 12px 12px;border-top:1px solid #f0eff3}
+.side-chat-compose textarea{flex:1;min-width:0;height:38px;max-height:120px;resize:none;padding:9px 12px;border:1px solid transparent;border-radius:14px;background:#f1f1f4;color:#18191a;font:inherit;font-size:12.5px;line-height:1.5}
+.side-chat-compose textarea:focus{outline:0;border-color:#d6d3dc;background:#fff}
+.side-chat-send{display:grid;place-items:center;width:38px;height:38px;padding:0;border:0;border-radius:50%;background:#18191a;color:#fff;cursor:pointer;flex:none}
+.side-chat-send:disabled{opacity:.35;cursor:default}
+.side-chat-send svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.side-chat-note{margin:0 14px 10px;padding:8px 10px;border-radius:10px;background:#f5e7e7;color:#8f4040;font-size:11px}
+.side-chat-note[hidden]{display:none}
+
+/* new conversation dialog (inherits the dashboard dialog look) */
+dialog.side-chat-dialog{width:min(440px,calc(100vw - 32px));max-width:min(440px,calc(100vw - 32px))}
+.side-chat-dialog h2{margin-bottom:4px;padding-right:36px}
+.side-chat-dialog .side-chat-search{margin:12px 0 8px}
+.side-chat-people{display:grid;gap:2px;max-height:320px;overflow-y:auto;margin:0 -6px;padding:0 6px}
+.side-chat-person{display:flex!important;align-items:center;gap:10px;margin:0!important;padding:7px 8px;border-radius:12px;cursor:pointer;font-size:13px!important}
+.side-chat-person:hover{background:#f4f4f6}
+.side-chat-person input{width:18px!important;height:18px;margin:0!important;padding:0!important;accent-color:#18191a;flex:none}
+.side-chat-dialog .side-chat-copy small{font-size:11px}
+.side-chat-dialog .side-chat-title[hidden]{display:none!important}
+.side-chat-dialog .save-button{width:100%;margin-top:12px}
+
+@media (max-width:760px){
+ .side-chat{min-height:520px;max-height:640px}
+ /* teacher phones hid the whole right column; it comes back under the page with the chat only, like the managers' */
+ body.teacher-page .teacher-right{display:flex!important;flex-direction:column;grid-column:2;grid-row:2;padding:0 12px 12px;min-height:0}
+ body.teacher-page .teacher-right>:not(.side-chat){display:none!important}
+ body.teacher-page .teacher-rail{grid-row:1 / 3;height:auto!important;align-self:stretch}
+}
+@media (prefers-reduced-motion:reduce){
+ body nav.framed-rail,body.teacher-page .teacher-rail,body nav.framed-rail *,body.teacher-page .teacher-rail *{transition:none!important}
+}

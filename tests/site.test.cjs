@@ -12,7 +12,7 @@ for (const c of C.courses) {
   const html = fs.readFileSync(file, 'utf8');
   const title = /<title>(.*?)<\/title>/.exec(html)[1];
   assert.ok(!titles.has(title), 'duplicate title ' + title); titles.add(title);
-  assert.ok(html.includes(`<option value="${c.slug}" selected>`), c.slug + ' form preselects its course');
+  assert.ok(html.includes(`<input type="radio" name="course" value="${c.slug}" data-name="${c.name}" checked>`), c.slug + ' form preselects its course');
   assert.ok(html.includes(`data-page="${c.slug}">`), c.slug + ' page names itself for the website counter');
   assert.ok(home.includes(`surgalt/${c.slug}.html`), 'home links to ' + c.slug);
   // Unconfirmed sample values must stay marked so they cannot be mistaken for confirmed data.
@@ -50,9 +50,33 @@ assert.ok(!/XMLHttpRequest|sendBeacon|document\.cookie|localStorage\.setItem/.te
 assert.ok(/localStorage\.getItem\('rise-notrack'\)/.test(js) && /if \(!quiet\) rpc\('track_web'/.test(js), 'staff devices are not counted');
 assert.ok(/localStorage\.setItem\('rise-notrack','1'\)/.test(fs.readFileSync(path.join(root, 'staff.js'), 'utf8')), 'staff sign-in marks the device');
 assert.ok(/const API = 'https:\/\/[a-z]+\.supabase\.co\/rest\/v1\/rpc\/';/.test(js), 'calls Supabase functions');
-assert.deepEqual([...new Set([...js.matchAll(/rpc\('(\w+)'/g)].map(m => m[1]))].sort(), ['submit_web_lead', 'track_web'], 'only the two public functions');
+assert.deepEqual([...new Set([...js.matchAll(/rpc\('(\w+)'/g)].map(m => m[1]))].sort(), ['register_web', 'submit_web_lead', 'track_web', 'web_registration_options'], 'only the public functions');
 assert.ok(/rpc\('track_web', \{ p_event: event, p_page: page \}\)/.test(js), 'counter sends only page and event');
 assert.ok(/'sb_publishable_\w+'/.test(js) && !/sb_secret_|service_role/.test(js), 'publishable key only');
 assert.ok(/ok = res\.ok && \(await res\.json\(\)\) === true;/.test(js), 'success requires the server to answer true');
 assert.ok(/if \(ok\) \{[^}]*done\.hidden = false[^}]*\}\s*else \{[^}]*fail\.hidden = false/.test(js), 'received only when ok, otherwise contact options');
-console.log('PASS: site build, ' + C.courses.length + ' course pages, sample markers, confirmed-only form');
+// Registration without a request step (owner request 2026-11-21): own manager or branch → course → own schedule →
+// name and phone. No "хүсэлт" wording in the form, nothing imitates e-Mongolia / GSign (not connected yet), the
+// lead goes to register_web with the chosen manager and schedule, and "Бүртгэгдлээ" appears only after true.
+for (const html of pages) {
+  const f = /<form class="leadform acct" id="lead-form"[\s\S]*?<\/form>/.exec(html);
+  assert.ok(f, 'every page has the step form');
+  assert.ok(f[0].includes('Таныг хариуцсан менежер байгаа юу?') && f[0].includes('name="has" value="yes"') && f[0].includes('name="has" value="no"'), 'starts with the own-manager question');
+  assert.ok(f[0].includes('class="acct-days"') && f[0].includes('data-branches') && f[0].includes('class="acct-managers"'), 'own schedule, branch and manager pickers');
+  assert.ok(!/хүсэлт/i.test(visible(f[0])), 'no request wording in the form');
+  assert.ok(!/e-Mongolia|GSign|Данс нээгдлээ|гарын үсэг/i.test(visible(html)), 'no imitation of verification or signing on the live page');
+}
+const reg = js.slice(js.indexOf('function registration('));
+assert.ok(/rpc\('web_registration_options', \{\}, stop\.signal\)/.test(reg), 'manager list comes from Supabase, never a hard-coded roster');
+assert.ok(!/Энхжин|Тэнүүн|Энэрэн|Золбоо/.test(js), 'no demo roster names in the public script');
+assert.ok(/rpc\('register_web', \{ p_name: [^}]*p_manager: [^}]*p_branch: [^}]*p_schedule: plan\(\) \}/.test(reg), 'sends the chosen manager or branch and the schedule');
+assert.equal((reg.match(/done\.hidden = false/g) || []).length, 1, 'one place shows success');
+assert.ok(reg.indexOf('ok = res.ok && (await res.json()) === true;') < reg.indexOf('if (ok) {') && reg.indexOf('if (ok) {') < reg.indexOf('done.hidden = false') && reg.indexOf('done.hidden = false') < reg.indexOf('fail.hidden = false; fail.focus();'), 'success only after the server answered true');
+const mig = fs.readFileSync(path.join(root, 'supabase', 'migrations', '2026-11-21-web-registration.sql'), 'utf8');
+const opts = mig.slice(mig.indexOf('function public.web_registration_options'), mig.indexOf('function public.register_web'));
+assert.ok(!/'login'|'phone'|avatar/.test(opts), 'the public list carries no login, phone or photo');
+assert.ok(/p\.active and not p\.hidden and p\.role in \('manager', 'senior_manager'\)/.test(mig), 'only active, visible managers are listed and accepted');
+assert.ok(/p\.display_name !~ '\^Салбар \[0-9\]\+ · '/.test(opts), 'accounts still named with the seeded placeholder are not listed publicly');
+assert.ok(/msg\.textContent = none \?/.test(reg) && /\$\('\.acct-search'\)\.hidden = none;/.test(reg), 'an empty manager list points the visitor to the branch choice');
+assert.ok(/grant execute on function public\.register_web\(text, text, text, uuid, smallint, jsonb\) to anon, authenticated;/.test(mig), 'anon may register');
+console.log('PASS: site build, ' + C.courses.length + ' course pages, sample markers, step registration form, confirmed-only success');

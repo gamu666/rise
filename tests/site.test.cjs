@@ -13,6 +13,7 @@ for (const c of C.courses) {
   const title = /<title>(.*?)<\/title>/.exec(html)[1];
   assert.ok(!titles.has(title), 'duplicate title ' + title); titles.add(title);
   assert.ok(html.includes(`<option value="${c.slug}" selected>`), c.slug + ' form preselects its course');
+  assert.ok(html.includes(`data-page="${c.slug}">`), c.slug + ' page names itself for the website counter');
   assert.ok(home.includes(`surgalt/${c.slug}.html`), 'home links to ' + c.slug);
   // Unconfirmed sample values must stay marked so they cannot be mistaken for confirmed data.
   if (!c.sample.confirmed) assert.ok(html.includes('<span class="s">'), c.slug + ' marks sample values');
@@ -40,11 +41,15 @@ assert.ok(!/gradient/i.test(css), 'public site CSS uses no gradients');
 assert.ok(!/#(6d28d9|a21caf|ec4899|f2a900|0071e3)/i.test(css), 'public site CSS has no accent colours');
 for (const html of pages) assert.ok(!/fonts\.googleapis/.test(html), 'system fonts only');
 const js = fs.readFileSync(path.join(root, 'site.js'), 'utf8');
-// The form's one network call goes to the public submit_web_lead function with the publishable key — never a secret
-// key — and "received" is shown only when the server answered true.
-assert.equal((js.match(/fetch\(/g) || []).length, 1, 'one network call');
-assert.ok(!/XMLHttpRequest|sendBeacon|localStorage/.test(js), 'no other channel, no browser-only copy');
-assert.ok(/'https:\/\/[a-z]+\.supabase\.co\/rest\/v1\/rpc\/submit_web_lead'/.test(js), 'posts to submit_web_lead');
+// All network calls go through one helper to the two public Supabase functions with the publishable key — never a
+// secret key. The form shows "received" only when the server answered true; the website counter sends only the page
+// and the event (no cookie, no visitor id).
+assert.ok(home.includes('data-page="home">'), 'home page names itself for the website counter');
+assert.equal((js.match(/fetch\(/g) || []).length, 1, 'one network helper');
+assert.ok(!/XMLHttpRequest|sendBeacon|localStorage|document\.cookie/.test(js), 'no other channel, no cookie, no browser-only copy');
+assert.ok(/const API = 'https:\/\/[a-z]+\.supabase\.co\/rest\/v1\/rpc\/';/.test(js), 'calls Supabase functions');
+assert.deepEqual([...new Set([...js.matchAll(/rpc\('(\w+)'/g)].map(m => m[1]))].sort(), ['submit_web_lead', 'track_web'], 'only the two public functions');
+assert.ok(/rpc\('track_web', \{ p_event: event, p_page: page \}\)/.test(js), 'counter sends only page and event');
 assert.ok(/'sb_publishable_\w+'/.test(js) && !/sb_secret_|service_role/.test(js), 'publishable key only');
 assert.ok(/ok = res\.ok && \(await res\.json\(\)\) === true;/.test(js), 'success requires the server to answer true');
 assert.ok(/if \(ok\) \{[^}]*done\.hidden = false[^}]*\}\s*else \{[^}]*fail\.hidden = false/.test(js), 'received only when ok, otherwise contact options');

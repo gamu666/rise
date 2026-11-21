@@ -149,39 +149,227 @@
     else if (/#burtguuleh$/.test(href)) track('register');
   }, true);
 
-  // Registration form.
+  // Registration form. The site15 form is the one without a request step; a page cached from before site15 still has
+  // the one-screen form (name, phone, course, day/evening) and keeps posting to submit_web_lead, so a cached page never
+  // falls back to a native GET that would put the person's name and phone in the address.
   const form = document.querySelector('#lead-form');
   if (!form) return;
-  // A page cached from before site13 has a single .done block (it asks the visitor to call) and no bot-trap field;
-  // that block then serves as the failure notice too, so old HTML with this script never throws or over-claims.
-  const err = form.querySelector('.err'), done = form.querySelector('.done:not(.fail)'), fail = form.querySelector('.done.fail') || done;
-  const send = form.querySelector('button[type=submit]'), label = send.textContent;
-  let sending = false;
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    if (sending) return;
-    const name = form.elements.name, phone = form.elements.phone, course = form.elements.course;
-    fail.hidden = true;
-    phone.value = phone.value.replace(/\D/g, '');
-    const problems = [];
-    [name, phone, course].forEach(f => f.removeAttribute('aria-invalid'));
-    if (name.value.trim().length < 2) { problems.push('Нэрээ бичнэ үү.'); name.setAttribute('aria-invalid', 'true'); }
-    if (!/^[0-9]{8}$/.test(phone.value)) { problems.push('Утасны дугаар 8 оронтой байна.'); phone.setAttribute('aria-invalid', 'true'); }
-    if (!course.value) { problems.push('Сургалтаа сонгоно уу.'); course.setAttribute('aria-invalid', 'true'); }
-    err.hidden = !problems.length; err.textContent = problems.join(' ');
-    if (problems.length) { form.querySelector('[aria-invalid=true]')?.focus(); return; }
-    // A filled bot-trap field means a script, not a person: send nothing and claim nothing.
-    if (form.elements.website?.value) { fail.hidden = false; return; }
-    sending = true; send.disabled = true; send.textContent = 'Илгээж байна…';
-    let ok = false;
-    try {
+  if (form.classList.contains('acct')) registration(form); else legacyForm(form);
+
+  function legacyForm(form) {
+    // A page cached from before site13 has a single .done block (it asks the visitor to call) and no bot-trap field;
+    // that block then serves as the failure notice too, so old HTML with this script never throws or over-claims.
+    const err = form.querySelector('.err'), done = form.querySelector('.done:not(.fail)'), fail = form.querySelector('.done.fail') || done;
+    const send = form.querySelector('button[type=submit]'), label = send.textContent;
+    let sending = false;
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (sending) return;
+      const name = form.elements.name, phone = form.elements.phone, course = form.elements.course;
+      fail.hidden = true;
+      phone.value = phone.value.replace(/\D/g, '');
+      const problems = [];
+      [name, phone, course].forEach(f => f.removeAttribute('aria-invalid'));
+      if (name.value.trim().length < 2) { problems.push('Нэрээ бичнэ үү.'); name.setAttribute('aria-invalid', 'true'); }
+      if (!/^[0-9]{8}$/.test(phone.value)) { problems.push('Утасны дугаар 8 оронтой байна.'); phone.setAttribute('aria-invalid', 'true'); }
+      if (!course.value) { problems.push('Сургалтаа сонгоно уу.'); course.setAttribute('aria-invalid', 'true'); }
+      err.hidden = !problems.length; err.textContent = problems.join(' ');
+      if (problems.length) { form.querySelector('[aria-invalid=true]')?.focus(); return; }
+      // A filled bot-trap field means a script, not a person: send nothing and claim nothing.
+      if (form.elements.website?.value) { fail.hidden = false; return; }
+      sending = true; send.disabled = true; send.textContent = 'Илгээж байна…';
+      let ok = false;
+      try {
+        const stop = new AbortController(), timer = setTimeout(() => stop.abort(), 15000);
+        const res = await rpc('submit_web_lead', { p_name: name.value.trim(), p_phone: phone.value, p_course: course.selectedOptions[0]?.textContent.trim() || '', p_time: form.elements.time.value }, stop.signal);
+        clearTimeout(timer);
+        ok = res.ok && (await res.json()) === true;
+      } catch { ok = false; }
+      sending = false; send.disabled = false; send.textContent = label;
+      if (ok) { send.hidden = true; done.hidden = false; done.focus(); }
+      else { fail.hidden = false; fail.focus(); }
+    });
+  }
+
+  // Registration without a request step (owner request 2026-11-21): own manager (or a branch) → course → own weekly
+  // schedule → name and phone. The lists come from Supabase web_registration_options (display name, position and branch
+  // only); register_web puts the lead straight into the chosen manager's CRM list, or unassigned into the chosen
+  // branch. "Бүртгэгдлээ" shows only after the server answered true; otherwise phone / Messenger are offered.
+  function registration(form) {
+    const $ = s => form.querySelector(s), $$ = s => [...form.querySelectorAll(s)];
+    const steps = $$('.acct-step'), marks = $$('.acct-steps li'), done = $('.done:not(.fail)'), fail = $('.done.fail');
+    const DAYS = [['Да', 'Даваа'], ['Мя', 'Мягмар'], ['Лх', 'Лхагва'], ['Пү', 'Пүрэв'], ['Ба', 'Баасан'], ['Бя', 'Бямба'], ['Ня', 'Ням']];
+    const TIMES = Array.from({ length: 27 }, (_, i) => String(8 + Math.floor(i / 2)).padStart(2, '0') + (i % 2 ? ':30' : ':00')); // 08:00 … 21:00
+    const ROLE = { manager: 'Менежер', senior_manager: 'Ахлах менежер' };
+    const S = { at: 1, plan: new Map(), managers: [], branches: [], loaded: false };
+    const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const mins = t => Number(t.slice(0, 2)) * 60 + Number(t.slice(3));
+    const initials = n => String(n).split(/[\s.·-]+/).filter(w => /^\p{Lu}/u.test(w)).map(w => w[0]).join('').slice(0, 2) || String(n).trim().charAt(0).toUpperCase();
+    const branchName = id => S.branches.find(b => b.id === id)?.name || '';
+    const has = () => $('[name=has]:checked')?.value || '';
+    const manager = () => S.managers.find(m => m.id === $('[name=manager]:checked')?.value);
+    const branch = () => Number($('[name=branch]:checked')?.value) || null;
+    const course = () => $('[name=course]:checked');
+
+    // The manager and branch lists load once, on the first touch of the form; a failure can be retried.
+    let loading = null;
+    const load = () => loading || (loading = (async () => {
       const stop = new AbortController(), timer = setTimeout(() => stop.abort(), 15000);
-      const res = await rpc('submit_web_lead', { p_name: name.value.trim(), p_phone: phone.value, p_course: course.selectedOptions[0]?.textContent.trim() || '', p_time: form.elements.time.value }, stop.signal);
+      try {
+        const res = await rpc('web_registration_options', {}, stop.signal);
+        const data = res.ok ? await res.json() : null;
+        if (!Array.isArray(data?.managers) || !Array.isArray(data?.branches)) throw new Error('bad answer');
+        S.managers = data.managers; S.branches = data.branches; S.loaded = true;
+      } catch { S.loaded = false; }
       clearTimeout(timer);
-      ok = res.ok && (await res.json()) === true;
-    } catch { ok = false; }
-    sending = false; send.disabled = false; send.textContent = label;
-    if (ok) { send.hidden = true; done.hidden = false; done.focus(); }
-    else { fail.hidden = false; fail.focus(); }
-  });
+      if (!S.loaded) loading = null;
+      drawLists(); status();
+    })());
+    form.addEventListener('pointerdown', load, { once: true });
+    form.addEventListener('focusin', load, { once: true });
+
+    function drawLists() {
+      if (!S.loaded) return;
+      $('.acct-managers').innerHTML = S.managers.map(m => `<label class="acct-manager"><input type="radio" name="manager" value="${esc(m.id)}"><i aria-hidden="true">${esc(initials(m.name))}</i><span><strong>${esc(m.name)}</strong><small>${esc(ROLE[m.role] || ROLE.manager)} · ${esc(branchName(m.branch))}</small></span></label>`).join('');
+      $('[data-branches]').innerHTML = S.branches.map(b => `<label><input type="radio" name="branch" value="${esc(b.id)}">${esc(b.name)}</label>`).join('');
+      filter();
+    }
+    function status() {
+      const el = $('[data-status]'), waiting = has() && !S.loaded;
+      el.hidden = !waiting;
+      if (waiting) el.innerHTML = loading ? 'Жагсаалт ачаалж байна…' : 'Жагсаалт ачаалсангүй. <button class="acct-link" type="button" data-retry>Дахин оролдох</button>';
+    }
+    // Managers still named with a position placeholder are not listed (the server leaves them out), so the list can be
+    // empty: the visitor is then pointed to the branch choice instead of an empty search.
+    function filter() {
+      const none = S.loaded && !S.managers.length, q = form.elements.managerQuery.value.trim().toLocaleLowerCase('mn');
+      let shown = 0;
+      $$('.acct-manager').forEach(l => { const on = !q || l.textContent.toLocaleLowerCase('mn').includes(q); l.hidden = !on; shown += on; });
+      $('.acct-search').hidden = none;
+      const msg = $('[data-nomatch]');
+      msg.textContent = none ? 'Менежерүүдийн нэр жагсаалтад хараахан ороогүй байна. “Үгүй”-г сонгоод салбараа сонгоно уу.' : 'Ийм нэртэй менежер олдсонгүй.';
+      msg.hidden = !S.loaded || shown > 0;
+    }
+    form.elements.managerQuery.addEventListener('input', filter);
+    form.addEventListener('change', e => { if (['manager', 'branch', 'course'].includes(e.target.name)) say(''); });
+    $$('[name=has]').forEach(r => r.addEventListener('change', () => {
+      $$('[data-pick]').forEach(p => { p.hidden = p.dataset.pick !== has(); });
+      say('');
+      load().then(() => { if (has() === 'yes' && S.managers.length && matchMedia('(pointer: fine)').matches) form.elements.managerQuery.focus(); });
+      status();
+    }));
+
+    // Own weekly schedule: any days, own hours for each day.
+    $('.acct-days').innerHTML = DAYS.map(([s, l], i) => `<label title="${l}"><input type="checkbox" value="${i}" aria-label="${l}">${s}</label>`).join('');
+    const options = sel => TIMES.map(t => `<option${t === sel ? ' selected' : ''}>${t}</option>`).join('');
+    const ordered = () => [...S.plan.keys()].sort((a, b) => a - b);
+    function drawSlots() {
+      const days = ordered();
+      $('.acct-slots').innerHTML = days.map(d => { const p = S.plan.get(d); return `<div class="acct-slot${mins(p.to) <= mins(p.from) ? ' bad' : ''}" data-day="${d}"><strong>${DAYS[d][1]}</strong><select data-edge="from" aria-label="${DAYS[d][1]} эхлэх цаг">${options(p.from)}</select><span>–</span><select data-edge="to" aria-label="${DAYS[d][1]} дуусах цаг">${options(p.to)}</select></div>`; }).join('');
+      const total = days.reduce((n, d) => { const p = S.plan.get(d); return n + Math.max(0, mins(p.to) - mins(p.from)); }, 0);
+      const sum = $('[data-sum]'); sum.hidden = !days.length;
+      sum.innerHTML = `<span>7 хоногт <strong>${days.length} өдөр</strong></span><span>Нийт <strong>${Math.floor(total / 60)} цаг${total % 60 ? ' ' + (total % 60) + ' мин' : ''}</strong></span>`;
+      $('[data-same]').hidden = days.length < 2;
+    }
+    $('.acct-days').addEventListener('change', e => {
+      const d = Number(e.target.value), last = S.plan.get(ordered().at(-1));
+      if (e.target.checked) S.plan.set(d, { from: last?.from || '10:00', to: last?.to || '12:00' }); else S.plan.delete(d);
+      drawSlots(); say('');
+    });
+    $('.acct-slots').addEventListener('change', e => {
+      const row = e.target.closest('[data-day]'); if (!row) return;
+      S.plan.get(Number(row.dataset.day))[e.target.dataset.edge] = e.target.value;
+      drawSlots(); say('');
+    });
+    $('[data-same]').addEventListener('click', () => { const first = S.plan.get(ordered()[0]); ordered().forEach(d => S.plan.set(d, { ...first })); drawSlots(); say(''); });
+    const plan = () => ordered().map(d => ({ d, from: S.plan.get(d).from, to: S.plan.get(d).to }));
+    const planText = () => {
+      const days = ordered(), first = S.plan.get(days[0]);
+      const same = days.every(d => S.plan.get(d).from === first.from && S.plan.get(d).to === first.to);
+      return same ? `${days.map(d => DAYS[d][0]).join(', ')} · ${first.from}–${first.to}` : days.map(d => `${DAYS[d][0]} ${S.plan.get(d).from}–${S.plan.get(d).to}`).join(', ');
+    };
+    const managerText = () => { const m = manager(); return m ? `${m.name} · ${branchName(m.branch)}` : ''; };
+
+    // Steps.
+    const say = text => { const e = steps[S.at - 1].querySelector('.err'); e.textContent = text; e.hidden = !text; return !text; };
+    function show(n) {
+      S.at = n;
+      steps.forEach(s => { s.hidden = Number(s.dataset.step) !== n; });
+      marks.forEach((m, i) => { m.classList.toggle('on', i + 1 === n); m.classList.toggle('past', i + 1 < n); });
+      if (n === 4) {
+        const mine = has() === 'yes';
+        $('[data-sum-who]').textContent = mine ? 'Менежер' : 'Салбар';
+        $('[data-sum-manager]').textContent = mine ? managerText() : branchName(branch());
+        $('[data-sum-course]').textContent = course().dataset.name;
+        $('[data-sum-plan]').textContent = planText();
+      }
+      const h = steps[n - 1].querySelector('h3'); h.tabIndex = -1; h.focus({ preventScroll: true });
+      const top = form.getBoundingClientRect().top;
+      if (top < 80) scrollBy({ top: top - 80, behavior: reduced ? 'auto' : 'smooth' });
+    }
+    function check() {
+      if (S.at === 1) {
+        if (!has()) return say('Хариуцсан менежер байгаа эсэхээ сонгоно уу.');
+        if (!S.loaded) { load(); status(); return say('Жагсаалт ачаалагдаж дуусаагүй байна. Түр хүлээгээд дахин дарна уу.'); }
+        if (has() === 'yes') return manager() ? say('') : say(S.managers.length ? 'Менежерээ жагсаалтаас сонгоно уу.' : '“Үгүй”-г сонгоод салбараа сонгоно уу.');
+        return branch() ? say('') : say('Суралцах салбараа сонгоно уу.');
+      }
+      if (S.at === 2) return course() ? say('') : say('Сургалтаа сонгоно уу.');
+      if (S.at === 3) {
+        if (!S.plan.size) return say('Дор хаяж нэг өдөр сонгоно уу.');
+        return [...S.plan.values()].every(p => mins(p.to) > mins(p.from)) ? say('') : say('Дуусах цаг эхлэх цагаас хойш байх ёстой.');
+      }
+      return true;
+    }
+    form.addEventListener('click', e => {
+      if (e.target.closest('[data-retry]')) { load(); status(); }
+      else if (e.target.closest('[data-back]')) { say(''); fail.hidden = true; show(S.at - 1); }
+      else if (e.target.closest('[data-next]') && check()) show(S.at + 1);
+    });
+
+    // Send. Enter in the search box (or any earlier step) never sends. Spaces and dashes typed into the phone number
+    // drop out as they are typed, so "9911 2233" fits the 8-digit field.
+    form.elements.phone.addEventListener('input', e => { const v = e.target.value.replace(/\D/g, ''); if (v !== e.target.value) e.target.value = v; });
+    const send = $('button[type=submit]'), label = send.textContent;
+    let sending = false;
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (S.at !== 4 || sending) return;
+      const name = form.elements.name, phone = form.elements.phone;
+      fail.hidden = true;
+      phone.value = phone.value.replace(/\D/g, '');
+      [name, phone].forEach(f => f.removeAttribute('aria-invalid'));
+      const problems = [];
+      if (name.value.trim().length < 2) { problems.push('Нэрээ бичнэ үү.'); name.setAttribute('aria-invalid', 'true'); }
+      if (!/^[0-9]{8}$/.test(phone.value)) { problems.push('Утасны дугаар 8 оронтой байна.'); phone.setAttribute('aria-invalid', 'true'); }
+      say(problems.join(' '));
+      if (problems.length) { form.querySelector('[aria-invalid=true]')?.focus(); return; }
+      // A filled bot-trap field means a script, not a person: send nothing and claim nothing.
+      if (form.elements.website?.value) { fail.hidden = false; return; }
+      sending = true; send.disabled = true; send.textContent = 'Илгээж байна…';
+      let ok = false, reason = '';
+      try {
+        const stop = new AbortController(), timer = setTimeout(() => stop.abort(), 15000);
+        const res = await rpc('register_web', { p_name: name.value.trim(), p_phone: phone.value, p_course: course().dataset.name, p_manager: has() === 'yes' ? manager().id : null, p_branch: has() === 'yes' ? null : branch(), p_schedule: plan() }, stop.signal);
+        clearTimeout(timer);
+        ok = res.ok && (await res.json()) === true;
+        if (!res.ok) reason = String((await res.json().catch(() => null))?.message || '');
+      } catch { ok = false; }
+      sending = false; send.disabled = false; send.textContent = label;
+      if (ok) {
+        const mine = has() === 'yes';
+        $('[data-done-text]').textContent = mine ? 'Таны бүртгэл сонгосон менежерт тань шууд очлоо. Гэрээ, төлбөрийн нөхцөлөө тохирохоор тантай холбогдоно.' : 'Таны бүртгэл сонгосон салбарт очлоо. Тэр салбарын менежер тантай холбогдож гэрээ, төлбөрийн нөхцөлөө тохирно.';
+        $('[data-done-manager]').textContent = mine ? 'Хариуцах менежер: ' + managerText() : 'Салбар: ' + branchName(branch());
+        $('[data-done-course]').textContent = 'Сургалт: ' + course().dataset.name;
+        $('[data-done-plan]').textContent = 'Хуваарь: ' + planText();
+        steps.forEach(s => { s.hidden = true; });
+        marks.forEach(m => { m.classList.remove('on'); m.classList.add('past'); });
+        done.hidden = false; done.focus();
+      } else {
+        // The server's own Mongolian message (wrong phone, manager no longer listed…) when there is one.
+        $('[data-fail-text]').textContent = /[А-Яа-яӨөҮүЁё]/.test(reason) ? reason : 'Холболт тасарсан байж магадгүй. Дахин оролдох эсвэл доорх аль нэгээр холбогдоорой.';
+        fail.hidden = false; fail.focus();
+      }
+    });
+  }
 })();

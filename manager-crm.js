@@ -87,7 +87,8 @@
       if (eventType === 'DELETE') S.leads = S.leads.filter(l => l.id !== o.id);
       else {
         const i = S.leads.findIndex(l => l.id === n.id);
-        if (i < 0) { S.leads.unshift(n); if (n.source === 'web' && !n.owner_id) say('Вэб сайтаас шинэ хүсэлт: ' + n.name); }
+        // A website registration names its manager since 2026-11-21: that manager is told too, not only the branch.
+        if (i < 0) { S.leads.unshift(n); if (n.source === 'web' && (!n.owner_id || n.owner_id === S.me?.id)) say('Вэб сайтаас шинэ бүртгэл: ' + n.name); }
         else S.leads[i] = n;
       }
       badge(); if (!page.hidden && !dialog.open) render();
@@ -135,7 +136,7 @@
     const enrolled = scope.filter(l => l.status === 'enrolled');
     return `<div class="library-toolbar"><label class="library-search">${searchIcon}<input type="search" data-q placeholder="Нэр, утас, сургалтаар хайх…" aria-label="Харилцагч хайх" value="${esc(S.q)}"></label>${branches}</div>
       <div class="library-categories" role="group" aria-label="Шүүлт">${FILTERS.map(([k, label]) => `<button type="button" data-filter="${k}" aria-pressed="${S.filter === k}">${label} ${scope.filter(l => matches(l, k)).length}</button>`).join('')}</div>
-      <div class="library-results crm-results" aria-live="polite">${rows || `<div class="library-empty"><h2>${S.leads.length ? 'Тохирох харилцагч олдсонгүй' : 'Харилцагч бүртгэгдээгүй байна'}</h2><p>${S.leads.length ? 'Шүүлт эсвэл хайлтаа өөрчилж үзээрэй.' : 'Facebook, утас, вэб сайтаар холбогдсон хүмүүсийг “Харилцагч нэмэх” товчоор оруулна. Вэб сайтын бүртгэлийн хүсэлт энд автоматаар орж ирнэ.'}</p></div>`}</div>
+      <div class="library-results crm-results" aria-live="polite">${rows || `<div class="library-empty"><h2>${S.leads.length ? 'Тохирох харилцагч олдсонгүй' : 'Харилцагч бүртгэгдээгүй байна'}</h2><p>${S.leads.length ? 'Шүүлт эсвэл хайлтаа өөрчилж үзээрэй.' : 'Facebook, утас, вэб сайтаар холбогдсон хүмүүсийг “Харилцагч нэмэх” товчоор оруулна. Вэб сайтаар бүртгүүлсэн хүмүүс энд автоматаар орж ирнэ.'}</p></div>`}</div>
       <footer class="library-footer"><span>${scope.length} харилцагч · ${enrolled.length} элссэн${enrolled.length ? ' · ' + money(enrolled.reduce((n, l) => n + Number(l.amount || 0), 0)) : ''}</span><span>Шинэчлэгдэх бүрд автоматаар орж ирнэ</span></footer>`;
   }
   function wireList() {
@@ -313,9 +314,9 @@
     const rows = slugs.map(s => { const p = pages.get(s) || {}, name = WEB_PAGES[s] || s, x = byCourse.get(name) || {}; return { name, view: p.view || 0, register: p.register || 0, leads: x.leads || 0, enrolled: x.enrolled || 0 }; })
       .sort((a, b) => b.view - a.view || b.leads - a.leads || a.name.localeCompare(b.name, 'mn'));
     return `<section class="crm-card crm-web"><div class="crm-card-head"><h3>Вэб сайт</h3><span>бүх салбар · ${total('view')} үзэлт</span></div>
-      <div class="crm-table-wrap"><table class="crm-table"><thead><tr><th>Сургалтын хуудас</th><th>Үзсэн</th><th>Бүртгүүлэх дарсан</th><th>Хүсэлт</th><th>Элссэн</th></tr></thead>
+      <div class="crm-table-wrap"><table class="crm-table"><thead><tr><th>Сургалтын хуудас</th><th>Үзсэн</th><th>Бүртгүүлэх дарсан</th><th>Бүртгэл</th><th>Элссэн</th></tr></thead>
       <tbody>${rows.map(r => `<tr><td>${esc(r.name)}</td><td>${r.view}</td><td>${r.register}</td><td>${r.leads}</td><td>${r.enrolled}</td></tr>`).join('')}</tbody></table></div>
-      <p class="crm-web-note">Нүүр хуудас ${home.view || 0} удаа нээгдэж, ${home.register || 0} удаа “Бүртгүүлэх” дарсан. Бүх хуудаснаас ${total('call')} удаа залгах, ${total('messenger')} удаа Messenger товч дарсан. Хүсэлт нь тухайн сургалтыг сонгож вэбээр бүртгүүлсэн хүмүүс. Нэг цонхонд хуудсыг дахин нээх, сэргээх нь нэмж тоологдохгүй.</p>
+      <p class="crm-web-note">Нүүр хуудас ${home.view || 0} удаа нээгдэж, ${home.register || 0} удаа “Бүртгүүлэх” дарсан. Бүх хуудаснаас ${total('call')} удаа залгах, ${total('messenger')} удаа Messenger товч дарсан. Бүртгэл нь тухайн сургалтыг сонгож вэбээр бүртгүүлсэн хүмүүс. Нэг цонхонд хуудсыг дахин нээх, сэргээх нь нэмж тоологдохгүй.</p>
     </section>`;
   }
 

@@ -252,6 +252,78 @@ body.draft .s{text-decoration:underline dotted 2px;text-underline-offset:4px}
 .contacts li{display:flex;align-items:center;gap:8px}
 .contacts .i{width:16px;height:16px}
 .contacts a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
+/* Registration without a request step (owner request 2026-11-21): own manager or branch → course → own weekly
+   schedule → name and phone. Radio and checkbox inputs sit hidden inside their labels; the label shows the state. */
+.acct{gap:18px}
+.acct-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0 0 4px;padding:0;list-style:none}
+.acct-steps li{display:grid;gap:7px;color:var(--muted2);font-size:12px;font-weight:600;white-space:nowrap}
+.acct-steps li::before{content:"";display:block;height:4px;border-radius:99px;background:#e8e8ed}
+.acct-steps li:is(.on,.past){color:var(--ink)}
+.acct-steps li:is(.on,.past)::before{background:var(--ink)}
+.acct-step{display:grid;gap:14px}
+.acct-step h3{margin:0;font-size:22px;font-weight:600;letter-spacing:-.03em;outline:none}
+.acct-step>h3+p{margin-top:-6px;color:var(--muted);font-size:14px;line-height:1.55}
+.acct input:is([type=radio],[type=checkbox]){position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.acct label:has(input:is([type=radio],[type=checkbox]):focus-visible){box-shadow:0 0 0 3px rgba(29,29,31,.2)}
+.acct-seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.acct-seg.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.acct .acct-seg label{position:relative;display:grid;place-items:center;min-height:48px;padding:10px 8px;border:1px solid #d2d2d7;border-radius:12px;line-height:1.25;text-align:center;font-size:14px;font-weight:500;cursor:pointer}
+.acct .acct-seg label:has(input:checked){border-color:var(--ink);background:var(--ink);color:#fff}
+.acct-legend{margin-bottom:-4px;font-size:13px;font-weight:600}
+.acct-pick{display:grid;gap:10px}
+.acct .acct-search{display:flex;align-items:center;gap:8px;min-height:48px;padding:0 14px;border:1px solid #d2d2d7;border-radius:12px;background:#fff}
+.acct .acct-search:focus-within{border-color:var(--ink);box-shadow:0 0 0 3px rgba(29,29,31,.12)}
+.acct-search svg{flex:none;width:16px;height:16px;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round}
+.acct .acct-search input,.acct .acct-search input:focus{flex:1;min-width:0;height:46px;padding:0;border:0;background:none;box-shadow:none;font-size:15px}
+.acct-managers{display:grid;gap:8px;max-height:252px;overflow-y:auto;padding:2px}
+.acct-managers:empty{display:none}
+.acct .acct-manager{position:relative;display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid #d2d2d7;border-radius:14px;background:#fff;cursor:pointer}
+.acct-manager i{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:50%;background:#eeeef1;color:var(--ink);font-size:13px;font-style:normal;font-weight:600}
+.acct-manager strong{display:block;font-size:15px;font-weight:600}
+.acct-manager small{display:block;color:var(--muted);font-size:12px;font-weight:400}
+.acct .acct-manager:has(input:checked){border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.acct-manager:has(input:checked) i{background:var(--ink);color:#fff}
+.acct-empty{padding:2px 4px;color:var(--muted);font-size:13px}
+.acct-courses{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.acct .acct-course{position:relative;display:grid;gap:4px;padding:14px 16px;border:1px solid #d2d2d7;border-radius:14px;background:#fff;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.acct-course strong{font-size:15px;font-weight:600}
+.acct-course span{color:var(--muted);font-size:12px;font-weight:400}
+.acct .acct-course:has(input:checked){border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.acct-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.acct .acct-days label{position:relative;display:grid;place-items:center;min-height:46px;border:1px solid #d2d2d7;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer}
+.acct .acct-days label:has(input:checked){border-color:var(--ink);background:var(--ink);color:#fff}
+.acct-slots{display:grid;gap:8px}
+.acct-slots:empty{display:none}
+.acct-slot{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;align-items:center;gap:8px;padding:8px 8px 8px 14px;border-radius:14px;background:var(--bg)}
+.acct-slot strong{font-size:14px;font-weight:600}
+.acct-slot span{color:var(--muted)}
+.acct .acct-slot select{width:auto;height:40px;padding:0 10px;border-radius:10px;font-size:14px}
+.acct .acct-slot.bad select{border-color:var(--ink);box-shadow:0 0 0 3px rgba(29,29,31,.2)}
+.acct-sum{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px}
+.acct-sum strong{color:var(--ink);font-weight:600}
+.acct-link{justify-self:center;padding:4px;border:0;background:none;color:var(--muted);font-size:13px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.acct-link:hover{color:var(--ink)}
+.acct-summary{display:grid;gap:8px;padding:14px 16px;border-radius:14px;background:var(--bg)}
+.acct-summary div{display:grid;grid-template-columns:76px minmax(0,1fr);gap:12px;font-size:13px;line-height:1.45}
+.acct-summary dt{color:var(--muted)}
+.acct-summary dd{font-weight:500}
+.acct-row{display:flex;gap:10px}
+.acct-row .btn{flex:1;min-height:48px;font-size:15px}
+.acct-row .btn:disabled{opacity:.6;cursor:progress}
+.acct-next{display:grid;gap:8px;list-style:none}
+.acct-next li{display:flex;align-items:flex-start;gap:10px;color:var(--ink);font-size:14px;line-height:1.45}
+.acct-next li::before{content:"";flex:none;width:18px;height:18px;margin-top:1px;border-radius:50%;background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 12.5 4 4 8-9'/%3E%3C/svg%3E") center/12px no-repeat}
+@media (max-width:560px){
+ .acct-courses{grid-template-columns:minmax(0,1fr)}
+ /* four labels do not fit on a phone: every bar stays, only the current step is named */
+ .acct-steps li{font-size:0}
+ .acct-steps li.on{font-size:11px}
+ .acct-row{flex-direction:column-reverse}
+ .acct-days{gap:4px}
+ .acct .acct-days label{min-height:42px;font-size:13px}
+ .acct-slot{gap:6px;padding-left:12px}
+ .acct .acct-slot select{padding:0 6px}
+}
 
 /* ---------- course page ---------- */
 .hero-course{height:clamp(560px,80svh,740px)}

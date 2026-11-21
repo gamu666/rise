@@ -12,8 +12,8 @@
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="../assets/favicon.svg">
 <link rel="preload" as="image" href="../assets/photos/course-dump-truck-800.jpg" imagesrcset="../assets/photos/course-dump-truck-800.jpg 800w, ../assets/photos/course-dump-truck-1600.jpg 1600w" imagesizes="100vw" fetchpriority="high">
-<link rel="stylesheet" href="../site.css?v=site14">
-<script defer src="../site.js?v=site14"></script>
+<link rel="stylesheet" href="../site.css?v=site15">
+<script defer src="../site.js?v=site15"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalOrganization","name":"THE RISE мэргэжил сургалтын төв","telephone":"7772 1170","address":"Peace Tower, 15 давхар, 1501 тоот, Улаанбаатар","sameAs":["https://www.facebook.com/EDURISE.MN","https://www.instagram.com/the.rise.official"]}</script>
 </head>
 <body class="course heavy" data-page="damp">
@@ -75,27 +75,63 @@
 
  <section class="callout" id="burtguuleh" data-theme="dark" aria-labelledby="enroll-title">
  <div class="callout-copy" data-reveal>
-  <p class="eyebrow">THE RISE-тэй холбогдох</p>
+  <p class="eyebrow">THE RISE-д бүртгүүлэх</p>
   <h2 id="enroll-title" aria-label="Ирээдүйгээ өнөөдрөөс бүтээ."><span aria-hidden="true"><span class="w"><span class="wi" style="--i:0">Ирээдүйгээ</span></span> <span class="w"><span class="wi" style="--i:1">өнөөдрөөс</span></span> <span class="w"><span class="wi" style="--i:2">бүтээ.</span></span></span></h2>
-  <p class="lead">Нэр, утсаа үлдээгээд хуваарь, төлбөрийн нөхцөлөө менежертэй тохирно.</p>
+  <p class="lead">Хариуцах менежер, сургалт, хуваариа өөрөө сонгоод шууд бүртгүүлээрэй.</p>
  </div>
- <form class="leadform" id="lead-form" novalidate data-reveal>
- <h3>Бүртгүүлэх хүсэлт</h3>
- <label>Овог, нэр<input name="name" autocomplete="name" required maxlength="60" placeholder="Таны нэр"></label>
- <label>Утасны дугаар<input name="phone" type="tel" inputmode="numeric" autocomplete="tel" required pattern="[0-9]{8}" maxlength="8" placeholder="8 оронтой дугаар"></label>
- <div class="two"><label>Сургалт<select name="course" required><optgroup label="Хүнд машин механизм"><option value="ekskavator">Экскаватор оператор</option><option value="damp" selected>Дамп оператор</option><option value="kovsh">Ковш оператор</option></optgroup><optgroup label="Гоо сайхан"><option value="manikyur">Маникюр</option><option value="sormuus">Сормуус</option></optgroup></select></label>
- <label>Цаг<select name="time"><option>Өдөр</option><option>Орой</option><option>Амралтын өдөр</option></select></label></div>
- <label class="hp" aria-hidden="true">Вэб хуудас<input name="website" tabindex="-1" autocomplete="off"></label>
- <p class="err" role="alert" hidden></p>
- <button class="btn" type="submit">Хүсэлт илгээх</button>
+ <form class="leadform acct" id="lead-form" novalidate data-reveal>
+ <ol class="acct-steps" aria-hidden="true"><li class="on">Менежер</li><li>Сургалт</li><li>Хуваарь</li><li>Холбоо барих</li></ol>
+ <div class="acct-step" data-step="1">
+  <h3>Таныг хариуцсан менежер байгаа юу?</h3>
+  <p>Танд зөвлөсөн менежер байвал шууд сонгоорой. Байхгүй бол салбараа сонгоход тэр салбарын менежер хариуцна.</p>
+  <div class="acct-seg" role="radiogroup" aria-label="Хариуцсан менежер"><label><input type="radio" name="has" value="yes">Тийм, байгаа</label><label><input type="radio" name="has" value="no">Үгүй</label></div>
+  <div class="acct-pick" data-pick="yes" hidden>
+   <label class="acct-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><input type="search" name="managerQuery" placeholder="Менежерийн нэрээр хайх" aria-label="Менежер хайх" autocomplete="off" enterkeyhint="search"></label>
+   <div class="acct-managers" role="radiogroup" aria-label="Менежерүүд"></div>
+   <p class="acct-empty" data-nomatch hidden>Ийм нэртэй менежер олдсонгүй.</p>
+  </div>
+  <div class="acct-pick" data-pick="no" hidden>
+   <p class="acct-legend">Аль салбарт суралцах вэ?</p>
+   <div class="acct-seg three" role="radiogroup" aria-label="Салбар" data-branches></div>
+  </div>
+  <p class="acct-empty" data-status role="status" hidden></p>
+  <p class="err" role="alert" hidden></p>
+  <div class="acct-row"><button class="btn" type="button" data-next>Үргэлжлүүлэх</button></div>
+ </div>
+ <div class="acct-step" data-step="2" hidden>
+  <h3>Сургалтаа сонгоно уу</h3>
+  <div class="acct-courses" role="radiogroup" aria-label="Сургалт"><label class="acct-course"><input type="radio" name="course" value="ekskavator" data-name="Экскаватор оператор"><strong>Экскаватор оператор</strong><span>Хүнд машин механизм</span></label><label class="acct-course"><input type="radio" name="course" value="damp" data-name="Дамп оператор" checked><strong>Дамп оператор</strong><span>Хүнд машин механизм</span></label><label class="acct-course"><input type="radio" name="course" value="kovsh" data-name="Ковш оператор"><strong>Ковш оператор</strong><span>Хүнд машин механизм</span></label><label class="acct-course"><input type="radio" name="course" value="manikyur" data-name="Маникюр"><strong>Маникюр</strong><span>Гоо сайхан</span></label><label class="acct-course"><input type="radio" name="course" value="sormuus" data-name="Сормуус"><strong>Сормуус</strong><span>Гоо сайхан</span></label></div>
+  <p class="err" role="alert" hidden></p>
+  <div class="acct-row"><button class="btn outline" type="button" data-back>Буцах</button><button class="btn" type="button" data-next>Үргэлжлүүлэх</button></div>
+ </div>
+ <div class="acct-step" data-step="3" hidden>
+  <h3>Өөрийн хуваариа гаргана уу</h3>
+  <p>Суралцах өдрүүдээ сонгоод өдөр бүрийн цагаа өөрөө тохируулна.</p>
+  <div class="acct-days" role="group" aria-label="Суралцах өдрүүд"></div>
+  <div class="acct-slots"></div>
+  <p class="acct-sum" data-sum hidden></p>
+  <button class="acct-link" type="button" data-same hidden>Эхний өдрийн цагийг бүх өдөрт хэрэглэх</button>
+  <p class="err" role="alert" hidden></p>
+  <div class="acct-row"><button class="btn outline" type="button" data-back>Буцах</button><button class="btn" type="button" data-next>Үргэлжлүүлэх</button></div>
+ </div>
+ <div class="acct-step" data-step="4" hidden>
+  <h3>Холбоо барих мэдээлэл</h3>
+  <dl class="acct-summary"><div><dt data-sum-who>Менежер</dt><dd data-sum-manager></dd></div><div><dt>Сургалт</dt><dd data-sum-course></dd></div><div><dt>Хуваарь</dt><dd data-sum-plan></dd></div></dl>
+  <label>Овог, нэр<input name="name" autocomplete="name" required maxlength="60" placeholder="Таны нэр"></label>
+  <label>Утасны дугаар<input name="phone" type="tel" inputmode="numeric" autocomplete="tel" required pattern="[0-9]{8}" maxlength="12" placeholder="8 оронтой дугаар"></label>
+  <label class="hp" aria-hidden="true">Вэб хуудас<input name="website" tabindex="-1" autocomplete="off"></label>
+  <p class="err" role="alert" hidden></p>
+  <div class="acct-row"><button class="btn outline" type="button" data-back>Буцах</button><button class="btn" type="submit">Бүртгүүлэх</button></div>
+ </div>
  <div class="done" hidden tabindex="-1">
-  <strong><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Хүсэлт тань хүлээн авлаа</strong>
-  <p>Манай менежер тантай удахгүй холбогдоно. Яаралтай бол шууд залгаарай.</p>
+  <strong><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Бүртгэгдлээ</strong>
+  <p data-done-text></p>
+  <ul class="acct-next"><li data-done-manager></li><li data-done-course></li><li data-done-plan></li></ul>
   <div class="actions start"><a class="btn" href="tel:77721170"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Залгах</a><a class="btn outline" href="https://m.me/EDURISE.MN" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>Messenger</a></div>
  </div>
  <div class="done fail" hidden tabindex="-1">
-  <strong>Хүсэлт илгээгдсэнгүй</strong>
-  <p>Холболт тасарсан байж магадгүй. Дахин илгээх эсвэл доорх аль нэгээр холбогдоорой.</p>
+  <strong>Бүртгэл илгээгдсэнгүй</strong>
+  <p data-fail-text>Холболт тасарсан байж магадгүй. Дахин оролдох эсвэл доорх аль нэгээр холбогдоорой.</p>
   <div class="actions start"><a class="btn" href="tel:77721170"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Залгах</a><a class="btn outline" href="https://m.me/EDURISE.MN" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>Messenger</a></div>
  </div>
  <p class="fine">Аль хэдийн суралцаж байгаа бол <a href="../staff.html#student">сурагчийн самбартаа нэвтэрнэ үү</a>.</p>

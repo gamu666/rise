@@ -7,7 +7,7 @@
 const fs = require('fs'), path = require('path');
 const root = path.join(__dirname, '..');
 const C = require(path.join(root, 'site-src', 'content.cjs'));
-const VERSION = 'site14';
+const VERSION = 'site15';
 
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const money = n => new Intl.NumberFormat('en-US').format(n) + '₮';
@@ -143,26 +143,68 @@ function helpTile() {
 </article>`;
 }
 
+// Registration without a request step (owner request 2026-11-21): the visitor answers whether a manager already
+// looks after them and picks that manager (or a branch), picks the course, builds their own weekly schedule and leaves a
+// name and phone number. site.js fills the manager and branch lists from Supabase (web_registration_options) and sends
+// the result to register_web, which puts the lead straight into the chosen manager's CRM list. e-Mongolia verification
+// and the online contract join these steps once they are connected; until then nothing on the page imitates them.
 function form(rel, selected) {
-  const opts = C.tracks.map(t => `<optgroup label="${esc(t.full)}">` + C.courses.filter(c => c.track === t.id).map(c => `<option value="${c.slug}"${c.slug === selected ? ' selected' : ''}>${esc(c.name)}</option>`).join('') + '</optgroup>').join('');
-  return `<form class="leadform" id="lead-form" novalidate data-reveal>
- <h3>Бүртгүүлэх хүсэлт</h3>
- <label>Овог, нэр<input name="name" autocomplete="name" required maxlength="60" placeholder="Таны нэр"></label>
- <label>Утасны дугаар<input name="phone" type="tel" inputmode="numeric" autocomplete="tel" required pattern="[0-9]{8}" maxlength="8" placeholder="8 оронтой дугаар"></label>
- <div class="two"><label>Сургалт<select name="course" required>${selected ? '' : '<option value="" selected disabled>Сонгоно уу</option>'}${opts}</select></label>
- <label>Цаг<select name="time"><option>Өдөр</option><option>Орой</option><option>Амралтын өдөр</option></select></label></div>
- <label class="hp" aria-hidden="true">Вэб хуудас<input name="website" tabindex="-1" autocomplete="off"></label>
- <p class="err" role="alert" hidden></p>
- <button class="btn" type="submit">Хүсэлт илгээх</button>
+  const courses = C.tracks.map(t => C.courses.filter(c => c.track === t.id).map(c => `<label class="acct-course"><input type="radio" name="course" value="${c.slug}" data-name="${esc(c.name)}"${c.slug === selected ? ' checked' : ''}><strong>${esc(c.name)}</strong><span>${esc(t.full)}</span></label>`).join('')).join('');
+  const contact = `<div class="actions start"><a class="btn" href="tel:${C.org.tel}">${icon('phone')}Залгах</a><a class="btn outline" href="${C.org.messenger}" target="_blank" rel="noopener">${icon('msg')}Messenger</a></div>`;
+  return `<form class="leadform acct" id="lead-form" novalidate data-reveal>
+ <ol class="acct-steps" aria-hidden="true"><li class="on">Менежер</li><li>Сургалт</li><li>Хуваарь</li><li>Холбоо барих</li></ol>
+ <div class="acct-step" data-step="1">
+  <h3>Таныг хариуцсан менежер байгаа юу?</h3>
+  <p>Танд зөвлөсөн менежер байвал шууд сонгоорой. Байхгүй бол салбараа сонгоход тэр салбарын менежер хариуцна.</p>
+  <div class="acct-seg" role="radiogroup" aria-label="Хариуцсан менежер"><label><input type="radio" name="has" value="yes">Тийм, байгаа</label><label><input type="radio" name="has" value="no">Үгүй</label></div>
+  <div class="acct-pick" data-pick="yes" hidden>
+   <label class="acct-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><input type="search" name="managerQuery" placeholder="Менежерийн нэрээр хайх" aria-label="Менежер хайх" autocomplete="off" enterkeyhint="search"></label>
+   <div class="acct-managers" role="radiogroup" aria-label="Менежерүүд"></div>
+   <p class="acct-empty" data-nomatch hidden>Ийм нэртэй менежер олдсонгүй.</p>
+  </div>
+  <div class="acct-pick" data-pick="no" hidden>
+   <p class="acct-legend">Аль салбарт суралцах вэ?</p>
+   <div class="acct-seg three" role="radiogroup" aria-label="Салбар" data-branches></div>
+  </div>
+  <p class="acct-empty" data-status role="status" hidden></p>
+  <p class="err" role="alert" hidden></p>
+  <div class="acct-row"><button class="btn" type="button" data-next>Үргэлжлүүлэх</button></div>
+ </div>
+ <div class="acct-step" data-step="2" hidden>
+  <h3>Сургалтаа сонгоно уу</h3>
+  <div class="acct-courses" role="radiogroup" aria-label="Сургалт">${courses}</div>
+  <p class="err" role="alert" hidden></p>
+  <div class="acct-row"><button class="btn outline" type="button" data-back>Буцах</button><button class="btn" type="button" data-next>Үргэлжлүүлэх</button></div>
+ </div>
+ <div class="acct-step" data-step="3" hidden>
+  <h3>Өөрийн хуваариа гаргана уу</h3>
+  <p>Суралцах өдрүүдээ сонгоод өдөр бүрийн цагаа өөрөө тохируулна.</p>
+  <div class="acct-days" role="group" aria-label="Суралцах өдрүүд"></div>
+  <div class="acct-slots"></div>
+  <p class="acct-sum" data-sum hidden></p>
+  <button class="acct-link" type="button" data-same hidden>Эхний өдрийн цагийг бүх өдөрт хэрэглэх</button>
+  <p class="err" role="alert" hidden></p>
+  <div class="acct-row"><button class="btn outline" type="button" data-back>Буцах</button><button class="btn" type="button" data-next>Үргэлжлүүлэх</button></div>
+ </div>
+ <div class="acct-step" data-step="4" hidden>
+  <h3>Холбоо барих мэдээлэл</h3>
+  <dl class="acct-summary"><div><dt data-sum-who>Менежер</dt><dd data-sum-manager></dd></div><div><dt>Сургалт</dt><dd data-sum-course></dd></div><div><dt>Хуваарь</dt><dd data-sum-plan></dd></div></dl>
+  <label>Овог, нэр<input name="name" autocomplete="name" required maxlength="60" placeholder="Таны нэр"></label>
+  <label>Утасны дугаар<input name="phone" type="tel" inputmode="numeric" autocomplete="tel" required pattern="[0-9]{8}" maxlength="12" placeholder="8 оронтой дугаар"></label>
+  <label class="hp" aria-hidden="true">Вэб хуудас<input name="website" tabindex="-1" autocomplete="off"></label>
+  <p class="err" role="alert" hidden></p>
+  <div class="acct-row"><button class="btn outline" type="button" data-back>Буцах</button><button class="btn" type="submit">Бүртгүүлэх</button></div>
+ </div>
  <div class="done" hidden tabindex="-1">
-  <strong>${icon('check')}Хүсэлт тань хүлээн авлаа</strong>
-  <p>Манай менежер тантай удахгүй холбогдоно. Яаралтай бол шууд залгаарай.</p>
-  <div class="actions start"><a class="btn" href="tel:${C.org.tel}">${icon('phone')}Залгах</a><a class="btn outline" href="${C.org.messenger}" target="_blank" rel="noopener">${icon('msg')}Messenger</a></div>
+  <strong>${icon('check')}Бүртгэгдлээ</strong>
+  <p data-done-text></p>
+  <ul class="acct-next"><li data-done-manager></li><li data-done-course></li><li data-done-plan></li></ul>
+  ${contact}
  </div>
  <div class="done fail" hidden tabindex="-1">
-  <strong>Хүсэлт илгээгдсэнгүй</strong>
-  <p>Холболт тасарсан байж магадгүй. Дахин илгээх эсвэл доорх аль нэгээр холбогдоорой.</p>
-  <div class="actions start"><a class="btn" href="tel:${C.org.tel}">${icon('phone')}Залгах</a><a class="btn outline" href="${C.org.messenger}" target="_blank" rel="noopener">${icon('msg')}Messenger</a></div>
+  <strong>Бүртгэл илгээгдсэнгүй</strong>
+  <p data-fail-text>Холболт тасарсан байж магадгүй. Дахин оролдох эсвэл доорх аль нэгээр холбогдоорой.</p>
+  ${contact}
  </div>
  <p class="fine">Аль хэдийн суралцаж байгаа бол <a href="${rel}staff.html#student">сурагчийн самбартаа нэвтэрнэ үү</a>.</p>
 </form>`;
@@ -182,9 +224,9 @@ function faqSection(cls) {
 function callout(rel, selected) {
   return `<section class="callout" id="burtguuleh" data-theme="dark" aria-labelledby="enroll-title">
  <div class="callout-copy" data-reveal>
-  <p class="eyebrow">THE RISE-тэй холбогдох</p>
+  <p class="eyebrow">THE RISE-д бүртгүүлэх</p>
   ${H('h2', 'enroll-title', 'Ирээдүйгээ өнөөдрөөс бүтээ.')}
-  <p class="lead">Нэр, утсаа үлдээгээд хуваарь, төлбөрийн нөхцөлөө менежертэй тохирно.</p>
+  <p class="lead">Хариуцах менежер, сургалт, хуваариа өөрөө сонгоод шууд бүртгүүлээрэй.</p>
  </div>
  ${form(rel, selected)}
  <ul class="contacts"><li>${icon('phone')}<a href="tel:${C.org.tel}">${C.org.phone}</a></li><li>${icon('msg')}<a href="${C.org.messenger}" target="_blank" rel="noopener">Messenger</a></li><li>${icon('pin')}<span>${esc(C.org.address)}</span></li></ul>

@@ -171,6 +171,32 @@ begin
   exception when others then insert into qa values (default, 'manager cannot read website stats', true, sqlerrm); end;
   reset role;
 
+  -- attendance: people punch with the server clock, see their own day, leaders see their branch, the general
+  -- director sees everyone but cannot punch; nobody writes the table directly
+  perform public.qa_act('s1.menejer1');
+  perform public.punch('in'); perform public.punch('in');
+  select count(*) into n from public.attendance where user_id = m1 and day = ub and check_in is not null and branch_id = 1;
+  insert into qa values (default, 'manager punch in (twice = one row)', n = 1, n::text);
+  perform public.punch('out');
+  select count(*) into n from public.attendance where user_id = m1 and day = ub and check_out >= check_in;
+  insert into qa values (default, 'manager punch out', n = 1, n::text);
+  begin update public.attendance set check_in = now() - interval '5 hours' where user_id = m1; insert into qa values (default, 'attendance not editable', false, 'updated');
+  exception when others then insert into qa values (default, 'attendance not editable', true, sqlerrm); end;
+  perform public.qa_act('s1.menejer2');
+  begin perform public.punch('out'); insert into qa values (default, 'out before in blocked', false, 'allowed');
+  exception when others then insert into qa values (default, 'out before in blocked', true, sqlerrm); end;
+  select count(*) into n from public.attendance where user_id = m1;
+  insert into qa values (default, 'colleague cannot see attendance', n = 0, n::text);
+  perform public.qa_act('s2.ahlah'); select count(*) into n from public.attendance where user_id = m1;
+  insert into qa values (default, 'other branch cannot see attendance', n = 0, n::text);
+  perform public.qa_act('s1.ahlah'); select count(*) into n from public.attendance where user_id = m1;
+  insert into qa values (default, 'branch senior sees attendance', n = 1, n::text);
+  perform public.qa_act('zahiral'); select count(*) into n from public.attendance where user_id = m1;
+  insert into qa values (default, 'GD sees attendance', n = 1, n::text);
+  begin perform public.punch('in'); insert into qa values (default, 'GD cannot punch', false, 'allowed');
+  exception when others then insert into qa values (default, 'GD cannot punch', true, sqlerrm); end;
+  reset role;
+
   -- sign-in records are well-formed (NULL token columns break GoTrue sign-in)
   select count(*) into n from auth.users where email like '%@therise.invalid'
     and confirmation_token = '' and recovery_token = '' and email_change = '' and email_change_token_new = '' and email_confirmed_at is not null;

@@ -133,9 +133,12 @@
 
   // Interest counter for the staff CRM (Вэб сайт card): a page view once per tab, and clicks on Бүртгүүлэх, phone and
   // Messenger, counted per page (home or the course slug in body[data-page]). Only "+1 for this page and event today"
-  // is sent: no cookie, no visitor id, nothing about the person.
+  // is sent: no cookie, no visitor id, nothing about the person. Staff devices (signed in now, or ever signed in on
+  // staff.html, which sets rise-notrack) and automated browsers are not counted, so the numbers are real visitors.
   const page = document.body.dataset.page || 'home';
-  const track = event => { if (!navigator.webdriver) rpc('track_web', { p_event: event, p_page: page }).catch(() => {}); };
+  let quiet = !!navigator.webdriver;
+  try { quiet = quiet || !!localStorage.getItem('rise-notrack') || !!localStorage.getItem('rise-auth'); } catch { /* storage blocked: count */ }
+  const track = event => { if (!quiet) rpc('track_web', { p_event: event, p_page: page }).catch(() => {}); };
   let seen = false;
   try { seen = sessionStorage.getItem('rise-seen-' + page) === '1'; sessionStorage.setItem('rise-seen-' + page, '1'); } catch { /* storage blocked: count the view */ }
   if (!seen) track('view');

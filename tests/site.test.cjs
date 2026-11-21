@@ -56,15 +56,23 @@ assert.ok(/'sb_publishable_\w+'/.test(js) && !/sb_secret_|service_role/.test(js)
 assert.ok(/ok = res\.ok && \(await res\.json\(\)\) === true;/.test(js), 'success requires the server to answer true');
 assert.ok(/if \(ok\) \{[^}]*done\.hidden = false[^}]*\}\s*else \{[^}]*fail\.hidden = false/.test(js), 'received only when ok, otherwise contact options');
 // Registration without a request step (owner request 2026-11-21): own manager or branch → course → own schedule →
-// name and phone. No "хүсэлт" wording in the form, nothing imitates e-Mongolia / GSign (not connected yet), the
-// lead goes to register_web with the chosen manager and schedule, and "Бүртгэгдлээ" appears only after true.
+// e-Mongolia → contact → contract. No "хүсэлт" wording in the form; e-Mongolia's step says exactly which 3 data
+// are taken; e-Mongolia / GSign buttons stay disabled ("Удахгүй") next to "Алгасах" because they are not connected,
+// and nothing claims a verification or a signature; the lead goes to register_web with the chosen manager and
+// schedule, and "Бүртгэгдлээ" appears only after true.
 for (const html of pages) {
   const f = /<form class="leadform acct" id="lead-form"[\s\S]*?<\/form>/.exec(html);
   assert.ok(f, 'every page has the step form');
+  assert.equal((f[0].match(/class="acct-step"/g) || []).length, 6, 'six steps');
   assert.ok(f[0].includes('Таныг хариуцсан менежер байгаа юу?') && f[0].includes('name="has" value="yes"') && f[0].includes('name="has" value="no"'), 'starts with the own-manager question');
   assert.ok(f[0].includes('class="acct-days"') && f[0].includes('data-branches') && f[0].includes('class="acct-managers"'), 'own schedule, branch and manager pickers');
   assert.ok(!/хүсэлт/i.test(visible(f[0])), 'no request wording in the form');
-  assert.ok(!/e-Mongolia|GSign|Данс нээгдлээ|гарын үсэг/i.test(visible(html)), 'no imitation of verification or signing on the live page');
+  assert.ok(f[0].includes('зөвхөн дараах 3 мэдээллийг авна') && ['Регистрийн дугаар', 'Овог, нэр', 'Иргэний бүртгэлийн зураг'].every(x => f[0].includes(x)) && f[0].includes('Үүнээс өөр мэдээлэл авахгүй.'), 'says exactly which data e-Mongolia hands over');
+  const providers = f[0].match(/<button class="btn( outline)? acct-provider"[^>]*>[\s\S]*?<\/button>/g) || [];
+  assert.equal(providers.length, 3, 'e-Mongolia verify, e-Mongolia sign and GSign sign buttons');
+  assert.ok(providers.every(b => / disabled aria-disabled="true"/.test(b) && b.includes('Удахгүй')), 'not connected yet: every provider button is disabled and marked Удахгүй');
+  assert.ok(f[0].includes('data-next>Алгасах</button>') && f[0].includes('type="submit">Алгасаад бүртгүүлэх</button>'), 'verification and signing can be skipped');
+  assert.ok(!/Баталгаажсан|Данс нээгдлээ|гарын үсэг зурсан|-аар зурсан/i.test(visible(html)), 'nothing claims a verification or a signature');
 }
 const reg = js.slice(js.indexOf('function registration('));
 assert.ok(/rpc\('web_registration_options', \{\}, stop\.signal\)/.test(reg), 'manager list comes from Supabase, never a hard-coded roster');

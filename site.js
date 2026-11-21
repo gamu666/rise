@@ -126,9 +126,27 @@
     });
   }
 
+  // Supabase public functions: the publishable key may call only submit_web_lead and track_web.
+  const API = 'https://lwgxvtkhetkelmihaynt.supabase.co/rest/v1/rpc/';
+  const KEY = 'sb_publishable_S6UNtZDweK06zFymdMexYQ_s59ljSXH';
+  const rpc = (fn, args, signal) => fetch(API + fn, { method: 'POST', signal, headers: { apikey: KEY, 'Content-Type': 'application/json' }, body: JSON.stringify(args) });
+
+  // Interest counter for the staff CRM (Вэб сайт card): a page view once per tab, and clicks on Бүртгүүлэх, phone and
+  // Messenger, counted per page (home or the course slug in body[data-page]). Only "+1 for this page and event today"
+  // is sent: no cookie, no visitor id, nothing about the person.
+  const page = document.body.dataset.page || 'home';
+  const track = event => { if (!navigator.webdriver) rpc('track_web', { p_event: event, p_page: page }).catch(() => {}); };
+  let seen = false;
+  try { seen = sessionStorage.getItem('rise-seen-' + page) === '1'; sessionStorage.setItem('rise-seen-' + page, '1'); } catch { /* storage blocked: count the view */ }
+  if (!seen) track('view');
+  document.addEventListener('click', e => {
+    const href = e.target.closest?.('a[href]')?.getAttribute('href') || '';
+    if (href.startsWith('tel:')) track('call');
+    else if (/^https:\/\/m\.me\//.test(href)) track('messenger');
+    else if (/#burtguuleh$/.test(href)) track('register');
+  }, true);
+
   // Registration form.
-  const LEAD_URL = 'https://lwgxvtkhetkelmihaynt.supabase.co/rest/v1/rpc/submit_web_lead';
-  const LEAD_KEY = 'sb_publishable_S6UNtZDweK06zFymdMexYQ_s59ljSXH';
   const form = document.querySelector('#lead-form');
   if (!form) return;
   // A page cached from before site13 has a single .done block (it asks the visitor to call) and no bot-trap field;
@@ -155,11 +173,7 @@
     let ok = false;
     try {
       const stop = new AbortController(), timer = setTimeout(() => stop.abort(), 15000);
-      const res = await fetch(LEAD_URL, {
-        method: 'POST', signal: stop.signal,
-        headers: { apikey: LEAD_KEY, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ p_name: name.value.trim(), p_phone: phone.value, p_course: course.selectedOptions[0]?.textContent.trim() || '', p_time: form.elements.time.value })
-      });
+      const res = await rpc('submit_web_lead', { p_name: name.value.trim(), p_phone: phone.value, p_course: course.selectedOptions[0]?.textContent.trim() || '', p_time: form.elements.time.value }, stop.signal);
       clearTimeout(timer);
       ok = res.ok && (await res.json()) === true;
     } catch { ok = false; }

@@ -15,6 +15,7 @@
   const clock = iso => new Intl.DateTimeFormat('en-GB', { timeZone: ZONE, hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date(iso));
   const fmtDay = d => { const t = today(); if (d === t) return 'Өнөөдөр'; if (d === addDays(t, -1)) return 'Өчигдөр'; const [y, m, dd] = d.split('-').map(Number); return `${m} сарын ${dd}` + (y !== Number(t.slice(0, 4)) ? `, ${y}` : ''); };
   const when = iso => { const d = dayOf(iso); return d === today() ? 'Өнөөдөр ' + clock(iso) : fmtDay(d); };
+  const stamp = iso => fmtDay(dayOf(iso)) + ' ' + clock(iso);
   const money = n => new Intl.NumberFormat('en-US').format(Math.round(Number(n) || 0)) + '₮';
   const short = name => String(name || '').replace(/^Салбар\s*\d+\s*·\s*/, '').trim();
   const initials = name => short(name).split(/\s+/).slice(0, 2).map(w => w[0] || '').join('').toUpperCase() || '?';
@@ -152,7 +153,8 @@
   dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
   dialog.addEventListener('close', () => { if (!page.hidden) render(); });
 
-  function openLead(l) {
+  // opt.note / opt.problem reopen a just-created lead whose note could not be saved, with the text kept.
+  function openLead(l, opt = {}) {
     const editing = !!l, isLeader = leader(), people = isLeader ? owners() : [];
     const claim = editing && !l.owner_id && !isLeader;
     const meta = editing ? [SOURCES[l.source] || l.source, when(l.created_at), l.created_by ? 'Бүртгэсэн: ' + short(nameOf(l.created_by)) : 'Вэб сайтаас', l.preferred_time ? 'Тохиромжтой цаг: ' + l.preferred_time : ''].filter(Boolean).join(' · ') : 'Шинэ харилцагч бүртгэх';
@@ -166,7 +168,8 @@
         <div class="crm-two"><label>Төлөв<select name="status">${Object.entries(STATUS).map(([k, v]) => `<option value="${k}" ${(l?.status || 'new') === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
         <label>Төлбөр (элссэн бол)<input name="amount" type="number" min="0" step="1000" inputmode="numeric" value="${esc(l?.amount ?? '')}" placeholder="₮"></label></div>
         ${isLeader ? `<label>Хариуцагч<select name="owner"><option value="">Хариуцагчгүй</option>${people.map(p => `<option value="${p.id}" ${l?.owner_id === p.id ? 'selected' : ''}>${esc(short(p.display_name))} — ${ROLE[p.role] || ''}${lvl() === 4 && p.branch_id ? ' · ' + branchName(p.branch_id) : ''}</option>`).join('')}</select></label>` : ''}
-        <label>Тэмдэглэл<textarea name="note" rows="3" maxlength="2000" placeholder="Юу ярилцсан, дараагийн алхам…">${esc(l?.note)}</textarea></label>
+        <label>${editing ? 'Шинэ тэмдэглэл' : 'Тэмдэглэл'}<textarea name="note" rows="3" maxlength="2000" placeholder="Юу ярилцсан, дараагийн алхам…">${esc(opt.note)}</textarea></label>
+        ${editing ? '<section class="crm-history" aria-label="Түүх"><h3>Түүх</h3><ol class="crm-history-list"><li class="crm-history-empty">Ачаалж байна…</li></ol></section>' : ''}
         <p class="crm-error" role="alert" hidden></p>
         <div class="crm-actions">${editing && l.phone ? `<a class="crm-secondary" href="tel:${esc(String(l.phone).replace(/[^\d+]/g, ''))}">Залгах</a>` : ''}${claim ? '<button type="button" class="crm-secondary" data-act="claim">Би хариуцъя</button>' : ''}${editing && isLeader ? '<button type="button" class="crm-secondary danger" data-act="delete">Устгах</button>' : ''}</div>
         <button type="submit" class="save-button">${editing ? 'Хадгалах' : 'Нэмэх'}</button>
@@ -177,7 +180,9 @@
     const busy = on => form.querySelectorAll('button').forEach(b => { b.disabled = on; });
     async function save(extra = {}) {
       error.hidden = true;
-      const row = { name: form.name.value.trim(), phone: form.phone.value.replace(/[^\d+ ]/g, '').trim() || null, course: form.course.value || null, source: form.source.value, status: form.status.value, amount: form.amount.value === '' ? null : Number(form.amount.value), note: form.note.value.trim() || null, ...extra };
+      // The note is not a lead column any more: it becomes a new history entry, so earlier notes stay.
+      const note = form.note.value.trim();
+      const row = { name: form.name.value.trim(), phone: form.phone.value.replace(/[^\d+ ]/g, '').trim() || null, course: form.course.value || null, source: form.source.value, status: form.status.value, amount: form.amount.value === '' ? null : Number(form.amount.value), ...extra };
       if (!row.name) return fail('Нэрээ бичнэ үү.');
       if (row.phone && !/^[0-9+ ]{6,20}$/.test(row.phone)) return fail('Утасны дугаараа шалгана уу.');
       if (row.status === 'enrolled' && !row.amount) return fail('Элссэн бол төлбөрийн дүнг оруулна уу.');
@@ -189,10 +194,20 @@
       busy(true);
       const q = editing ? RISE.sb.from('leads').update(row).eq('id', l.id).select().single() : RISE.sb.from('leads').insert(row).select().single();
       const { data, error: err } = await q;
-      busy(false);
-      if (err) return fail(problemText(err));
-      const i = S.leads.findIndex(x => x.id === data.id); if (i >= 0) S.leads[i] = data; else S.leads.unshift(data);
-      badge(); dialog.close(); say(editing ? 'Хадгаллаа.' : 'Харилцагч нэмэгдлээ.');
+      if (err) { busy(false); return fail(problemText(err)); }
+      const keep = lead => { const i = S.leads.findIndex(x => x.id === lead.id); if (i >= 0) S.leads[i] = lead; else S.leads.unshift(lead); badge(); };
+      if (note) {
+        const { error: nerr } = await RISE.sb.from('lead_events').insert({ lead_id: data.id, kind: 'note', body: note });
+        if (nerr) {
+          busy(false); keep(data);
+          const problem = 'Харилцагч хадгалагдсан ч тэмдэглэл хадгалагдсангүй. ' + problemText(nerr);
+          if (!editing) { dialog.close(); openLead(data, { note, problem }); return; }
+          return fail(problem);
+        }
+        data.note = note;
+      }
+      busy(false); keep(data);
+      dialog.close(); say(editing ? 'Хадгаллаа.' : 'Харилцагч нэмэгдлээ.');
     }
     form.onsubmit = e => { e.preventDefault(); save(); };
     dialog.querySelector('[data-act=claim]')?.addEventListener('click', () => save({ owner_id: S.me.id, branch_id: S.me.branch_id }));
@@ -205,7 +220,31 @@
       S.leads = S.leads.filter(x => x.id !== l.id); badge(); dialog.close(); say('Устгалаа.');
     });
     dialog.showModal();
-    form.name.focus();
+    if (opt.problem) { fail(opt.problem); form.note.focus(); } else form.name.focus();
+    if (editing) loadHistory(l, dialog.querySelector('.crm-history-list'));
+  }
+
+  // ───────────── history: notes (kept, never overwritten) plus status and owner changes logged by the database
+  const ownerLabel = id => id ? short(nameOf(id)) : 'Хариуцагчгүй';
+  async function loadHistory(l, list) {
+    const { data, error } = await RISE.sb.from('lead_events').select('*').eq('lead_id', l.id).order('created_at', { ascending: false }).limit(200);
+    if (!list.isConnected) return;
+    if (error) { list.innerHTML = '<li class="crm-history-empty">Түүх ачаалсангүй.</li>'; return; }
+    const items = (data || []).concat([{ kind: 'created', created_at: l.created_at, author_id: l.created_by, web: l.source === 'web' }]);
+    const draw = all => {
+      list.innerHTML = (all ? items : items.slice(0, 3)).map(eventHtml).join('')
+        + (!all && items.length > 3 ? `<li class="crm-history-more-row"><button type="button" class="crm-secondary crm-history-more">Бүх түүх (${items.length})</button></li>` : '');
+      list.querySelector('.crm-history-more')?.addEventListener('click', () => draw(true));
+    };
+    draw(false);
+  }
+  function eventHtml(e) {
+    const who = e.author_id ? short(nameOf(e.author_id)) : e.kind === 'note' ? 'Өмнөх тэмдэглэл' : e.kind === 'created' && e.web ? 'Вэб сайтаас' : '—';
+    const text = e.kind === 'note' ? `<p class="crm-event-note">${esc(e.body)}</p>`
+      : e.kind === 'status' ? `<p>Төлөв: ${esc(STATUS[e.from_value] || e.from_value)} → ${esc(STATUS[e.to_value] || e.to_value)}</p>`
+      : e.kind === 'owner' ? `<p>Хариуцагч: ${esc(ownerLabel(e.from_value))} → ${esc(ownerLabel(e.to_value))}</p>`
+      : '<p>Бүртгэгдсэн</p>';
+    return `<li class="crm-event ${e.kind}">${text}<span class="crm-event-meta">${esc(who)} · ${esc(stamp(e.created_at))}</span></li>`;
   }
   function problemText(err) {
     const m = String(err?.message || err || '');
@@ -251,6 +290,7 @@
         <section class="crm-card"><div class="crm-card-head"><h3>Эх сурвалж</h3><span>харилцагч / элсэлт</span></div>${src.length ? src.map(s => `<div class="crm-hbar"><span>${esc(SOURCES[s.source] || s.source)}</span><span class="crm-track"><i style="width:${s.leads / maxS * 100}%"></i></span><b>${s.leads} / ${s.enrolled}</b></div>`).join('') : '<p class="crm-none">Мэдээлэл алга</p>'}</section>
         <section class="crm-card"><div class="crm-card-head"><h3>Сургалтаар</h3></div>${(d.by_course || []).length ? `<div class="crm-table-wrap"><table class="crm-table"><thead><tr><th>Сургалт</th><th>Харилцагч</th><th>Элсэлт</th><th>Орлого</th></tr></thead><tbody>${d.by_course.map(c => `<tr><td>${esc(c.course)}</td><td>${c.leads}</td><td>${c.enrolled}</td><td>${money(c.revenue)}</td></tr>`).join('')}</tbody></table></div>` : '<p class="crm-none">Мэдээлэл алга</p>'}</section>
       </div>
+      ${webHtml(d.web)}
       <div class="crm-two-cards">
         <section class="crm-card"><div class="crm-card-head"><h3>Менежерүүд</h3><span>орлогоор эрэмбэлсэн</span></div>${ppl.length ? ppl.map((p, i) => `<div class="crm-rank"><b>${i + 1}</b><span class="crm-avatar small" aria-hidden="true">${esc(initials(p.name))}</span><span class="crm-copy"><strong>${esc(short(p.name))}</strong><span>${ROLE[p.role] || ''}${all ? ' · ' + branchName(p.branch) : ''}</span></span><span class="crm-rank-num">${p.enrolled} элсэлт<strong>${money(p.revenue)}</strong></span></div>`).join('') : '<p class="crm-none">Менежер алга</p>'}</section>
         ${d.by_branch ? `<section class="crm-card"><div class="crm-card-head"><h3>Салбаруудаар</h3></div><div class="crm-table-wrap"><table class="crm-table"><thead><tr><th>Салбар</th><th>Харилцагч</th><th>Элсэлт</th><th>Орлого</th></tr></thead><tbody>${d.by_branch.map(b => `<tr><td>${esc(b.name)}</td><td>${b.leads}</td><td>${b.enrolled}</td><td>${money(b.revenue)}</td></tr>`).join('')}</tbody></table></div></section>` : ''}
@@ -260,6 +300,23 @@
           ${(fb.top_posts || []).map(p => `<div class="crm-post"><span class="crm-copy"><strong>${esc(p.message || 'Зураг, видео нийтлэл')}</strong><span>${esc(fmtDay(dayOf(p.created_at)))} · ${p.reactions} reaction · ${p.comments} сэтгэгдэл · ${p.shares} хуваалцсан</span></span>${p.permalink ? `<a href="${esc(p.permalink)}" target="_blank" rel="noopener">Нээх</a>` : ''}</div>`).join('')}`
           : `<p class="crm-none">${esc(fb.status?.message || 'Хуудас холбогдоогүй байна. Хуудасны админ нэг удаа Page token үүсгэж Supabase-д хадгалахад дагагч, хүрээ, оролцоо, шилдэг нийтлэл өдөр бүр автоматаар орж ирнэ.')}</p><a class="crm-link" href="https://github.com/gamu666/rise/blob/main/supabase/FACEBOOK.md" target="_blank" rel="noopener">Холбох заавар</a>`}
       </section>`;
+  }
+
+  // Website interest (public.web_daily via crm_stats.web): course page views and "Бүртгүүлэх" clicks counted by the
+  // public site without any visitor id, next to the web requests and enrolments for the same course.
+  const WEB_PAGES = { home: 'Нүүр хуудас', ekskavator: 'Экскаватор оператор', damp: 'Дамп оператор', kovsh: 'Ковш оператор', manikyur: 'Маникюр', sormuus: 'Сормуус' };
+  function webHtml(w) {
+    if (!w) return '';
+    const pages = new Map((w.pages || []).map(p => [p.page, p])), byCourse = new Map((w.leads || []).map(x => [x.course, x]));
+    const total = key => (w.pages || []).reduce((n, p) => n + (Number(p[key]) || 0), 0), home = pages.get('home') || {};
+    const slugs = [...new Set(Object.keys(WEB_PAGES).concat([...pages.keys()]))].filter(s => s !== 'home');
+    const rows = slugs.map(s => { const p = pages.get(s) || {}, name = WEB_PAGES[s] || s, x = byCourse.get(name) || {}; return { name, view: p.view || 0, register: p.register || 0, leads: x.leads || 0, enrolled: x.enrolled || 0 }; })
+      .sort((a, b) => b.view - a.view || b.leads - a.leads || a.name.localeCompare(b.name, 'mn'));
+    return `<section class="crm-card crm-web"><div class="crm-card-head"><h3>Вэб сайт</h3><span>бүх салбар · ${total('view')} үзэлт</span></div>
+      <div class="crm-table-wrap"><table class="crm-table"><thead><tr><th>Сургалтын хуудас</th><th>Үзсэн</th><th>Бүртгүүлэх дарсан</th><th>Хүсэлт</th><th>Элссэн</th></tr></thead>
+      <tbody>${rows.map(r => `<tr><td>${esc(r.name)}</td><td>${r.view}</td><td>${r.register}</td><td>${r.leads}</td><td>${r.enrolled}</td></tr>`).join('')}</tbody></table></div>
+      <p class="crm-web-note">Нүүр хуудас ${home.view || 0} удаа нээгдэж, ${home.register || 0} удаа “Бүртгүүлэх” дарсан. Бүх хуудаснаас ${total('call')} удаа залгах, ${total('messenger')} удаа Messenger товч дарсан. Хүсэлт нь тухайн сургалтыг сонгож вэбээр бүртгүүлсэн хүмүүс. Нэг цонхонд хуудсыг дахин нээх, сэргээх нь нэмж тоологдохгүй.</p>
+    </section>`;
   }
 
   load();

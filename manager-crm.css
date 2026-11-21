@@ -48,6 +48,18 @@ dialog.crm-dialog{width:min(520px,calc(100vw - 32px));max-width:min(520px,calc(1
 .crm-secondary.danger{color:#8f4040;border-color:#efcfcf}
 .crm-dialog .save-button:disabled,.crm-secondary:disabled{opacity:.55;cursor:progress}
 
+/* history in the lead dialog: newest first, each entry in the same box as the dialog's fields */
+.crm-history{display:grid;gap:6px}
+.crm-history h3{margin:0;color:#29272f;font-size:13px;font-weight:600}
+.crm-history-list{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.crm-event{display:grid;gap:3px;padding:9px 10px;border:1px solid rgba(255,255,255,.4);border-radius:9px;background:var(--field,#ffffff70)}
+.crm-event p{margin:0;color:#29272f;font-size:12px;line-height:1.5}
+.crm-event:not(.note) p{color:#4f4a58}
+.crm-event-note{white-space:pre-wrap;overflow-wrap:anywhere}
+.crm-event-meta{color:#77717f;font-size:10px;line-height:1.4}
+.crm-history-empty{color:#77717f;font-size:12px}
+.crm-history-more-row{display:flex}
+
 /* statistics */
 .crm-stats-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .crm-stats-bar select{background:#ffffffaa;border:1px solid #fff;border-radius:12px;padding:9px;font-size:11px;color:#4f4a58}
@@ -92,6 +104,7 @@ dialog.crm-dialog{width:min(520px,calc(100vw - 32px));max-width:min(520px,calc(1
 .crm-rank-num strong{color:#29272f;font-size:12px}
 .crm-post a,.crm-link{color:#29272f;font-size:11px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
 .crm-none{margin-bottom:8px;color:#77717f;font-size:12px;line-height:1.6}
+.crm-web-note{margin:10px 0 0;color:#77717f;font-size:10px;line-height:1.6}
 
 @media (max-width:760px){
  .crm-home{padding:18px;gap:14px;min-height:420px}

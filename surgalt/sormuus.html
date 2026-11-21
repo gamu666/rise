@@ -80,7 +80,7 @@
   <p class="lead">Хариуцах менежер, сургалт, хуваариа өөрөө сонгоод шууд бүртгүүлээрэй.</p>
  </div>
  <form class="leadform acct" id="lead-form" novalidate data-reveal>
- <ol class="acct-steps" aria-hidden="true"><li class="on">Менежер</li><li>Сургалт</li><li>Хуваарь</li><li>Холбоо барих</li></ol>
+ <ol class="acct-steps" aria-hidden="true"><li class="on">Менежер</li><li>Сургалт</li><li>Хуваарь</li><li>Баталгаа</li><li>Холбоо</li><li>Гэрээ</li></ol>
  <div class="acct-step" data-step="1">
   <h3>Таныг хариуцсан менежер байгаа юу?</h3>
   <p>Танд зөвлөсөн менежер байвал шууд сонгоорой. Байхгүй бол салбараа сонгоход тэр салбарын менежер хариуцна.</p>
@@ -115,18 +115,36 @@
   <div class="acct-row"><button class="btn outline" type="button" data-back>Буцах</button><button class="btn" type="button" data-next>Үргэлжлүүлэх</button></div>
  </div>
  <div class="acct-step" data-step="4" hidden>
+  <h3>Иргэний мэдээллээ баталгаажуулах</h3>
+  <p>Бүртгэл e-Mongolia-аар баталгаажна. Бид таны e-Mongolia-аас зөвхөн дараах 3 мэдээллийг авна:</p>
+  <ul class="acct-gives"><li><span>Регистрийн дугаар</span></li><li><span>Овог, нэр</span></li><li><span>Иргэний бүртгэлийн зураг<small>Таны дансны зураг болж, сурагчийн үнэмлэх, сертификатад хэвлэгдэнэ</small></span></li></ul>
+  <p class="acct-fine">Үүнээс өөр мэдээлэл авахгүй. 18 нас хүрээгүй бол эцэг, эх эсвэл асран хамгаалагч нь өөрийн e-Mongolia-аар баталгаажуулж, гэрээнд гарын үсэг зурна.</p>
+  <button class="btn acct-provider" type="button" disabled aria-disabled="true"><span class="mark" aria-hidden="true">e</span>e-Mongolia-аар баталгаажуулах<span class="acct-soon">Удахгүй</span></button>
+  <p class="err" role="alert" hidden></p>
+  <div class="acct-row"><button class="btn outline" type="button" data-back>Буцах</button><button class="btn" type="button" data-next>Алгасах</button></div>
+ </div>
+ <div class="acct-step" data-step="5" hidden>
   <h3>Холбоо барих мэдээлэл</h3>
-  <dl class="acct-summary"><div><dt data-sum-who>Менежер</dt><dd data-sum-manager></dd></div><div><dt>Сургалт</dt><dd data-sum-course></dd></div><div><dt>Хуваарь</dt><dd data-sum-plan></dd></div></dl>
+  <p>Менежер тантай энэ утсаар холбогдоно.</p>
   <label>Овог, нэр<input name="name" autocomplete="name" required maxlength="60" placeholder="Таны нэр"></label>
   <label>Утасны дугаар<input name="phone" type="tel" inputmode="numeric" autocomplete="tel" required pattern="[0-9]{8}" maxlength="12" placeholder="8 оронтой дугаар"></label>
   <label class="hp" aria-hidden="true">Вэб хуудас<input name="website" tabindex="-1" autocomplete="off"></label>
   <p class="err" role="alert" hidden></p>
-  <div class="acct-row"><button class="btn outline" type="button" data-back>Буцах</button><button class="btn" type="submit">Бүртгүүлэх</button></div>
+  <div class="acct-row"><button class="btn outline" type="button" data-back>Буцах</button><button class="btn" type="button" data-next>Үргэлжлүүлэх</button></div>
+ </div>
+ <div class="acct-step" data-step="6" hidden>
+  <h3>Сургалтын гэрээ</h3>
+  <p>Гэрээгээ e-Mongolia эсвэл GSign-ийн цахим гарын үсгээр онлайнаар байгуулна. Салбар дээр ирэх шаардлагагүй.</p>
+  <article class="acct-contract"><strong>Гэрээний гол мэдээлэл</strong><dl><dt>Суралцагч</dt><dd data-c-name></dd><dt>Сургалт</dt><dd data-c-course></dd><dt>Хуваарь</dt><dd data-c-plan></dd><dt data-c-who>Хариуцах менежер</dt><dd data-c-manager></dd><dt>Төлбөр</dt><dd>Гэрээний хавсралтаар</dd></dl></article>
+  <div class="acct-sign"><button class="btn acct-provider" type="button" disabled aria-disabled="true"><span class="mark" aria-hidden="true">e</span>e-Mongolia-аар зурах<span class="acct-soon">Удахгүй</span></button><button class="btn outline acct-provider" type="button" disabled aria-disabled="true"><span class="mark" aria-hidden="true">G</span>GSign-аар зурах<span class="acct-soon">Удахгүй</span></button></div>
+  <p class="acct-fine">Алгасвал менежер тантай холбогдож гэрээг байгуулна.</p>
+  <p class="err" role="alert" hidden></p>
+  <div class="acct-row"><button class="btn outline" type="button" data-back>Буцах</button><button class="btn" type="submit">Алгасаад бүртгүүлэх</button></div>
  </div>
  <div class="done" hidden tabindex="-1">
   <strong><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Бүртгэгдлээ</strong>
   <p data-done-text></p>
-  <ul class="acct-next"><li data-done-manager></li><li data-done-course></li><li data-done-plan></li></ul>
+  <ul class="acct-next"><li data-done-manager></li><li data-done-course></li><li data-done-plan></li><li class="wait">e-Mongolia баталгаажуулалт — алгассан</li><li class="wait">Сургалтын гэрээ — менежер тантай байгуулна</li></ul>
   <div class="actions start"><a class="btn" href="tel:77721170"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Залгах</a><a class="btn outline" href="https://m.me/EDURISE.MN" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>Messenger</a></div>
  </div>
  <div class="done fail" hidden tabindex="-1">

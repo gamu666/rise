@@ -32,6 +32,24 @@
  window.RISE_TEAM_RANK_DATA=({range})=>{const inside=key=>key>=range.start&&key<=range.end;const rows=members.map(m=>({id:m.id,name:m.name,initial:m.initial,branch:m.branch,role:roleName(m.rank),tasks:0,target:0,revenue:m.students.reduce((sum,s)=>sum+(s.payments||[]).filter(p=>{const key=new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Ulaanbaatar'}).format(new Date(p.recordedAt));return inside(key);}).reduce((n,p)=>n+Number(p.amount||0),0),0)}));if(rankingMode==='manager')return rows;return branches.map((branch,i)=>({id:'branch:'+i,name:branch,branch,branchRow:true,role:members.filter(m=>m.branch===branch).length+' менежер',tasks:0,target:0,revenue:rows.filter(r=>r.branch===branch).reduce((n,r)=>n+r.revenue,0)}));};
  window.RISE_TEAM_RANK_CONTROLS=host=>{const modes=make('div','team-rank-tabs');modes.setAttribute('role','group');modes.setAttribute('aria-label','Амжилтын төрөл');[['branch','Салбар'],['manager','Менежер']].forEach(([key,text])=>{const b=make('button','',text);b.type='button';b.setAttribute('aria-pressed',String(rankingMode===key));b.onclick=()=>{rankingMode=key;renderRanking();};modes.append(b);});host.append(modes);};
  window.RISE_TEAM_RANK_OPEN=row=>{if(row.branchRow){workspaceSelect('team');openBranch(row.branch);}else window.RISE_ROLE_SHOW_GOAL(row.id);return true;};
+ // Сурагчид for the general director lists the managers of the chosen branch scope with their income, not single
+ // students (the hook below was called but never defined, so the student cards showed). The layout is the
+ // .director-manager-* one in manager-director-views.css; a row opens that manager's own goal chart and payments.
+ window.RISE_DIRECTOR_STUDENT_SUMMARY=()=>{
+  const view=document.querySelector('#hub-students');if(!view)return;
+  const scope=String(window.RISE_ROLE_SCOPE?.()||'branch:all');let box=view.querySelector(':scope>.director-manager-overview');
+  if(!scope.startsWith('branch:')){view.classList.remove('director-manager-view');box?.remove();return;}
+  const branchName=scope==='branch:all'?'Бүх салбар':branches[Number(scope.slice(7))],scoped=scope==='branch:all'?members:members.filter(m=>m.branch===branchName);
+  const day=new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Ulaanbaatar'}),month=day.format(new Date()).slice(0,7),money=n=>new Intl.NumberFormat('en-US').format(Math.round(n))+'₮',sum=list=>list.reduce((n,p)=>n+Number(p.amount||0),0);
+  const rows=scoped.map(m=>{const pays=m.students.flatMap(s=>s.payments||[]);return {m,month:sum(pays.filter(p=>day.format(new Date(p.recordedAt)).startsWith(month))),total:sum(pays)};}).sort((a,b)=>b.month-a.month||b.total-a.total||a.m.name.localeCompare(b.m.name,'mn'));
+  if(!box){box=make('section','director-manager-overview');box.setAttribute('aria-label','Менежерүүдийн орлого');view.append(box);}
+  view.classList.add('director-manager-view');box.replaceChildren();
+  const head=make('header','director-section-heading');head.append(make('h3','','Менежерүүдийн орлого'),make('span','',branchName+' · '+rows.length+' менежер · энэ сар '+money(rows.reduce((n,r)=>n+r.month,0))));
+  const list=make('div','director-manager-income-list');
+  rows.forEach(({m,month:now,total})=>{const row=make('button','director-manager-income-row'),copy=make('div'),amount=make('div','director-manager-amount');row.type='button';row.setAttribute('aria-label',m.name+' · '+money(now)+' · зорилго, гүйлгээ харах');copy.append(make('strong','',m.name),make('span','',roleName(m.rank)+' · '+m.branch+' · '+m.students.length+' сурагч'));amount.append(make('strong','',money(now)),make('span','','Нийт '+money(total)));row.append(make('span','demo-manager-avatar',m.initial),copy,amount);row.onclick=()=>window.RISE_ROLE_SHOW_GOAL?.(m.id);list.append(row);});
+  if(!rows.length)list.append(make('p','director-empty','Энэ салбарт менежер алга.'));
+  box.append(head,list);
+ };
  const selectDirectorSection=workspaceSelect;workspaceSelect=function(key){selectDirectorSection(key);if(key==='students'){window.RISE_DIRECTOR_STUDENT_SUMMARY?.();const summary=document.querySelector('.notch-summary');if(summary)summary.textContent='Сурагчдын мэдээллийг хамтдаа хяная.';}};selectHub=workspaceSelect;
 })();
 

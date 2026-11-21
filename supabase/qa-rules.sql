@@ -146,6 +146,40 @@ begin
   exception when others then insert into qa values (default, 'anon cannot read leads', true, sqlerrm); end;
   reset role;
 
+  -- registration without a request step (anon): the list shows only branches and managers by name; the chosen
+  -- manager gets the lead directly, a branch choice leaves it unassigned in that branch; reversed hours and a
+  -- non-manager owner are refused
+  perform set_config('role', 'anon', true);
+  j := public.web_registration_options();
+  insert into qa values (default, 'anon registration list: branches + named managers only',
+    jsonb_array_length(j->'branches') = 3
+    and not exists (select 1 from jsonb_array_elements(j->'managers') x
+                     where x->>'role' not in ('manager', 'senior_manager') or x ? 'login' or x ? 'phone'
+                        or x->>'name' ~ '^Салбар [0-9]+ · '),
+    jsonb_array_length(j->'managers')::text);
+  begin perform public.register_web('QA Бүртгэл', '88002233', 'Маникюр', m1, null,
+                                    '[{"d":2,"from":"18:00","to":"20:30"},{"d":0,"from":"10:00","to":"12:00"}]');
+    insert into qa values (default, 'anon registration with own manager', true, null);
+  exception when others then insert into qa values (default, 'anon registration with own manager', false, sqlerrm); end;
+  begin perform public.register_web('QA Салбар', '88002244', 'Сормуус', null, 2::smallint, '[{"d":5,"from":"11:00","to":"13:00"}]');
+    insert into qa values (default, 'anon registration with a branch', true, null);
+  exception when others then insert into qa values (default, 'anon registration with a branch', false, sqlerrm); end;
+  begin perform public.register_web('QA Буруу', '88002255', 'Маникюр', null, 1::smallint, '[{"d":0,"from":"12:00","to":"10:00"}]');
+    insert into qa values (default, 'reversed hours refused', false, 'accepted');
+  exception when others then insert into qa values (default, 'reversed hours refused', true, sqlerrm); end;
+  begin perform public.register_web('QA Буруу', '88002266', 'Маникюр', b1, null, '[{"d":0,"from":"10:00","to":"12:00"}]');
+    insert into qa values (default, 'teacher as owner refused', false, 'accepted');
+  exception when others then insert into qa values (default, 'teacher as owner refused', true, sqlerrm); end;
+  reset role;
+  select count(*) into n from public.leads where phone = '88002233' and owner_id = m1 and branch_id = 1 and source = 'web'
+    and preferred_time = 'Да 10:00–12:00, Лх 18:00–20:30' and jsonb_array_length(schedule) = 2;
+  insert into qa values (default, 'registration lands with the chosen manager', n = 1, n::text);
+  select count(*) into n from public.leads where phone = '88002244' and owner_id is null and branch_id = 2;
+  insert into qa values (default, 'branch registration unassigned in that branch', n = 1, n::text);
+  perform public.qa_act('s1.menejer1'); select count(*) into n from public.leads where phone = '88002233';
+  insert into qa values (default, 'chosen manager sees the registration', n = 1, n::text);
+  reset role;
+
   -- website counters: anonymous +1 per call, junk ignored without an error, unreadable from the public key,
   -- and the general director's statistics carry them together with web requests by course
   select coalesce(sum(w.n), 0) into n0 from public.web_daily w where w.day = ub and w.page = 'damp' and w.event = 'view';

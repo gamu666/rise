@@ -7,7 +7,7 @@
 const fs = require('fs'), path = require('path');
 const root = path.join(__dirname, '..');
 const C = require(path.join(root, 'site-src', 'content.cjs'));
-const VERSION = 'site13';
+const VERSION = 'site14';
 
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const money = n => new Intl.NumberFormat('en-US').format(n) + '₮';
@@ -63,7 +63,8 @@ const sprite = `<svg width="0" height="0" style="position:absolute" aria-hidden=
 <symbol id="i-brief" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="13.5" rx="2.5"/><path d="M16 20.5V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v15.5"/></symbol>
 </svg>`;
 
-function head(title, desc, rel, bodyClass, heroPhoto) {
+// page: "home" or the course slug; site.js counts views and clicks per page for the CRM's website card.
+function head(title, desc, rel, bodyClass, heroPhoto, page) {
   const org = { '@context': 'https://schema.org', '@type': 'EducationalOrganization', name: C.org.name, telephone: C.org.phone, address: C.org.address, sameAs: [C.org.facebook, C.org.instagram] };
   const p = photoSet(heroPhoto, rel);
   return `<!doctype html>
@@ -84,7 +85,7 @@ function head(title, desc, rel, bodyClass, heroPhoto) {
 <script defer src="${rel}site.js?v=${VERSION}"></script>
 <script type="application/ld+json">${JSON.stringify(org)}</script>
 </head>
-<body class="${bodyClass}">`;
+<body class="${bodyClass}" data-page="${page}">`;
 }
 
 // Pill navigation (naimansar.com layout): brand · section links · social, sign-in, register.
@@ -235,7 +236,7 @@ function home() {
   ];
   const studentFeatures = ['Өнөөдрийн хичээл, хуваарь', 'Сургалтын явц, ирц', 'Төлбөрийн мэдээлэл', 'Төгсөлт, сертификат'];
   const staffFeatures = ['Өдрийн ажил, даалгавар', 'Зорилго, орлогын явц', 'Баг, сурагчдын мэдээлэл', 'Чат, мэдэгдэл'];
-  return head('THE RISE — Хүнд машин, гоо сайхны мэргэжлийн сургалт', 'Экскаватор, дамп, ковш оператор, маникюр, сормуусны сургалт. Үнэ, хугацаа, хуваарь ил тод. Бодит дадлага, сертификат.', rel, 'home', 'hero-mining-shovel') + `
+  return head('THE RISE — Хүнд машин, гоо сайхны мэргэжлийн сургалт', 'Экскаватор, дамп, ковш оператор, маникюр, сормуусны сургалт. Үнэ, хугацаа, хуваарь ил тод. Бодит дадлага, сертификат.', rel, 'home', 'hero-mining-shovel', 'home') + `
 ${header(rel, true)}
 <main id="main">
  <section class="hero" data-theme="dark" aria-labelledby="hero-title">
@@ -326,7 +327,7 @@ function coursePage(c) {
     ? [['Үнэ', money(s.price) + ' -аас'], ['Хугацаа', s.days + ' хоног'], ['Онол / машин дээр', s.theory + ' / ' + s.practice + ' цаг'], ['Дараагийн анги', day(s.next)]]
     : [['Үнэ', money(s.price) + ' -аас'], ['Хугацаа', s.days + ' хоног'], ['Материал', s.materials], ['Дараагийн анги', day(s.next)]];
   const practice = c.track === 'heavy' ? `Талбайн дадлага — ${S(s, s.machine)}` : 'Загвар, үйлчлүүлэгч дээрх дадлага';
-  return head(`${c.name} сургалт — THE RISE`, `${c.description} Үнэ, хугацаа, хуваарь, бүртгэл.`, rel, 'course ' + c.track, c.image) + `
+  return head(`${c.name} сургалт — THE RISE`, `${c.description} Үнэ, хугацаа, хуваарь, бүртгэл.`, rel, 'course ' + c.track, c.image, c.slug) + `
 ${header(rel, false)}
 <main id="main">
  <section class="hero hero-course" data-theme="dark" aria-labelledby="course-title">

@@ -69,7 +69,9 @@ for (const html of pages) {
   assert.ok(!/хүсэлт/i.test(visible(f[0])), 'no request wording in the form');
   assert.ok(f[0].includes('зөвхөн дараах 3 мэдээллийг авна') && ['Регистрийн дугаар', 'Овог, нэр', 'Иргэний бүртгэлийн зураг'].every(x => f[0].includes(x)) && f[0].includes('Үүнээс өөр мэдээлэл авахгүй.'), 'says exactly which data e-Mongolia hands over');
   const providers = f[0].match(/<button class="btn( outline)? acct-provider"[^>]*>[\s\S]*?<\/button>/g) || [];
-  assert.equal(providers.length, 3, 'e-Mongolia verify, e-Mongolia sign and GSign sign buttons');
+  // e-Mongolia supplies the account data, GSign signs the contract: two separate services (owner, 2026-11-22)
+  assert.equal(providers.length, 2, 'one e-Mongolia button for the account data, one GSign button for the contract');
+  assert.ok(providers[0].includes('e-Mongolia') && providers[1].includes('GSign') && !/e-Mongolia-аар зурах/.test(f[0]) && f[0].includes('GSign цахим гарын үсгээр'), 'the contract is signed with GSign only');
   assert.ok(providers.every(b => / disabled aria-disabled="true"/.test(b) && b.includes('Удахгүй')), 'not connected yet: every provider button is disabled and marked Удахгүй');
   assert.ok(f[0].includes('data-next>Алгасах</button>') && f[0].includes('type="submit">Алгасаад бүртгүүлэх</button>'), 'verification and signing can be skipped');
   assert.ok(!/Баталгаажсан|Данс нээгдлээ|гарын үсэг зурсан|-аар зурсан/i.test(visible(html)), 'nothing claims a verification or a signature');

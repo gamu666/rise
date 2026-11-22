@@ -44,4 +44,6 @@ assert.ok(!/reactions\.summary|comments\.summary/.test(sync), 'no fields that ne
 assert.ok(sync.includes("const ENGAGEMENT = 'post_reactions_by_type_total,post_activity_by_action_type';") && /engagement: false/.test(sync), 'engagement from insights, with a fallback without it');
 assert.ok(/m\.period === 'lifetime'/.test(sync), 'post metrics read the lifetime value');
 assert.ok(/if \(last\?\.ok && Date\.now\(\) - new Date\(last\.updated_at\)\.getTime\(\) < 3600_000\)/.test(sync), 'an open URL cannot make it call Meta more than once an hour after a success');
+// A never-expiring system user token (business portfolio) is exchanged for the page's token on every run (2026-11-22).
+assert.ok(/pageToken = TOKEN;\s*const own = await graph\(PAGE, \{ fields: 'access_token' \}\)\.catch\(\(\) => null\);/.test(sync) && /access_token: pageToken/.test(sync), 'a system user token is swapped for the page token, a page token still works');
 console.log('PASS: CRM list, sortable table, drag-and-drop board, analysis with validated colours and table views, leaders-only marketing with website and Facebook content research');

@@ -1,5 +1,7 @@
 // THE RISE · fb-sync Edge Function. Pulls Facebook Page statistics into fb_page_daily / fb_posts.
 // Secrets (Supabase → Edge Functions → Secrets): FB_PAGE_ID, FB_PAGE_TOKEN, optional FB_API_VERSION (default v27.0).
+// FB_PAGE_TOKEN is either the page's own token or a never-expiring system user token of the business portfolio that
+// owns the page ("Rise page remote"); the system user token is exchanged for the page's token on every run.
 // Runs daily from pg_cron (see supabase/FACEBOOK.md). Each metric is fetched separately so a metric Meta
 // retires does not stop the rest; the outcome is written to integration_status for the Статистик page.
 import { createClient } from 'jsr:@supabase/supabase-js@2';
@@ -33,9 +35,10 @@ const POST_METRICS = [
   { reach: 'post_impressions_unique', impressions: 'post_impressions', clicks: 'post_clicks', engagement: false },
 ];
 
+let pageToken = TOKEN;
 async function graph(path: string, params: Record<string, string> = {}) {
   const url = new URL(`${G}/${path}`);
-  for (const [k, v] of Object.entries({ ...params, access_token: TOKEN })) url.searchParams.set(k, v);
+  for (const [k, v] of Object.entries({ ...params, access_token: pageToken })) url.searchParams.set(k, v);
   const res = await fetch(url);
   const body = await res.json();
   if (!res.ok || body.error) throw new Error(body.error?.message ?? `HTTP ${res.status}`);
@@ -59,6 +62,10 @@ Deno.serve(async () => {
   }
   const notes: string[] = [];
   try {
+    // A system user token asks for the page's own token first; the page's own token keeps working as it is.
+    pageToken = TOKEN;
+    const own = await graph(PAGE, { fields: 'access_token' }).catch(() => null);
+    if (typeof own?.access_token === 'string' && own.access_token) pageToken = own.access_token;
     const until = Math.floor(Date.now() / 1000), since = until - 30 * 86400;
     const days = new Map<string, Record<string, number | string>>();
     for (const [column, names] of METRICS) {

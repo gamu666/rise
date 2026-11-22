@@ -59,10 +59,18 @@ Deno.serve(async () => {
       if (error) throw error;
     }
 
-    const posts = await graph(`${PAGE}/posts`, { fields: 'id,created_time,message,permalink_url,shares,reactions.summary(total_count).limit(0),comments.summary(total_count).limit(0)', limit: '50' });
+    // Each post's reach, impressions and clicks (content research in the CRM Маркетинг view, 2026-11-22). If Meta refuses
+    // the post insights (permission or a retired metric), the posts are still stored without them.
+    const base = 'id,created_time,message,permalink_url,status_type,attachments{media_type},shares,reactions.summary(total_count).limit(0),comments.summary(total_count).limit(0)';
+    let posts;
+    try { posts = await graph(`${PAGE}/posts`, { fields: base + ',insights.metric(post_impressions_unique,post_impressions,post_clicks)', limit: '50' }); }
+    catch (e) { notes.push(`post insights: ${(e as Error).message}`); posts = await graph(`${PAGE}/posts`, { fields: base, limit: '50' }); }
+    const metric = (p: any, name: string) => { const v = p.insights?.data?.find((m: any) => m.name === name)?.values?.[0]?.value; return typeof v === 'number' ? v : null; };
     const rows = (posts.data ?? []).map((p: any) => ({
       id: p.id, created_at: p.created_time, message: p.message ?? null, permalink: p.permalink_url ?? null,
       reactions: p.reactions?.summary?.total_count ?? 0, comments: p.comments?.summary?.total_count ?? 0, shares: p.shares?.count ?? 0,
+      reach: metric(p, 'post_impressions_unique'), impressions: metric(p, 'post_impressions'), clicks: metric(p, 'post_clicks'),
+      media_type: String(p.attachments?.data?.[0]?.media_type ?? p.status_type ?? '').toLowerCase() || null,
       fetched_at: new Date().toISOString(),
     }));
     if (rows.length) { const { error } = await db.from('fb_posts').upsert(rows); if (error) throw error; }

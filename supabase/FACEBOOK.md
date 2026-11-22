@@ -2,34 +2,37 @@
 
 Нэг удаа хийнэ. Дараа нь систем өдөр бүр автоматаар татна (дагагч, хүрээ, оролцоо, хуудас үзэлт, нийтлэл бүрийн
 хүрээ, үзэлт, дарсан тоо, reaction, сэтгэгдэл, хуваалцалт).
-Token-ийг зөвхөн та (хуудасны админ) өөрөө Supabase-д хадгална — кодонд, GitHub-д хэзээ ч орохгүй.
+Token-ийг зөвхөн хүн (хуудасны админ) өөрөө Supabase-д хадгална — кодонд, GitHub-д хэзээ ч орохгүй.
 
 Төлөв (2026-11-22): холбогдсон. App `THE RISE CRM` (App ID 1127795656631933), хуудас "THE RISE санхүүгийн цогц
-сургалтын төв" (ID 409031592763487). Эхний синк: 30 өдөр, 50 нийтлэл. Verify JWT унтраасан, cron `fb-sync-daily`
-(job 1) өдөр бүр 06:00 (Улаанбаатар) ажиллана. Page token **2027-01-21**-нд дуусна — түүнээс өмнө 2-р алхмыг давтаж
-шинэ token-оо `FB_PAGE_TOKEN`-д солино (эсвэл доорх "хугацаагүй token"-ийг хийнэ).
+сургалтын төв" (ID 409031592763487), business portfolio "Rise page remote". `FB_PAGE_TOKEN` нь system user
+**RiseCrmSync**-ийн хугацаагүй ("Never") token. Verify JWT унтраасан, cron `fb-sync-daily` (job 1) өдөр бүр 06:00
+(Улаанбаатар) ажиллана. Token зөвхөн system user устгагдах, түүний token-уудыг "Revoke tokens" хийх, хуудас эсвэл app
+portfolio-оос хасагдах үед хүчингүй болно — тэр үед Статистик хуудсанд "Facebook token хүчингүй болсон" гэж гарна.
 
-## 1. Meta app үүсгэх (хийгдсэн)
-1. https://developers.facebook.com/apps → **Create app** → нэр `THE RISE CRM` → use case **Manage everything on your Page**
-   → business portfolio холбохгүй → **Create app**.
+## 1. Meta app (хийгдсэн)
+1. https://developers.facebook.com/apps → **Create app** → нэр `THE RISE CRM` → use case **Manage everything on your Page**.
 2. **Use cases → Customize**: `pages_show_list`, `pages_read_engagement`, `read_insights` → **Add** ("Ready for testing").
-3. App нь **Development** горимд үлдэнэ: хуудасны админ өөрөө app-ын admin учраас өөрийн хуудасны статистикийг уншина.
+3. App нь **Development** горимд үлдэнэ.
 
-## 2. Page token авах
-1. https://developers.facebook.com/tools/explorer → **Meta App**: THE RISE CRM.
-2. **Permissions**: дээрх 3 эрх → **Generate Access Token** → Facebook цонхонд **Opt in to current Pages only** →
-   THE RISE хуудсыг сонгоно → Save.
-3. **User or Page** талбараас THE RISE хуудсыг сонгоно → token-ий хажуугийн **i** → **Open in Access Token Tool** →
-   **Extend Access Token** (Facebook нууц үгээ дахин асууна) → гарсан урт token (Page, 60 хоног).
-4. Хуудасны ID: Explorer дээр `me/accounts?fields=id,name` → `id`.
+## 2. Хугацаагүй token (system user, хийгдсэн)
+Хуудсыг удирддаг, app-ын админ бүртгэлээр (Дижитал Хариуцах) business.facebook.com → **Rise page remote** → Settings:
+1. **Accounts → Apps → Add → Connect an app ID** → 1127795656631933 (app-ын админ тул шууд зөвшөөрөгдөнө).
+2. **Users → System users → Add** → нэр `RiseCrmSync` (Meta "THE RISE CRM sync" нэрийг зөвшөөрөөгүй), эрх **Employee**.
+   Анх удаа Non-discrimination policy-г зөвшөөрнө (2026-11-22-нд зөвшөөрсөн).
+3. **Assign assets** → Facebook Pages → THE RISE санхүүгийн цогц сургалтын төв → зөвхөн **Content** ба **Insights**;
+   Apps → THE RISE CRM → **Test app** (энэ эрхгүй бол token-д permission сонгогдохгүй).
+4. **Generate token** → THE RISE CRM → **Never** → `pages_show_list`, `pages_read_engagement`, `read_insights` →
+   Generate token → **Copy** (нэг л удаа харагдана) → Supabase `FB_PAGE_TOKEN`-д буулгана.
+fb-sync ажиллах бүрдээ энэ token-оор хуудасны өөрийн token-ийг авдаг (`/{page-id}?fields=access_token`).
 
-Хугацаагүй token (дараа хийх): business portfolio-д system user үүсгэж, THE RISE хуудас болон app-ыг түүнд оноож,
-"Never" хугацаатай token гаргана. Тэгвэл 60 хоног тутам солих шаардлагагүй.
+Нөөц арга (60 хоногийн token): https://developers.facebook.com/tools/explorer → THE RISE CRM → дээрх 3 эрх →
+Generate Access Token → THE RISE хуудсыг сонгох → **i** → Open in Access Token Tool → **Extend Access Token**.
 
 ## 3. Supabase-д хадгалах
-Supabase → төсөл **the-rise** → **Edge Functions → Secrets**:
-- `FB_PAGE_ID` = хуудасны ID
-- `FB_PAGE_TOKEN` = Page access token (админ өөрөө хуулж оруулна)
+Supabase → төсөл **the-rise** → **Edge Functions → Secrets** (ижил нэрээр хадгалбал "Replace secret" гэж асууна):
+- `FB_PAGE_ID` = 409031592763487
+- `FB_PAGE_TOKEN` = system user token (эсвэл хуудасны token)
 
 ## 4. Шалгах
 Edge Functions → **fb-sync** → **Test** → `{"ok": true, "days": 30, "posts": 50, "skipped": []}` маягийн хариу.

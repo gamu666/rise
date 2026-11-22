@@ -106,8 +106,128 @@ dialog.crm-dialog{width:min(520px,calc(100vw - 32px));max-width:min(520px,calc(1
 .crm-none{margin-bottom:8px;color:#77717f;font-size:12px;line-height:1.6}
 .crm-web-note{margin:10px 0 0;color:#77717f;font-size:10px;line-height:1.6}
 
+/* ───── table view: same card rows as the list, sortable headers */
+.crm-grid-wrap{flex:none;border:1px solid #ffffffda;border-radius:15px;background:#ffffffa6;padding:4px 10px}
+.crm-grid{min-width:760px}
+.crm-grid :is(th,td){text-align:left!important;white-space:nowrap}
+.crm-grid :is(th,td).num{text-align:right!important}
+.crm-grid th button{padding:0;border:0;background:none;color:inherit;font:inherit;font-weight:600;cursor:pointer}
+.crm-grid th button:hover{color:#29272f}
+.crm-grid tbody tr{cursor:pointer}
+.crm-grid tbody tr:hover td,.crm-grid tbody tr:focus-visible td{background:#ffffffd9}
+.crm-grid tbody tr:focus-visible{outline:2px solid #8f88a0;outline-offset:-2px}
+.crm-grid td strong{color:#29272f;font-weight:600}
+.crm-grid .crm-status{display:inline-block;padding:3px 7px;font-size:10px}
+.crm-muted{color:#9a93a3}
+
+/* ───── pipeline board: one glass column per status, cards are dragged between columns */
+.crm-board-wrap{overflow:auto}
+.crm-board{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(160px,1fr);gap:10px;align-items:start;min-width:min-content;padding-bottom:4px}
+.crm-col{display:flex;flex-direction:column;gap:8px;min-height:180px;padding:10px;border:1px solid #ffffffda;border-radius:15px;background:#ffffff73;transition:box-shadow .15s,background-color .15s}
+.crm-col.over{background:#ffffffc7;box-shadow:inset 0 0 0 2px #2b2931}
+.crm-col header{display:flex;align-items:center;gap:7px;padding:2px 2px 4px}
+.crm-col h3{flex:1;margin:0;color:#29272f;font-size:12px;font-weight:600}
+.crm-col header b{min-width:22px;padding:2px 7px;border-radius:8px;background:#efedf3;color:#4f4a58;font-size:11px;text-align:center}
+.crm-col-dot{width:8px;height:8px;border-radius:50%;background:#c9c5d0;flex:none}
+.crm-col-dot.s-new{background:#242429}
+.crm-col-dot.s-contacted{background:#6d87ad}
+.crm-col-dot.s-interested{background:#4f8ea3}
+.crm-col-dot.s-enrolled{background:#3f9a72}
+.crm-col-dot.s-lost{background:#b86a6a}
+.crm-col-sum{margin:-4px 2px 0;color:#2f6b55;font-size:11px;font-weight:600}
+.crm-col-list{display:flex;flex-direction:column;gap:7px}
+.crm-col-empty{margin:4px 2px;color:#9a93a3;font-size:11px}
+.crm-lead-card{display:flex;flex-direction:column;gap:4px;width:100%;padding:10px 11px;border:1px solid #ffffffe6;border-radius:12px;background:#fffffff0;color:inherit;font:inherit;text-align:left;cursor:grab;box-shadow:0 1px 2px #29272f0f;transition:transform .15s,box-shadow .15s}
+.crm-lead-card:hover{transform:translateY(-1px);box-shadow:0 4px 12px #29272f14}
+.crm-lead-card.dragging{opacity:.45;cursor:grabbing}
+.crm-lead-card strong{color:#29272f;font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.crm-lead-card>span{color:#77717f;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.crm-lead-foot{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:2px;color:#8a8494;font-size:10px}
+.crm-lead-foot i{display:grid;place-items:center;width:22px;height:22px;border-radius:7px;background:#ece9f1;color:#4f4a58;font-size:9px;font-style:normal;font-weight:600;flex:none}
+.crm-lead-foot i.free{background:#242429;color:#fff}
+
+/* ───── Шинжилгээ: filter row, figures, charts (chart colours are set inline from the validated palette in JS) */
+.crm-scope{margin:0;color:#77717f;font-size:11px}
+.crm-kpis-6{grid-template-columns:repeat(3,minmax(0,1fr))}
+.crm-kpi .crm-delta{margin-top:auto;color:#77717f;font-size:10px;line-height:1.4}
+.crm-kpi strong{overflow-wrap:anywhere}
+/* the full / short amount spans sit inside the value, not in the tile's grey label style (.crm-kpi span) */
+.crm-kpi strong span,.crm-kpi .crm-delta span{color:inherit;font-size:inherit}
+.crm-compact{display:none}
+.crm-kpi .crm-delta.up{color:#006300}
+.crm-kpi .crm-delta.down{color:#b23b3b}
+.crm-legend i.line{width:14px;height:2px;border-radius:2px}
+.crm-chart{position:relative;min-height:220px;outline:none;border-radius:10px}
+.crm-chart:focus-visible{box-shadow:0 0 0 2px #8f88a0}
+/* the dashboard's global "svg{stroke:currentColor;stroke-width:1.8}" (manager-measured.css) would outline the plot
+   area, the area wash and every label; chart parts set their own strokes */
+.crm-chart svg{display:block;overflow:visible;stroke:none;stroke-width:0}
+.crm-chart .g{stroke:#ebe9f0;stroke-width:1}
+.crm-chart text{fill:#8a8494;font-size:10px;font-variant-numeric:tabular-nums}
+.crm-chart .ch{stroke:#b9b4c2;stroke-width:1}
+.crm-tip{position:absolute;top:0;z-index:2;display:grid;gap:3px;min-width:132px;padding:8px 10px;border:1px solid #ffffff;border-radius:10px;background:#fffffff5;box-shadow:0 6px 18px #29272f1f;pointer-events:none;font-size:11px;color:#4f4a58}
+.crm-tip strong{color:#29272f;font-size:11px;font-weight:600}
+.crm-tip span{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.crm-tip i{display:inline-block;width:12px;height:2px;border-radius:2px}
+.crm-tip b{color:#29272f;font-size:12px;font-weight:600}
+.crm-data{margin-top:8px}
+.crm-data summary{width:max-content;color:#4f4a58;font-size:11px;font-weight:600;cursor:pointer}
+.crm-data .crm-table-wrap{margin-top:6px}
+.crm-note{margin:8px 0 0;color:#77717f;font-size:10px;line-height:1.5}
+.crm-funnel{display:grid;gap:8px}
+.crm-funnel-row,.crm-hbar2{display:grid;grid-template-columns:86px minmax(0,1fr) 34px 38px;align-items:center;gap:8px;color:#3e3a46;font-size:11px;border-radius:8px;outline:none}
+/* ranked bars: name · bar · value on one line, the detail (enrolled, conversion…) under the bar so it never gets cut */
+.crm-hbar2{grid-template-columns:110px minmax(0,1fr) 40px;row-gap:1px}
+.crm-hbar2 small{grid-column:2 / -1}
+.crm-funnel-row:focus-visible,.crm-hbar2:focus-visible,.crm-col-bar:focus-visible,.crm-heat-cell:focus-visible{box-shadow:0 0 0 2px #8f88a0}
+.crm-funnel-label,.crm-hbar2-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.crm-funnel-track{height:12px;border-radius:0 4px 4px 0;background:#f2f0f5;overflow:hidden}
+.crm-funnel-track i{display:block;height:100%;border-radius:0 4px 4px 0}
+.crm-funnel-row b,.crm-hbar2 b{color:#29272f;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.crm-funnel-row small,.crm-hbar2 small{color:#77717f;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.crm-ranks{display:grid;gap:7px}
+.crm-hbar2 .crm-track{height:10px;border-radius:0 4px 4px 0}
+.crm-hbar2 .crm-track i{border-radius:0 4px 4px 0}
+.crm-cols{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:8px;align-items:end}
+.crm-col-bar{display:grid;grid-template-rows:auto 110px auto;justify-items:center;gap:4px;min-width:0;border-radius:8px;outline:none}
+.crm-col-bar b{color:#29272f;font-size:11px;font-weight:600;font-variant-numeric:tabular-nums}
+.crm-col-track{display:flex;align-items:flex-end;justify-content:center;width:100%;height:110px;border-bottom:1px solid #e3e0e8}
+.crm-col-track i{display:block;width:min(24px,70%);border-radius:4px 4px 0 0}
+.crm-col-bar small{max-width:100%;color:#77717f;font-size:10px;line-height:1.2;text-align:center;overflow-wrap:anywhere}
+.crm-heat{display:grid;grid-template-columns:26px repeat(6,minmax(0,1fr));gap:3px;align-items:center}
+.crm-heat small{color:#77717f;font-size:9px;text-align:center;white-space:nowrap}
+.crm-heat-cell{height:24px;border-radius:5px;outline:none}
+.crm-heat-cell.zero{background:#f2f0f5}
+.crm-heat-key{display:flex;align-items:center;gap:3px;margin-top:8px;color:#77717f;font-size:9px}
+.crm-heat-key i{width:16px;height:8px;border-radius:2px}
+.crm-heat-key span:first-child{margin-right:3px}
+.crm-heat-key span:last-child{margin-left:3px}
+.crm-split{display:flex;gap:2px;height:22px;margin-top:12px;overflow:hidden;border-radius:6px}
+.crm-split span{display:flex;align-items:center;padding:0 8px;color:#fff;font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden}
+/* ───── Маркетинг: content research sections and the computed findings */
+.crm-section{margin:6px 2px -2px;color:#29272f;font-size:15px;font-weight:600;letter-spacing:-.2px}
+.crm-findings{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.crm-findings li{position:relative;padding-left:16px;color:#3e3a46;font-size:12px;line-height:1.55}
+.crm-findings li::before{content:"";position:absolute;left:2px;top:.55em;width:6px;height:6px;border-radius:50%;background:#2a78d6}
+.crm-findings b{color:#29272f;font-weight:600}
+.crm-findings.plain li{color:#4f4a58}
+.crm-findings.plain li::before{background:#c9c5d0}
+.crm-team td:first-child{min-width:150px}
+.crm-team-name{display:flex;align-items:center;gap:8px}
+.crm-team-money{display:inline-flex;align-items:center;gap:6px}
+.crm-team-money i{display:inline-block;height:6px;border-radius:0 3px 3px 0}
+
 @media (max-width:760px){
  .crm-home{padding:18px;gap:14px;min-height:420px}
+ .crm-kpis-6{grid-template-columns:repeat(2,minmax(0,1fr))}
+ /* a full amount (8,900,000₮) is wider than a phone tile: the short form (8.9M₮) is shown instead */
+ .crm-full{display:none}
+ .crm-compact{display:inline}
+ .crm-kpi strong{font-size:19px}
+ /* a column a little narrower than the phone card, so the next column peeks in and invites a sideways swipe */
+ .crm-board{grid-auto-columns:200px}
+ .crm-hbar2{grid-template-columns:84px minmax(0,1fr) 32px}
+ .crm-funnel-row{grid-template-columns:76px minmax(0,1fr) 30px 34px}
  /* the add button drops under the title instead of running past the card edge */
  .crm-home .library-header{flex-wrap:wrap;gap:12px}
  .crm-home .library-upload{white-space:nowrap}

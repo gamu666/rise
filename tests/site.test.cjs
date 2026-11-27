@@ -51,7 +51,24 @@ assert.ok(/localStorage\.getItem\('rise-notrack'\)/.test(js) && /if \(!quiet\) r
 assert.ok(/localStorage\.setItem\('rise-notrack','1'\)/.test(fs.readFileSync(path.join(root, 'staff.js'), 'utf8')), 'staff sign-in marks the device');
 assert.ok(/const API = 'https:\/\/[a-z]+\.supabase\.co\/rest\/v1\/rpc\/';/.test(js), 'calls Supabase functions');
 assert.deepEqual([...new Set([...js.matchAll(/rpc\('(\w+)'/g)].map(m => m[1]))].sort(), ['register_web', 'submit_web_lead', 'track_web', 'web_registration_options'], 'only the public functions');
-assert.ok(/rpc\('track_web', \{ p_event: event, p_page: page \}\)/.test(js), 'counter sends only page and event');
+assert.ok(js.includes("rpc('track_web', src ? { p_event: event, p_page: page, p_src: src } : { p_event: event, p_page: page })"), 'counter sends only page, event and, for a view, a source category');
+// Visit source (owner request 2026-11-27): only one of six categories, decided by the tab's first page, never the address.
+const sourceFn = (js.match(/const sourceOf = \(\) => \{[\s\S]*?\n  \};/) || [''])[0];
+assert.ok(sourceFn, 'source detection exists');
+assert.deepEqual([...new Set([...sourceFn.matchAll(/return '(\w+)'/g)].map(m => m[1]))].sort(), ['direct', 'facebook', 'google', 'instagram', 'search', 'site'], 'six categories only');
+assert.ok(/if \(host === location\.hostname\) return null;/.test(sourceFn), 'moving between own pages is not a new source');
+assert.ok(/sessionStorage\.getItem\('rise-src'\)/.test(js) && /if \(!seen\) track\('view', src\);/.test(js), 'the first page of a tab decides the source, sent with the view only');
+assert.ok(!/p_ref|[{,]\s*referrer\s*:|p_src: document|p_src: host/.test(js), 'the referring address is never sent');
+{
+  // run the real function against typical arrivals
+  const classify = (search, referrer) => new Function('location', 'document', 'URL', 'URLSearchParams', sourceFn + '\nreturn sourceOf();')(
+    { search, hostname: 'gamu666.github.io' }, { referrer }, URL, URLSearchParams);
+  const cases = [['?fbclid=abc', '', 'facebook'], ['', 'https://l.facebook.com/', 'facebook'], ['', 'https://m.facebook.com/', 'facebook'],
+    ['', 'https://lm.facebook.com/l.php', 'facebook'], ['?utm_source=ig', '', 'instagram'], ['', 'https://l.instagram.com/', 'instagram'],
+    ['', 'https://www.google.com/', 'google'], ['', 'https://www.google.mn/', 'google'], ['', 'https://www.bing.com/', 'search'],
+    ['', 'https://example.mn/news', 'site'], ['', '', 'direct'], ['', 'https://gamu666.github.io/rise/', null]];
+  for (const [search, ref, want] of cases) assert.equal(classify(search, ref), want, `source for ${search || ref || 'no referrer'}`);
+}
 assert.ok(/'sb_publishable_\w+'/.test(js) && !/sb_secret_|service_role/.test(js), 'publishable key only');
 assert.ok(/ok = res\.ok && \(await res\.json\(\)\) === true;/.test(js), 'success requires the server to answer true');
 assert.ok(/if \(ok\) \{[^}]*done\.hidden = false[^}]*\}\s*else \{[^}]*fail\.hidden = false/.test(js), 'received only when ok, otherwise contact options');

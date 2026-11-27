@@ -28,6 +28,11 @@ assert.ok(code.includes("RISE.sb.rpc('web_daily_stats', { p_from: prevFrom, p_to
 assert.ok(code.includes("RISE.sb.from('fb_page_daily')") && code.includes("RISE.sb.from('fb_posts')"), 'Facebook page days and posts (leaders may read them)');
 assert.ok(/const rated = courses\.filter\(r => r\.view >= 20\)/.test(code) && /if \(posts\.length >= 6\)/.test(code) && /g\.posts >= 2/.test(code), 'a finding is said only with enough data behind it');
 assert.ok(/if \(!F\.any\) return/.test(code) && code.includes('Пэйж холбогдоогүй байна'), 'an unconnected page says so instead of showing zeros');
+// visit sources (owner request 2026-11-27): counted per category since 2026-11-27, shown with the unknown remainder
+assert.ok(code.includes("RISE.sb.rpc('web_source_stats', { p_from: from, p_to: to })") && code.includes('Хаанаас орж ирсэн') && /const unknown = Math\.max\(0, \(M\.W \? M\.W\.cur\.view : 0\) - total\);/.test(code), 'visit sources card adds up to the view count');
+const srcMig = fs.readFileSync(path.join(__dirname, '../supabase/migrations/2026-11-27-web-sources.sql'), 'utf8');
+assert.ok(/drop function if exists public\.track_web\(text, text\);/.test(srcMig) && /p_src text default null/.test(srcMig) && /grant execute on function public\.track_web\(text, text, text\) to anon, authenticated;/.test(srcMig), 'track_web takes an optional source and old pages keep counting');
+assert.ok(/revoke execute on function public\.web_source_stats\(date, date\) from public, anon;/.test(srcMig) && /coalesce\(private\.me_level\(\), 0\) < 2/.test(srcMig) && /src in \('facebook', 'instagram', 'google', 'search', 'site', 'direct'\)/.test(srcMig), 'source counts are for leaders only and categories only');
 assert.ok(/fb\.status && fb\.status\.ok === false/.test(code) && code.includes('Facebook-ийн тоо шинэчлэгдэхээ больсон.') && /return stale \+ kpis/.test(code), 'a failing daily sync is announced above the old numbers');
 assert.ok(!/тэйтэй|тойтой|[ÐÑ][\u0080-¿]/.test(js), 'Mongolian text is intact (no doubled suffix, no broken encoding)');
 const mig = fs.readFileSync(path.join(__dirname, '../supabase/migrations/2026-11-22-content-stats.sql'), 'utf8');

@@ -35,6 +35,17 @@ for (const html of pages) {
   assert.ok(!/туршилт|\btest\b|\bdemo\b|жишээ/i.test(visible(html)), 'no test/demo/sample wording visible');
 }
 assert.ok(!/Туршилт|Жишээ|value="lvl/.test(fs.readFileSync(path.join(root, 'staff.html'), 'utf8')), 'sign-in page shows no test wording or internal level markers');
+// Link preview (owner request 2026-11-27): each page gives Facebook, Messenger and Viber its own photo, size and address.
+const SITE = 'https://gamu666.github.io/rise/';
+[['home', home], ...C.courses.map(c => [c.slug, fs.readFileSync(path.join(root, 'surgalt', c.slug + '.html'), 'utf8')])].forEach(([slug, html]) => {
+  const url = slug === 'home' ? SITE : `${SITE}surgalt/${slug}.html`;
+  assert.ok(html.includes(`<link rel="canonical" href="${url}">`) && html.includes(`<meta property="og:url" content="${url}">`), slug + ' canonical address');
+  const m = html.match(/<meta property="og:image" content="https:\/\/gamu666\.github\.io\/rise\/assets\/photos\/([\w-]+\.jpg)">/);
+  assert.ok(m && fs.existsSync(path.join(root, 'assets', 'photos', m[1])), slug + ' preview photo exists');
+  const w = Number((html.match(/og:image:width" content="(\d+)"/) || [])[1]), h = Number((html.match(/og:image:height" content="(\d+)"/) || [])[1]);
+  assert.ok(w >= 1200 && h >= 630, slug + ' preview photo is large enough for a big card');
+  assert.ok(html.includes('<meta name="twitter:card" content="summary_large_image">') && /og:image:alt" content="[^"]{10,}"/.test(html), slug + ' large card with alt text');
+});
 // v4 (owner request): black & white only, no gradients, no web-font download.
 const css = fs.readFileSync(path.join(root, 'site.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
 assert.ok(!/gradient/i.test(css), 'public site CSS uses no gradients');

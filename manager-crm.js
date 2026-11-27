@@ -623,7 +623,9 @@
     cur.forEach(r => { const p = points.find(x => r.day >= x.a && r.day <= x.b); if (p) { p.reach += Number(r.reach) || 0; p.engagements += Number(r.engagements) || 0; } });
     const followers = [...M.fbDays].reverse().find(r => r.followers != null)?.followers ?? null;
     const posts = M.fbPosts.filter(p => p.created_at && inCur(M, dayOf(p.created_at))).map(p => ({ ...p, eng: (p.reactions || 0) + (p.comments || 0) + (p.shares || 0) }));
-    return { days: cur.length, T, P, points, followers, posts, any: M.fbDays.length > 0 || M.fbPosts.length > 0 };
+    // when fb-sync last stored anything, for the "numbers stopped updating" warning
+    const lastFetch = [...M.fbDays, ...M.fbPosts].map(r => r.fetched_at).filter(Boolean).sort().pop() || null;
+    return { days: cur.length, T, P, points, followers, posts, lastFetch, any: M.fbDays.length > 0 || M.fbPosts.length > 0 };
   }
   // A KPI tile with the change against the previous period of the same length.
   const mTile = (label, value, cur, prev, note, opt) => `<article class="crm-kpi"><span>${label}</span><strong>${value}</strong>${delta(cur, prev, opt) || `<small>${note}</small>`}</article>`;
@@ -687,6 +689,9 @@
       <p class="crm-none">Facebook пэйжийг нэг удаа холбоход энд өдөр бүр автоматаар гарна:</p>
       <ul class="crm-findings plain"><li>Хүрээ, үзэлт, оролцоо, шинэ дагагч — өдрөөр, өмнөх үетэй харьцуулж</li><li>Нийтлэл бүр хэдэн хүнд хүрч, хэдэн reaction, сэтгэгдэл, хуваалцалт авсан</li><li>Аль сургалтын сэдэв, аль төрлийн контент (зураг, видео, reel) илүү үзэгддэг</li><li>Аль гараг, аль цагт нийтлэхэд илүү хүрээтэй байдаг</li></ul>
       ${status}<a class="crm-link" href="https://github.com/gamu666/rise/blob/main/supabase/FACEBOOK.md" target="_blank" rel="noopener">Холбох заавар</a></section>`;
+    // The daily sync failed (fb-sync wrote ok = false): the numbers below are the last ones stored, so say so first
+    // instead of showing old numbers as if they were current (owner request 2026-11-27).
+    const stale = fb.status && fb.status.ok === false ? `<section class="crm-card"><p class="crm-error" role="status"><strong>Facebook-ийн тоо шинэчлэгдэхээ больсон.</strong>${F.lastFetch ? ' Сүүлд татсан: ' + esc(stamp(F.lastFetch)) + '.' : ''} ${esc(fb.status.message || '')}</p></section>` : '';
     const T = F.T, P = F.P, er = T.reach ? Math.round(T.engagements / T.reach * 1000) / 10 : null, per = P.reach ? Math.round(P.engagements / P.reach * 1000) / 10 : null;
     const kpis = `<div class="crm-kpis crm-kpis-6">
       ${mTile('Хүрээ', num(T.reach), T.reach, P.reach, 'Пэйжийн контент хүрсэн хүн')}
@@ -700,7 +705,7 @@
         <section class="crm-card"><div class="crm-card-head"><h3>Хүрээ</h3><span>өдөрт хүрсэн хүн</span></div><div class="crm-chart" data-chart="fb-reach" tabindex="0" aria-label="Facebook хүрээ өдрөөр. Сум товчоор өдөр сонгоно."></div></section>
         <section class="crm-card"><div class="crm-card-head"><h3>Оролцоо</h3><span>өдөрт</span></div><div class="crm-chart" data-chart="fb-eng" tabindex="0" aria-label="Facebook оролцоо өдрөөр. Сум товчоор өдөр сонгоно."></div></section>
       </div>` : '';
-    return kpis + charts + postsHtml(F) + status;
+    return stale + kpis + charts + postsHtml(F) + (stale ? '' : status);
   }
   function postsHtml(F) {
     const posts = F.posts;

@@ -28,6 +28,7 @@ assert.ok(code.includes("RISE.sb.rpc('web_daily_stats', { p_from: prevFrom, p_to
 assert.ok(code.includes("RISE.sb.from('fb_page_daily')") && code.includes("RISE.sb.from('fb_posts')"), 'Facebook page days and posts (leaders may read them)');
 assert.ok(/const rated = courses\.filter\(r => r\.view >= 20\)/.test(code) && /if \(posts\.length >= 6\)/.test(code) && /g\.posts >= 2/.test(code), 'a finding is said only with enough data behind it');
 assert.ok(/if \(!F\.any\) return/.test(code) && code.includes('Пэйж холбогдоогүй байна'), 'an unconnected page says so instead of showing zeros');
+assert.ok(/fb\.status && fb\.status\.ok === false/.test(code) && code.includes('Facebook-ийн тоо шинэчлэгдэхээ больсон.') && /return stale \+ kpis/.test(code), 'a failing daily sync is announced above the old numbers');
 assert.ok(!/тэйтэй|тойтой|[ÐÑ][\u0080-¿]/.test(js), 'Mongolian text is intact (no doubled suffix, no broken encoding)');
 const mig = fs.readFileSync(path.join(__dirname, '../supabase/migrations/2026-11-22-content-stats.sql'), 'utf8');
 assert.ok(/coalesce\(private\.me_level\(\), 0\) < 2/.test(mig) && /revoke execute on function public\.web_daily_stats\(date, date\) from public, anon;/.test(mig), 'web_daily_stats is for leaders, never anon');

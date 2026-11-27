@@ -138,10 +138,30 @@
   const page = document.body.dataset.page || 'home';
   let quiet = !!navigator.webdriver;
   try { quiet = quiet || !!localStorage.getItem('rise-notrack') || !!localStorage.getItem('rise-auth'); } catch { /* storage blocked: count */ }
-  const track = event => { if (!quiet) rpc('track_web', { p_event: event, p_page: page }).catch(() => {}); };
-  let seen = false;
+  const track = (event, src) => { if (!quiet) rpc('track_web', src ? { p_event: event, p_page: page, p_src: src } : { p_event: event, p_page: page }).catch(() => {}); };
+  // Where the visit came from (owner request 2026-11-27): only a category is sent with the view — facebook, instagram,
+  // google, search (another search engine), site (another website) or direct (typed address, bookmark, or an app that
+  // hides it) — never the address itself. The first page of a tab decides it and later pages of that tab keep it; a
+  // move between this site's own pages without a remembered source sends none.
+  const sourceOf = () => {
+    const q = new URLSearchParams(location.search), utm = (q.get('utm_source') || '').toLowerCase();
+    if (q.has('fbclid') || /^(fb|facebook|messenger)/.test(utm)) return 'facebook';
+    if (/^(ig|instagram)/.test(utm)) return 'instagram';
+    if (q.has('gclid') || /^google/.test(utm)) return 'google';
+    let host = '';
+    try { host = document.referrer ? new URL(document.referrer).hostname.toLowerCase() : ''; } catch { /* odd referrer: direct */ }
+    if (!host) return 'direct';
+    if (host === location.hostname) return null;
+    if (/(^|\.)(facebook\.com|fb\.com|fb\.me|messenger\.com|m\.me)$/.test(host)) return 'facebook';
+    if (/(^|\.)instagram\.com$/.test(host)) return 'instagram';
+    if (/(^|\.)google\.[a-z.]+$/.test(host)) return 'google';
+    if (/(^|\.)(bing\.com|yandex\.[a-z]+|duckduckgo\.com|yahoo\.com|baidu\.com|ecosia\.org)$/.test(host)) return 'search';
+    return 'site';
+  };
+  let seen = false, src = null;
   try { seen = sessionStorage.getItem('rise-seen-' + page) === '1'; sessionStorage.setItem('rise-seen-' + page, '1'); } catch { /* storage blocked: count the view */ }
-  if (!seen) track('view');
+  try { src = sessionStorage.getItem('rise-src') || sourceOf(); if (src) sessionStorage.setItem('rise-src', src); } catch { src = sourceOf(); }
+  if (!seen) track('view', src);
   document.addEventListener('click', e => {
     const href = e.target.closest?.('a[href]')?.getAttribute('href') || '';
     if (href.startsWith('tel:')) track('call');

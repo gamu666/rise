@@ -573,6 +573,8 @@
   // Edge Function once the page is connected (supabase/FACEBOOK.md). The findings are sentences computed from those
   // numbers — nothing is estimated or made up, and a finding needs enough data before it is said.
   const WEB_PAGES = { home: 'Нүүр хуудас', ekskavator: 'Экскаватор оператор', damp: 'Дамп оператор', kovsh: 'Ковш оператор', manikyur: 'Маникюр', sormuus: 'Сормуус' };
+  // Where website views came from (web_source_stats, counted since 2026-11-27): the category the public site sends.
+  const VISIT_SOURCES = [['facebook', 'Facebook'], ['instagram', 'Instagram'], ['google', 'Google'], ['search', 'Бусад хайлт'], ['site', 'Бусад сайт'], ['direct', 'Шууд орсон']];
   const TOPICS = [['Экскаватор', /экскаватор/i], ['Дамп', /дамп/i], ['Ковш', /ковш/i], ['Маникюр', /маникюр|хумс/i], ['Сормуус', /сормуус/i]];
   const MEDIA = { photo: 'Зураг', added_photos: 'Зураг', video: 'Видео', added_video: 'Видео', video_inline: 'Видео', reel: 'Reel', link: 'Холбоос', share: 'Холбоос', album: 'Цомог', status: 'Текст', mobile_status_update: 'Текст', shared_story: 'Хуваалцсан', event: 'Арга хэмжээ' };
   const weekdayOf = d => (new Date(d + 'T12:00:00Z').getUTCDay() + 6) % 7;
@@ -583,16 +585,17 @@
     let [from, to] = span(S.range); if (daysBetween(from, to) > 400) from = addDays(to, -400);
     const n = daysBetween(from, to) + 1, prevFrom = S.range === 'all' ? from : addDays(from, -n);
     const box = page.querySelector('.crm-stats');
-    const [stats, web, fbDays, fbPosts] = await Promise.all([
+    const [stats, web, fbDays, fbPosts, sources] = await Promise.all([
       RISE.sb.rpc('crm_stats', { p_from: from, p_to: to, p_branch: lvl() === 4 && S.statsBranch ? Number(S.statsBranch) : null }),
       RISE.sb.rpc('web_daily_stats', { p_from: prevFrom, p_to: to }),
       RISE.sb.from('fb_page_daily').select('*').gte('day', prevFrom).lte('day', to).order('day', { ascending: true }),
-      RISE.sb.from('fb_posts').select('*').order('created_at', { ascending: false }).limit(300)
+      RISE.sb.from('fb_posts').select('*').order('created_at', { ascending: false }).limit(300),
+      RISE.sb.rpc('web_source_stats', { p_from: from, p_to: to })
     ]);
     if (!box.isConnected) return;
     if (stats.error) { box.innerHTML = `<div class="library-empty crm-empty"><h2>Статистик ачаалсангүй</h2><p>${esc(problemText(stats.error))}</p></div>`; return; }
-    const M = { from, to, n, prevFrom, d: stats.data || {}, web: web.error ? null : (web.data || []), fbDays: fbDays.error ? [] : (fbDays.data || []), fbPosts: fbPosts.error ? [] : (fbPosts.data || []) };
-    M.W = webSeries(M); M.F = fbSeries(M);
+    const M = { from, to, n, prevFrom, d: stats.data || {}, web: web.error ? null : (web.data || []), fbDays: fbDays.error ? [] : (fbDays.data || []), fbPosts: fbPosts.error ? [] : (fbPosts.data || []), src: sources.error ? null : (sources.data || []) };
+    M.W = webSeries(M); M.F = fbSeries(M); M.V = visitSources(M);
     box.innerHTML = marketingHtml(M);
     drawMarketing(M);
   }
@@ -614,6 +617,15 @@
     for (let i = 0; i < M.n; i++) wd[weekdayOf(addDays(M.from, i))].days++;
     M.web.filter(r => inCur(M, r.day)).forEach(r => { wd[weekdayOf(r.day)].views += Number(r.view) || 0; });
     return { cur, prev, points, weekday: wd.map(x => x.days ? Math.round(x.views / x.days * 10) / 10 : 0) };
+  }
+  // Views per source in the period. Views with no source (a page cached from before 2026-11-27, or a move between the
+  // site's own pages in a new tab) are shown as unknown, so the rows add up to the view count.
+  function visitSources(M) {
+    if (!M.src) return null;
+    const by = {}; M.src.forEach(r => { by[r.src] = (by[r.src] || 0) + (Number(r.n) || 0); });
+    const rows = VISIT_SOURCES.map(([k, name]) => ({ k, name, n: by[k] || 0 })), total = rows.reduce((t, r) => t + r.n, 0);
+    const unknown = Math.max(0, (M.W ? M.W.cur.view : 0) - total);
+    return { rows: [...rows].sort((a, b) => b.n - a.n), total, unknown };
   }
   function fbSeries(M) {
     const sum = (list, k) => list.reduce((t, r) => t + (Number(r[k]) || 0), 0), keys = ['reach', 'impressions', 'engagements', 'page_views', 'new_follows'];
@@ -646,7 +658,7 @@
         <section class="crm-card"><div class="crm-card-head"><h3>Гарагаар</h3><span>өдөрт дунджаар хэдэн үзэлт</span></div>${columnsHtml(DAYS, Wd.weekday, () => C.leads, (l, v) => `${DAYS_LONG[DAYS.indexOf(l)]}: дунджаар ${v} үзэлт`)}</section>
         <section class="crm-card"><div class="crm-card-head"><h3>Дүгнэлт</h3><span>энэ хугацааны тооноос</span></div>${findingsHtml(webFindings(M))}</section>
       </div>` : `<section class="crm-card"><p class="crm-none">Өдөр тутмын хандалтын тоо ачаалсангүй. Доорх нь энэ хугацааны нийт дүн.</p></section>`;
-    return `<h2 class="crm-section">Вэб сайтын хандалт</h2>${web}${pagesHtml(w)}
+    return `<h2 class="crm-section">Вэб сайтын хандалт</h2>${web}${visitSourcesHtml(M)}${pagesHtml(w)}
       <section class="crm-card"><div class="crm-card-head"><h3>Бүх эх сурвалж</h3><span>харилцагч · элсэлт</span></div>${src.length ? `<div class="crm-ranks">${src.map(s => `<div class="crm-hbar2"><span class="crm-hbar2-name">${esc(SOURCES[s.source] || s.source)}</span><span class="crm-track"><i style="width:${Math.max(2, s.leads / maxS * 100)}%;background:${C.leads}"></i></span><b>${s.leads}</b><small>${s.enrolled} элссэн · ${pct(s.enrolled, s.leads)}%</small></div>`).join('')}</div>` : '<p class="crm-none">Мэдээлэл алга</p>'}</section>
       <h2 class="crm-section">Facebook пэйж · контент</h2>${fbHtml(F, fb)}`;
   }
@@ -670,7 +682,22 @@
     if (M.n >= 14 && days[peak] > 0 && days[peak] !== days[low]) out.push(`Сайт <b>${DAYS_LONG[peak]}</b> гарагт хамгийн их үзэгддэг (өдөрт дунджаар ${days[peak]}), ${DAYS_LONG[low]} гарагт хамгийн бага (${days[low]}).`);
     if (S.range !== 'all' && Wd.prev.view) { const ch = Math.round((Wd.cur.view - Wd.prev.view) / Wd.prev.view * 100); out.push(`Үзэлт өмнөх ижил хугацаанаас ${ch >= 0 ? ch + '% өссөн' : Math.abs(ch) + '% буурсан'} (${num(Wd.prev.view)} → ${num(Wd.cur.view)}).`); }
     if (Wd.cur.call + Wd.cur.messenger) out.push(`Сайтаас ${Wd.cur.call} удаа утсаар залгах, ${Wd.cur.messenger} удаа Messenger товч дарсан.`);
+    const V = M.V, lead = V && V.total >= 10 ? V.rows[0] : null;
+    if (lead && lead.n) out.push(`Үзэлт хамгийн их ирсэн эх сурвалж: <b>${esc(lead.name)}</b> — эх сурвалж мэдэгдэх үзэлтийн ${pct(lead.n, V.total)}% (${num(lead.n)}).`);
     return out;
+  }
+  function visitSourcesHtml(M) {
+    const V = M.V;
+    if (!V) return '';
+    const all = V.total + V.unknown, max = Math.max(1, ...V.rows.map(r => r.n), V.unknown);
+    const bar = (name, n, color) => `<div class="crm-hbar2" tabindex="0" aria-label="${esc(name)}: ${n} үзэлт"><span class="crm-hbar2-name">${esc(name)}</span><span class="crm-track"><i style="width:${n ? Math.max(2, n / max * 100) : 0}%;background:${color}"></i></span><b>${num(n)}</b><small>${pct(n, all)}%</small></div>`;
+    const rows = V.rows.filter(r => r.n).map(r => bar(r.name, r.n, C.leads)).join('') + (V.unknown ? bar('Тодорхойгүй', V.unknown, '#a8a8b0') : '');
+    return `<section class="crm-card crm-web"><div class="crm-card-head"><h3>Хаанаас орж ирсэн</h3><span>вэб хуудасны үзэлт</span></div>
+      ${V.total ? `<div class="crm-ranks">${rows}</div>` : '<p class="crm-none">Энэ хугацаанд эх сурвалж бүртгэгдээгүй байна.</p>'}
+      <details class="crm-data"><summary>Тоогоор харах</summary><div class="crm-table-wrap"><table class="crm-table"><thead><tr><th>Эх сурвалж</th><th>Үзэлт</th><th>Хувь</th></tr></thead>
+      <tbody>${V.rows.map(r => `<tr><td>${esc(r.name)}</td><td>${r.n}</td><td>${pct(r.n, all)}%</td></tr>`).join('')}<tr><td>Тодорхойгүй</td><td>${V.unknown}</td><td>${pct(V.unknown, all)}%</td></tr></tbody></table></div></details>
+      <p class="crm-web-note">2026-11-27-ноос хойш тоолж эхэлсэн. Зөвхөн ангилал хадгалагдана, хаяг болон хүний мэдээлэл хадгалагдахгүй. Messenger болон зарим апп хаанаас ирснээ нуудаг тул “Шууд орсон” гэж тоологдож болно.</p>
+    </section>`;
   }
   function pagesHtml(w) {
     const rows = pageRows(w).sort((a, b) => b.view - a.view || b.leads - a.leads || a.name.localeCompare(b.name, 'mn')), max = Math.max(1, ...rows.map(r => r.view));

@@ -8,6 +8,8 @@ const fs = require('fs'), path = require('path');
 const root = path.join(__dirname, '..');
 const C = require(path.join(root, 'site-src', 'content.cjs'));
 const VERSION = 'site15';
+// Address of the published site. Link previews need absolute URLs; change this if the site moves to its own domain.
+const SITE = 'https://gamu666.github.io/rise/';
 
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const money = n => new Intl.NumberFormat('en-US').format(n) + '₮';
@@ -64,9 +66,14 @@ const sprite = `<svg width="0" height="0" style="position:absolute" aria-hidden=
 </svg>`;
 
 // page: "home" or the course slug; site.js counts views and clicks per page for the CRM's website card.
-function head(title, desc, rel, bodyClass, heroPhoto, page) {
+// Link preview (owner request 2026-11-27): Facebook, Messenger and Viber show the page's own hero photo as a large card
+// when the address is shared. The photo file closest to 1200 px wide is used, with its real size, so even the first
+// share shows the picture; the canonical address keeps shares of the same page together.
+function head(title, desc, rel, bodyClass, heroPhoto, page, alt) {
   const org = { '@context': 'https://schema.org', '@type': 'EducationalOrganization', name: C.org.name, telephone: C.org.phone, address: C.org.address, sameAs: [C.org.facebook, C.org.instagram] };
   const p = photoSet(heroPhoto, rel);
+  const [small, large, w, h] = PHOTOS[heroPhoto], ow = small >= 1200 ? small : large, oh = Math.round(h * ow / w);
+  const url = page === 'home' ? SITE : `${SITE}surgalt/${page}.html`;
   return `<!doctype html>
 <html lang="mn">
 <head>
@@ -74,10 +81,18 @@ function head(title, desc, rel, bodyClass, heroPhoto, page) {
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
+<link rel="canonical" href="${url}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="mn_MN">
+<meta property="og:site_name" content="${esc(C.org.name)}">
+<meta property="og:url" content="${url}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
+<meta property="og:image" content="${SITE}assets/photos/${heroPhoto}-${ow}.jpg">
+<meta property="og:image:width" content="${ow}">
+<meta property="og:image:height" content="${oh}">
+<meta property="og:image:alt" content="${esc(alt)}">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="${rel}assets/favicon.svg">
 <link rel="preload" as="image" href="${p.src}" imagesrcset="${p.srcset}" imagesizes="100vw" fetchpriority="high">
@@ -300,7 +315,7 @@ function home() {
   ];
   const studentFeatures = ['Өнөөдрийн хичээл, хуваарь', 'Сургалтын явц, ирц', 'Төлбөрийн мэдээлэл', 'Төгсөлт, сертификат'];
   const staffFeatures = ['Өдрийн ажил, даалгавар', 'Зорилго, орлогын явц', 'Баг, сурагчдын мэдээлэл', 'Чат, мэдэгдэл'];
-  return head('THE RISE — Хүнд машин, гоо сайхны мэргэжлийн сургалт', 'Экскаватор, дамп, ковш оператор, маникюр, сормуусны сургалт. Үнэ, хугацаа, хуваарь ил тод. Бодит дадлага, сертификат.', rel, 'home', 'hero-mining-shovel', 'home') + `
+  return head('THE RISE — Хүнд машин, гоо сайхны мэргэжлийн сургалт', 'Экскаватор, дамп, ковш оператор, маникюр, сормуусны сургалт. Үнэ, хугацаа, хуваарь ил тод. Бодит дадлага, сертификат.', rel, 'home', 'hero-mining-shovel', 'home', 'Бүрэнхий үеийн уурхайд ажиллаж буй том экскаватор') + `
 ${header(rel, true)}
 <main id="main">
  <section class="hero" data-theme="dark" aria-labelledby="hero-title">
@@ -391,7 +406,7 @@ function coursePage(c) {
     ? [['Үнэ', money(s.price) + ' -аас'], ['Хугацаа', s.days + ' хоног'], ['Онол / машин дээр', s.theory + ' / ' + s.practice + ' цаг'], ['Дараагийн анги', day(s.next)]]
     : [['Үнэ', money(s.price) + ' -аас'], ['Хугацаа', s.days + ' хоног'], ['Материал', s.materials], ['Дараагийн анги', day(s.next)]];
   const practice = c.track === 'heavy' ? `Талбайн дадлага — ${S(s, s.machine)}` : 'Загвар, үйлчлүүлэгч дээрх дадлага';
-  return head(`${c.name} сургалт — THE RISE`, `${c.description} Үнэ, хугацаа, хуваарь, бүртгэл.`, rel, 'course ' + c.track, c.image, c.slug) + `
+  return head(`${c.name} сургалт — THE RISE`, `${c.description} Үнэ, хугацаа, хуваарь, бүртгэл.`, rel, 'course ' + c.track, c.image, c.slug, c.alt) + `
 ${header(rel, false)}
 <main id="main">
  <section class="hero hero-course" data-theme="dark" aria-labelledby="course-title">

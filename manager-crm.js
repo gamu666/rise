@@ -7,6 +7,46 @@
 //   Жагсаалт — cards · Хүснэгт — sortable table · Самбар — pipeline board, drag a card to change its status ·
 //   Шинжилгээ — figures and charts computed from the leads this account may see · Маркетинг (leaders) — website and
 //   Facebook figures from crm_stats. Every number comes from the real rows; nothing is sample data.
+
+// ───────────── Real student list for the other dashboard screens (owner request 2026-11-28 "бодит тоо холбох").
+// Сурагчид, Зорилго, Сүүлийн орлого and the home figures read the global students list that manager.js builds before
+// they run; it used to hold six sample people. Here, after sign-in, the employee's own enrolments (leads marked Элссэн,
+// row level security decides what is visible) are mapped to that list and kept for this tab in sessionStorage, so
+// manager.js can read them synchronously. The first page of a tab is drawn before they arrive, so it is drawn again
+// once when real rows exist; later changes appear on the next page load instead of interrupting work.
+(() => {
+  if (typeof students === 'undefined' || !window.RISE) return;
+  const KEY = 'rise-real-v1', ZONE = 'Asia/Ulaanbaatar';
+  const ymd = iso => new Intl.DateTimeFormat('sv-SE', { timeZone: ZONE }).format(new Date(iso)).replaceAll('-', '.');
+  const initial = name => ((String(name || '').trim().split(/\s+/).at(-1) || '?')[0] || '?').toUpperCase();
+  // The student code shown on the cards is the start of the CRM row id; the one payment the CRM records (at enrolment)
+  // is the payment history, without a method because the CRM does not record one.
+  const toStudent = l => {
+    const at = l.enrolled_at || l.created_at, paid = Number(l.amount) || 0;
+    return { id: 'CRM-' + String(l.id).replace(/-/g, '').slice(0, 10).toUpperCase(), leadId: l.id, name: l.name || 'Нэргүй', initial: initial(l.name),
+      course: l.course || '—', registered: ymd(at), enrolledAt: at, ends: '', total: paid, paid, status: 'Суралцаж байгаа', group: '',
+      phone: l.phone || '', rd: '', payments: paid > 0 ? [{ amount: paid, recordedAt: at }] : [] };
+  };
+  (async () => {
+    try {
+      const me = await RISE.profile();
+      if (!me) return;
+      const { data, error } = await RISE.sb.from('leads').select('id,name,phone,course,amount,enrolled_at,created_at')
+        .eq('owner_id', me.id).eq('status', 'enrolled').order('enrolled_at', { ascending: false }).limit(2000);
+      if (error) return;
+      const list = (data || []).map(toStudent);
+      let before = null;
+      try { before = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch { /* unreadable cache: replace it */ }
+      sessionStorage.setItem(KEY, JSON.stringify({ uid: me.id, students: list }));
+      const changed = !before || before.uid !== me.id || JSON.stringify(before.students) !== JSON.stringify(list);
+      if (!window.RISE_REAL_STUDENTS && changed && list.length && sessionStorage.getItem('rise-real-drawn') !== me.id) {
+        sessionStorage.setItem('rise-real-drawn', me.id);
+        location.reload();
+      }
+    } catch { /* offline or storage blocked: the screens keep what they drew */ }
+  })();
+})();
+
 (() => {
   const menu = document.querySelector('.figma-menu'), hub = document.querySelector('#hub-profile');
   if (!menu || !hub) return;

@@ -1,4 +1,5 @@
-// Recent income is based on dated, locally recorded payment confirmations only.
+// Recent income: tuition recorded when a lead was marked Элссэн in the CRM (the real student list from manager.js,
+// owner request 2026-11-28) and the certificate payments confirmed on this device. Nothing is generated.
 (()=>{
  const viewport=document.querySelector('.task-viewport');if(!viewport)return;
  const key='rise-income-receipts';let receipts=loadLocal(key,[]);if(!Array.isArray(receipts))receipts=[];
@@ -7,9 +8,8 @@
  const dateKey=d=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Ulaanbaatar'}).format(d);
  const card=document.createElement('section');card.className='recent-income';card.setAttribute('aria-label','Сүүлийн орлого');viewport.prepend(card);
  const dialog=document.createElement('dialog');dialog.className='recent-income-dialog';dialog.setAttribute('aria-labelledby','recent-income-title');document.body.append(dialog);
- // Visual preview requested by the user; never persisted as payment receipts.
- const preview=Array.from({length:14},(_,i)=>{const d=new Date();d.setDate(d.getDate()-(13-i));d.setHours(11+i%7,20,0,0);return {name:students[i%students.length].name,course:['Экскаватор','Маникюр','Нягтлан'][i%3],kind:'Сургалтын төлбөр',amount:[250000,180000,350000,120000,275000,300000,150000][i%7],recordedAt:d.toISOString()}}).reverse();
- const active=()=>{const rows=receipts.filter(r=>r&&!r.voided&&Number(r.amount)>0&&Number.isFinite(Date.parse(r.recordedAt))).sort((a,b)=>Date.parse(b.recordedAt)-Date.parse(a.recordedAt));return receipts.length?rows:preview};
+ const tuition=()=>students.filter(s=>Number(s.paid)>0&&Number.isFinite(Date.parse(s.enrolledAt))).map(s=>({studentId:s.id,name:s.name,course:s.course,kind:'Сургалтын төлбөр',amount:Number(s.paid),recordedAt:s.enrolledAt}));
+ const active=()=>receipts.filter(r=>r&&!r.voided&&Number(r.amount)>0&&Number.isFinite(Date.parse(r.recordedAt))).concat(tuition()).sort((a,b)=>Date.parse(b.recordedAt)-Date.parse(a.recordedAt));
  function studentLink(r){const s=students.find(s=>s.id===r.studentId)||students.find(s=>s.name===r.name);return s?' role="link" tabindex="0" data-open-student="'+esc(s.id)+'" aria-label="'+esc(s.name)+' — Сурагчийн мэдээлэл"':''}
  function portrait(r){const at=Math.max(0,students.findIndex(s=>s.name===r.name))%6;return '<span class="receipt-avatar student-illustration" style="--avatar-x:'+((at%3)*50)+'%;--avatar-y:'+(Math.floor(at/3)*100)+'%" aria-hidden="true"></span>'}
  function showAll(){const rows=active();dialog.innerHTML='<button class="dialog-close" type="button" aria-label="Хаах">×</button><h2 id="recent-income-title">Сүүлийн орлого</h2><div class="receipt-list">'+(rows.length?rows.map(r=>'<article'+studentLink(r)+'>'+portrait(r)+'<div><strong>'+esc(r.name)+'</strong><small>'+esc(r.course)+' · '+esc(r.kind)+'</small><time datetime="'+esc(r.recordedAt)+'">'+esc(fmt.format(new Date(r.recordedAt)))+'</time></div><b>+'+money(Number(r.amount))+'</b></article>').join(''):'<p class="receipt-empty">Орлого бүртгэгдээгүй байна.</p>')+'</div>';dialog.querySelector('.dialog-close').onclick=()=>dialog.close();dialog.showModal()}
